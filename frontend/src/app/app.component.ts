@@ -6,8 +6,6 @@ import { SignupComponent } from './components/signup/signup.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
   imports: [
     RouterOutlet,
     RouterLink,
@@ -15,6 +13,8 @@ import { SignupComponent } from './components/signup/signup.component';
     LoginComponent,
     SignupComponent,
   ],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css',
 })
 export class AppComponent {
   title = 'springular';
