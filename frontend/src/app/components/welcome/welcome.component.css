@@ -1,11 +1,12 @@
 :host {
   --header-height: 3rem;
   --header-padding: 25px;
-  --button-background-color: var(--background-tertiary);
-  --button-border-color: var(--error-dark);
+  --button-background-color: var(--foreground-primary);
+  --button-border-color: var(--border-secondary);
   --button-width: 100px;
   --button-margin: 10px;
-  --text-color: var(--foreground-quaternary);
+  --text-color: var(--foreground-light);
+  --button-shadow: var(--shadow-primary);
 }
 
 .container {
@@ -70,7 +71,7 @@ button:disabled {
 }
 
 button:hover {
-  box-shadow: var(--background-tertiary-shadow);
+  box-shadow: var(--button-shadow);
   transform: translateY(-2px);
 }
 
