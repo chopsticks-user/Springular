@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { ThemeService } from '../../services/theme/theme.service';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-welcome',
