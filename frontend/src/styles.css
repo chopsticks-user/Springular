@@ -1,4 +1,32 @@
-html,body {
-    height: 100%;
-    margin: 0;
+:root {
+  --foreground-default: #5c7d99;
+  --foreground-secondary: #a3b9cc;
+  --foreground-tertiary: #f4faff;
+  --foreground-quaternary: #e2d8d8;
+  --foreground-light: #ffffff;
+
+  --background-default: #151719;
+  --background-secondary: #41474d;
+  --background-tertiary: #08090a;
+  --background-light: #41474d;
+
+  --primary-default: #5dfdcb;
+  --primary-dark: #24b286;
+  --primary-light: #b2ffe7;
+
+  --error-default: #ef3e36;
+  --error-dark: #800600;
+  --error-light: #ffcecc;
+
+  --background-tertiary-shadow: 0 1px 3px 0 rgba(8, 9, 10, 0.5);
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--background-default);
 }
