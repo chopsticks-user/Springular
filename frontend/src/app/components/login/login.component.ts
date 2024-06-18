@@ -1,14 +1,25 @@
-import { NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component, inject, model, signal } from '@angular/core';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle,
+} from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 import {
   FormControl,
   FormGroup,
+  FormsModule,
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-login',
@@ -16,14 +27,20 @@ import { MatInputModule } from '@angular/material/input';
   imports: [
     MatFormFieldModule,
     MatInputModule,
-    MatIconModule,
-    NgIf,
+    FormsModule,
+    MatButtonModule,
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose,
     ReactiveFormsModule,
+    MatIconModule,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
+  // readonly dialogRef = inject(MatDialogRef<LoginComponent>);
   login: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.email, Validators.required]),
     password: new FormControl('', [
@@ -40,4 +57,8 @@ export class LoginComponent {
   get password() {
     return this.login.get('password');
   }
+
+  // onNoClick() {
+  //   this.dialogRef.close();
+  // }
 }
