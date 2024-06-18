@@ -1,4 +1,40 @@
-html,body {
-    height: 100%;
-    margin: 0;
+:root {
+  --foreground-primary: #08090a;
+  --foreground-secondary: #a3b9cc;
+  --foreground-tertiary: #f4faff;
+  --foreground-quaternary: #e2d8d8;
+  --foreground-light: #e2d8d8;
+
+  --background-primary: #0f0f11;
+  --background-secondary: #151719;
+  --background-tertiary: #08090a;
+  --background-light: #41474d;
+
+  --border-primary: #a3b9cc;
+  --border-secondary: #921e1e;
+
+  --shadow-primary: 0 1px 3px 0 rgba(8, 9, 10, 0.5);
+
+  --error-primary: #ef3e36;
+  --error-dark: #921e1e;
+  --error-light: #ffcecc;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--background-primary);
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
