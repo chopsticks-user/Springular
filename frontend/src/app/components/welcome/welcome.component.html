@@ -1,6 +1,9 @@
 <div class="container">
   <div class="main-container">
-    <h1>Welcome to Springular!</h1>
-    <button mat-flat-button (click)="openDialog()">Get Started</button>
+    <h1 class="welcome-message">Welcome to Springular!</h1>
+    <button mat-flat-button (click)="openAuthModal()">Get Started</button>
+    <dialog #authModal style="width: 100px; height: 200px">
+      <button (click)="closeAuthModal()">Close</button>
+    </dialog>
   </div>
 </div>

@@ -1,13 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, ViewChild, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginComponent } from '../login/login.component';
-
-export interface DialogData {
-  animal: string;
-  name: string;
-}
 
 @Component({
   selector: 'app-welcome',
@@ -17,15 +12,13 @@ export interface DialogData {
   styleUrl: './welcome.component.css',
 })
 export class WelcomeComponent {
-  readonly dialog = inject(MatDialog);
+  @ViewChild('authModal') authModal!: ElementRef;
 
-  openDialog() {
-    const dialogRef = this.dialog.open(LoginComponent, {
-      data: {},
-    });
+  openAuthModal() {
+    this.authModal.nativeElement.showModal();
+  }
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-    });
+  closeAuthModal() {
+    this.authModal.nativeElement.close();
   }
 }
