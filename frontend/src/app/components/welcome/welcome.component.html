@@ -1,28 +1,14 @@
 <div class="container">
-  <header>
-    <div class="header-container">
-      <div class="header-span"></div>
-      <button class="login-button">
-        <a
-          routerLink="/login"
-          routerLinkActive="active"
-          ariaCurrentWhenActive="page"
-          >Log In</a
-        >
-      </button>
-      <button class="signup-button">
-        <a
-          routerLink="/signup"
-          routerLinkActive="active"
-          ariaCurrentWhenActive="page"
-          >Sign Up</a
-        >
-      </button>
-    </div>
-  </header>
-  <main>
-    <div class="main-container">
-      <h1>Welcome to Springular!</h1>
-    </div>
-  </main>
+  <div class="main-container">
+    <h1 class="welcome-message">Welcome to Springular!</h1>
+    <button mat-flat-button (click)="openAuthModal()">Get Started</button>
+    <dialog #authModal>
+      @if (showLogin){
+      <app-login #loginModalContent></app-login>
+      }@else {
+      <app-signup #signupModalContent></app-signup>
+      }
+      <button (click)="closeAuthModal()">Close</button>
+    </dialog>
+  </div>
 </div>
