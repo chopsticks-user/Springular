@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginComponent } from '../login/login.component';
 import { SignupComponent } from '../signup/signup.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-welcome',
@@ -15,18 +16,13 @@ import { SignupComponent } from '../signup/signup.component';
     MatButtonModule,
     LoginComponent,
     SignupComponent,
+    MatIconModule,
   ],
   templateUrl: './welcome.component.html',
   styleUrl: './welcome.component.css',
 })
 export class WelcomeComponent {
   @ViewChild('authModal') authModal!: ElementRef<HTMLDialogElement>;
-
-  @ViewChild('loginModalContent')
-  loginModalContent!: ElementRef<LoginComponent>;
-
-  @ViewChild('signupModalContent')
-  signupModalContent!: ElementRef<SignupComponent>;
 
   showLogin: boolean = false;
 

@@ -41,7 +41,6 @@
           [type]="hide ? 'password' : 'text'"
           formControlName="password"
           required
-          style="color: white"
         />
         <mat-icon matSuffix (click)="hide = !hide">
           {{ hide ? "visibility_off" : "visibility" }}
@@ -50,4 +49,8 @@
       </mat-form-field>
     </p>
   </form>
+  <div class="signup-wrapper">
+    <p></p>
+    <button mat-flat-button>Sign Up</button>
+  </div>
 </div>

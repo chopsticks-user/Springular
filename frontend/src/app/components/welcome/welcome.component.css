@@ -28,6 +28,20 @@
   color: var(--text-color);
 }
 
+.modal-header {
+  display: flex;
+  flex-direction: row;
+}
+
+.modal-header-span {
+  display: flex;
+  flex: 1;
+}
+
+.mat-icon {
+  color: var(--text-color);
+}
+
 dialog {
   background-color: var(--dialog-background);
   border: var(--dialog-border);
