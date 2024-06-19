@@ -3,6 +3,7 @@
     <h1 class="welcome-message">Welcome to Springular!</h1>
     <button mat-flat-button (click)="openAuthModal()">Get Started</button>
     <dialog #authModal>
+      @if(showModal){
       <header class="modal-header">
         <div class="modal-header-span"></div>
         <mat-icon matSuffix (click)="closeAuthModal()"> close </mat-icon>
@@ -23,6 +24,7 @@
         <a (click)="showLogin = !showLogin"><p>Sign in</p></a>
         }
       </footer>
+      }
     </dialog>
   </main>
 </div>

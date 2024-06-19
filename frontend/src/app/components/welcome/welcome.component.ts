@@ -24,14 +24,16 @@ import { MatIconModule } from '@angular/material/icon';
 export class WelcomeComponent {
   @ViewChild('authModal') authModal!: ElementRef<HTMLDialogElement>;
 
+  showModal: boolean = false;
   showLogin: boolean = false;
 
   openAuthModal() {
+    this.showModal = true;
     this.authModal.nativeElement.showModal();
   }
 
   closeAuthModal() {
-    // TODO: clear input before closing
+    this.showModal = false;
     this.authModal.nativeElement.close();
   }
 }

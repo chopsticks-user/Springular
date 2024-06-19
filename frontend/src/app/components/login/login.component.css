@@ -10,17 +10,3 @@
   align-items: center;
   width: 400px;
 }
-
-mat-hint {
-  color: var(--text-color);
-}
-
-#mat-input-0 {
-  color: var(--text-color);
-}
-#mat-input-1 {
-  color: var(--text-color);
-}
-#mat-input-2 {
-  color: var(--text-color);
-}
