@@ -8,6 +8,8 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-signup',
@@ -17,12 +19,17 @@ import { MatInputModule } from '@angular/material/input';
     MatInputModule,
     MatIconModule,
     ReactiveFormsModule,
+    MatDatepickerModule,
   ],
+  providers: [provideNativeDateAdapter()],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css',
 })
 export class SignupComponent {
   signup: FormGroup = new FormGroup({
+    firstName: new FormControl('', [Validators.required]),
+    lastName: new FormControl('', [Validators.required]),
+    dateOfBirth: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.email, Validators.required]),
     password: new FormControl('', [
       Validators.required,

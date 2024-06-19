@@ -21,6 +21,13 @@ import { SignupComponent } from '../signup/signup.component';
 })
 export class WelcomeComponent {
   @ViewChild('authModal') authModal!: ElementRef<HTMLDialogElement>;
+
+  @ViewChild('loginModalContent')
+  loginModalContent!: ElementRef<LoginComponent>;
+
+  @ViewChild('signupModalContent')
+  signupModalContent!: ElementRef<SignupComponent>;
+
   showLogin: boolean = false;
 
   openAuthModal() {

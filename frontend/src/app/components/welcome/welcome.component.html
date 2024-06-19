@@ -4,9 +4,9 @@
     <button mat-flat-button (click)="openAuthModal()">Get Started</button>
     <dialog #authModal>
       @if (showLogin){
-      <app-login></app-login>
+      <app-login #loginModalContent></app-login>
       }@else {
-      <app-signup></app-signup>
+      <app-signup #signupModalContent></app-signup>
       }
       <button (click)="closeAuthModal()">Close</button>
     </dialog>

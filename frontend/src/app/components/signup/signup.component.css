@@ -8,7 +8,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 300px;
+  width: 400px;
 }
 
 mat-hint {
@@ -16,5 +16,14 @@ mat-hint {
 }
 
 #mat-input-0 {
+  color: var(--text-color);
+}
+#mat-input-1 {
+  color: var(--text-color);
+}
+#mat-input-2 {
+  color: var(--text-color);
+}
+#mat-input-3 {
   color: var(--text-color);
 }
