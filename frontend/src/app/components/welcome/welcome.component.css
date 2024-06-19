@@ -38,8 +38,28 @@
   flex: 1;
 }
 
+.modal-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .mat-icon {
   color: var(--text-color);
+}
+
+a,
+p {
+  color: var(--text-color);
+}
+
+a {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+p {
+  margin-right: 5px;
 }
 
 dialog {

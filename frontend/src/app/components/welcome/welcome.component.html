@@ -14,7 +14,15 @@
         <app-signup></app-signup>
         }
       </main>
-      <footer class="modal-footer"></footer>
+      <footer class="modal-footer">
+        @if (showLogin){
+        <p>New to Springular?</p>
+        <a (click)="showLogin = !showLogin"><p>Sign up</p></a>
+        }@else {
+        <p>Already have an account?</p>
+        <a (click)="showLogin = !showLogin"><p>Sign in</p></a>
+        }
+      </footer>
     </dialog>
   </main>
 </div>
