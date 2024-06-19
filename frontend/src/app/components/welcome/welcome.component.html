@@ -2,7 +2,12 @@
   <div class="main-container">
     <h1 class="welcome-message">Welcome to Springular!</h1>
     <button mat-flat-button (click)="openAuthModal()">Get Started</button>
-    <dialog #authModal style="width: 100px; height: 200px">
+    <dialog #authModal>
+      @if (showLogin){
+      <app-login></app-login>
+      }@else {
+      <app-signup></app-signup>
+      }
       <button (click)="closeAuthModal()">Close</button>
     </dialog>
   </div>

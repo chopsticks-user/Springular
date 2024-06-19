@@ -2,11 +2,12 @@
   --header-height: 3rem;
   --header-padding: 25px;
   --button-background-color: var(--foreground-primary);
-  --button-border-color: var(--border-secondary);
   --button-width: 100px;
   --button-margin: 10px;
   --text-color: var(--foreground-light);
   --button-shadow: var(--shadow-primary);
+  --dialog-background: var(--background-secondary);
+  --dialog-border: 1px solid var(--border-secondary);
 }
 
 .container {
@@ -25,6 +26,12 @@
 
 .welcome-message {
   color: var(--text-color);
+}
+
+dialog {
+  background-color: var(--dialog-background);
+  border: var(--dialog-border);
+  border-radius: 10px;
 }
 
 dialog::backdrop {

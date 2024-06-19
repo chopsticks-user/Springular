@@ -1,15 +1,6 @@
 import { Component, inject, model, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import {
-  MAT_DIALOG_DATA,
-  MatDialog,
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogContent,
-  MatDialogRef,
-  MatDialogTitle,
-} from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
@@ -29,10 +20,6 @@ import {
     MatInputModule,
     FormsModule,
     MatButtonModule,
-    MatDialogTitle,
-    MatDialogContent,
-    MatDialogActions,
-    MatDialogClose,
     ReactiveFormsModule,
     MatIconModule,
   ],
@@ -40,7 +27,6 @@ import {
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  // readonly dialogRef = inject(MatDialogRef<LoginComponent>);
   login: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.email, Validators.required]),
     password: new FormControl('', [
@@ -57,8 +43,4 @@ export class LoginComponent {
   get password() {
     return this.login.get('password');
   }
-
-  // onNoClick() {
-  //   this.dialogRef.close();
-  // }
 }
