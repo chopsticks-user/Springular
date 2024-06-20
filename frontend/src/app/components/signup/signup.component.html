@@ -1,5 +1,5 @@
 <div class="container">
-  <form [formGroup]="signup">
+  <form [formGroup]="signup" (submit)="signupHandler()">
     <p>
       <mat-form-field appearance="outline" color="primary">
         <mat-label>First name</mat-label>
@@ -64,9 +64,9 @@
         <mat-hint style="color: var(--text-color)"></mat-hint>
       </mat-form-field>
     </p>
+    <div class="submit-container">
+      <p></p>
+      <button mat-flat-button type="submit">Sign Up</button>
+    </div>
   </form>
-  <div class="signup-wrapper">
-    <p></p>
-    <button mat-flat-button>Sign Up</button>
-  </div>
 </div>

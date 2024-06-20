@@ -47,4 +47,8 @@ export class SignupComponent {
   get password() {
     return this.signup.get('password');
   }
+
+  signupHandler() {
+    console.log('Sign Up');
+  }
 }
