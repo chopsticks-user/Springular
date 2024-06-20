@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-signup',
@@ -20,6 +21,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
     MatIconModule,
     ReactiveFormsModule,
     MatDatepickerModule,
+    MatButtonModule,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './signup.component.html',
@@ -44,5 +46,9 @@ export class SignupComponent {
 
   get password() {
     return this.signup.get('password');
+  }
+
+  signupHandler() {
+    console.log('Sign Up');
   }
 }

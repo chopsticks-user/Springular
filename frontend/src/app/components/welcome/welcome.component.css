@@ -28,6 +28,40 @@
   color: var(--text-color);
 }
 
+.modal-header {
+  display: flex;
+  flex-direction: row;
+}
+
+.modal-header-span {
+  display: flex;
+  flex: 1;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mat-icon {
+  color: var(--text-color);
+}
+
+a,
+p {
+  color: var(--text-color);
+}
+
+a {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+p {
+  margin-right: 5px;
+}
+
 dialog {
   background-color: var(--dialog-background);
   border: var(--dialog-border);
