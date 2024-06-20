@@ -11,18 +11,8 @@ export class LoginService {
   http = inject(HttpClient);
 
   authenticate(loginInfo: LoginInfo, callback: any) {
-    const headers = new HttpHeaders(
-      loginInfo
-        ? {
-            authorization:
-              'Basic ' + loginInfo.email + ':' + loginInfo.password,
-          }
-        : {}
-    );
-
     this.http
-      .get('http://localhost:8080/users', {
-        headers: headers,
+      .post('http://localhost:8080/api/login', loginInfo, {
         responseType: 'text',
       })
       .subscribe((res) => {

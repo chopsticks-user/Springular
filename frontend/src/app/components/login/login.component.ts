@@ -63,7 +63,7 @@ export class LoginComponent {
       password: this.password,
     };
     this.loginService.authenticate(loginInfo, () => {
-      // this.router.navigateByUrl('/home');
+      this.router.navigateByUrl('/home');
     });
   }
 }
