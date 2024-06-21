@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { LoginInfo } from '../models/login-info';
+import { LoginInfo } from '../models/loginInfo';
 
 @Injectable({
   providedIn: 'root',
@@ -12,11 +12,10 @@ export class LoginService {
 
   authenticate(loginInfo: LoginInfo, callback: any) {
     this.http
-      .post('http://localhost:8080/api/login', loginInfo, {
+      .post('http://localhost:8080/api/auth/login', loginInfo, {
         responseType: 'text',
       })
       .subscribe((res) => {
-        // TODO:
         console.log(res);
         this.authenticated = true;
         return callback && callback();
