@@ -30,9 +30,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)
             throws Exception {
         httpSecurity
-                .csrf(Customizer.withDefaults())
+                .csrf((csrf) -> csrf.disable())
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                        .requestMatchers("/auth/**")
+                        .requestMatchers("/api/auth/**")
                         // .hasRole("USER") // TODO: might need this in the future
                         .permitAll()
                         .anyRequest()

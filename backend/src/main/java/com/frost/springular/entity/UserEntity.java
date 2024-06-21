@@ -24,8 +24,9 @@ public final class UserEntity implements UserDetails {
     @Column(nullable = false)
     private String lastName;
 
+    // TODO: dob should be of type Date
     @Column(nullable = false)
-    private Date dateOfBirth;
+    private String dateOfBirth;
 
     @Column(nullable = false)
     private String email;
@@ -81,7 +82,7 @@ public final class UserEntity implements UserDetails {
         return this;
     }
 
-    public UserEntity setDateOfBirth(Date dateOfBirth) {
+    public UserEntity setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
         return this;
     }

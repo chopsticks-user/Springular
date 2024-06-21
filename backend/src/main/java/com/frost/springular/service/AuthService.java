@@ -28,12 +28,13 @@ public class AuthService {
         return userRepository.save(new UserEntity()
                 .setFirstname(signupDTO.firstName())
                 .setLastname(signupDTO.lastName())
-                .setDateOfBirth(signupDTO.dataOfBirth())
+                .setDateOfBirth(signupDTO.dateOfBirth())
                 .setEmail(signupDTO.email())
                 .setPassword(passwordEncoder.encode(signupDTO.password())));
     }
 
     public UserEntity authenticate(LoginDTO loginDTO) {
+        // TODO: implement business logic for dto objects
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginDTO.email(), loginDTO.password()));
         return userRepository.findByEmail(loginDTO.email()).orElseThrow();
