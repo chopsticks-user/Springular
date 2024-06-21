@@ -17,7 +17,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { LoginService } from '../../services/login.service';
-import { LoginInfo } from '../../models/login-info';
+import { LoginInfo } from '../../models/loginInfo';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
