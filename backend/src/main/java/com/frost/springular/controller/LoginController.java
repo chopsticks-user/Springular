@@ -5,16 +5,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.frost.springular.model.LoginModel;
-import com.frost.springular.model.TokenModel;
+import com.frost.springular.dto.LoginDTO;
+import com.frost.springular.dto.TokenDTO;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class LoginController {
+
     @PostMapping("/api/login")
-    public TokenModel getToken(@RequestBody LoginModel loginInfo) {
+    public TokenDTO getToken(@RequestBody LoginDTO loginInfo) {
         // TODO: business logic
-        return new TokenModel(String.format("%s_%s",
+        return new TokenDTO(String.format("%s_%s",
                 loginInfo.email(), loginInfo.password()));
     }
+
 }
