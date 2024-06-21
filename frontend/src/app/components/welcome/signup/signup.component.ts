@@ -11,8 +11,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
-import { SignupInfo } from '../../models/signupInfo';
-import { SignupService } from '../../services/signup.service';
+import { SignupInfo } from '../../../models/signupInfo';
+import { SignupService } from '../../../services/signup.service';
 import { Router } from '@angular/router';
 
 @Component({
