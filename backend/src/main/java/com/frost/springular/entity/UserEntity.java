@@ -12,7 +12,7 @@ import jakarta.persistence.*;
 
 @Table(name = "users")
 @Entity
-public class UserEntity implements UserDetails {
+public final class UserEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
@@ -69,5 +69,30 @@ public class UserEntity implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public UserEntity setFirstname(String firstName) {
+        this.firstName = firstName;
+        return this;
+    }
+
+    public UserEntity setLastname(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
+
+    public UserEntity setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+        return this;
+    }
+
+    public UserEntity setEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public UserEntity setPassword(String password) {
+        this.password = password;
+        return this;
     }
 }
