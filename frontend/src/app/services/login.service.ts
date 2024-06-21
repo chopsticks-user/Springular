@@ -11,20 +11,15 @@ export class LoginService {
   http = inject(HttpClient);
 
   authenticate(loginInfo: LoginInfo, callback: any) {
-    const headers = new HttpHeaders(
-      loginInfo
-        ? {
-            authorization: `Basic ${btoa(
-              loginInfo.email + ':' + loginInfo.password
-            )}`,
-          }
-        : {}
-    );
-
-    this.http.get('/users', { headers: headers }).subscribe((res) => {
-      // TODO:
-      this.authenticated = true;
-      return callback && callback();
-    });
+    this.http
+      .post('http://localhost:8080/api/login', loginInfo, {
+        responseType: 'text',
+      })
+      .subscribe((res) => {
+        // TODO:
+        console.log(res);
+        this.authenticated = true;
+        return callback && callback();
+      });
   }
 }
