@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -14,6 +14,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { SignupInfo } from '../../../models/signupInfo';
 import { SignupService } from '../../../services/signup.service';
 import { Router } from '@angular/router';
+import { NgIf } from '@angular/common';
+import { LoginService } from '../../../services/login.service';
 
 @Component({
   selector: 'app-signup',
@@ -25,60 +27,113 @@ import { Router } from '@angular/router';
     ReactiveFormsModule,
     MatDatepickerModule,
     MatButtonModule,
+    NgIf,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css',
 })
-export class SignupComponent {
-  signup: FormGroup = new FormGroup({
-    firstName: new FormControl('', [Validators.required]),
-    lastName: new FormControl('', [Validators.required]),
-    dateOfBirth: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.email, Validators.required]),
-    password: new FormControl('', [
-      Validators.required,
-      Validators.minLength(3),
-    ]),
-  });
-
+export class SignupComponent implements OnInit {
   signupService = inject(SignupService);
+
+  loginService = inject(LoginService);
+
+  signupStatus!: string;
 
   router = inject(Router);
 
   hide = true;
 
+  signup!: FormGroup;
+
+  ngOnInit(): void {
+    this.signup = new FormGroup({
+      firstName: new FormControl('', [Validators.required]),
+      lastName: new FormControl('', [Validators.required]),
+      dateOfBirth: new FormControl('', [Validators.required]), // TODO: custom validator
+      email: new FormControl('', [Validators.email, Validators.required]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+      ]),
+    });
+  }
+
   // TODO: verify input validity
   get firstName() {
-    return this.signup.get('firstName')?.value;
+    return this.signup.get('firstName');
+  }
+
+  get firstNameInvalid() {
+    return (
+      this.firstName?.invalid &&
+      (this.firstName?.dirty || this.firstName?.touched)
+    );
   }
 
   get lastName() {
-    return this.signup.get('lastName')?.value;
+    return this.signup.get('lastName');
+  }
+
+  get lastNameInvalid() {
+    return (
+      this.lastName?.invalid && (this.lastName?.dirty || this.lastName?.touched)
+    );
   }
 
   get dateOfBirth() {
-    return this.signup.get('dateOfBirth')?.value;
+    return this.signup.get('dateOfBirth');
+  }
+
+  get dateOfBirthInvalid() {
+    return (
+      this.dateOfBirth?.invalid &&
+      (this.dateOfBirth?.dirty || this.dateOfBirth?.touched)
+    );
   }
 
   get email() {
-    return this.signup.get('email')?.value;
+    return this.signup.get('email');
+  }
+
+  get emailInvalid() {
+    return this.email?.invalid && (this.email?.dirty || this.email?.touched);
   }
 
   get password() {
-    return this.signup.get('password')?.value;
+    return this.signup.get('password');
+  }
+
+  get passwordInvalid() {
+    return (
+      this.password?.invalid && (this.password?.dirty || this.password?.touched)
+    );
   }
 
   signupHandler() {
+    if (this.signup.invalid) {
+      this.signup.markAllAsTouched();
+      return;
+    }
+
     const signupInfo: SignupInfo = {
-      firstName: this.firstName,
-      lastName: this.lastName,
-      dateOfBirth: this.dateOfBirth,
-      email: this.email,
-      password: this.password,
+      firstName: this.firstName?.value,
+      lastName: this.lastName?.value,
+      dateOfBirth: this.dateOfBirth?.value,
+      email: this.email?.value,
+      password: this.password?.value,
     };
-    this.signupService.register(signupInfo, () => {
-      this.router.navigateByUrl('/home');
-    });
+
+    this.signupService.register(
+      signupInfo,
+      () => {
+        this.loginService.authenticate(
+          { email: this.email?.value, password: this.password?.value },
+          () => this.router.navigateByUrl('/home'), // Todo: replace with a home service
+          (errMesg) => (this.signupStatus = errMesg as string)
+        );
+      },
+      (errMesg) => (this.signupStatus = errMesg as string)
+    );
   }
 }

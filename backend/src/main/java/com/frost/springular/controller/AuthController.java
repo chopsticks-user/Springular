@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.frost.springular.dto.LoginDTO;
 import com.frost.springular.dto.SignupDTO;
 import com.frost.springular.entity.UserEntity;
+import com.frost.springular.exception.DuplicatedEmailException;
 import com.frost.springular.response.TokenResponse;
 import com.frost.springular.service.AuthService;
 import com.frost.springular.service.JWTService;
@@ -34,7 +35,8 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<UserEntity> register(@RequestBody SignupDTO signupInfo) {
+    public ResponseEntity<UserEntity> register(@RequestBody SignupDTO signupInfo)
+            throws DuplicatedEmailException {
         return ResponseEntity.ok(authService.register(signupInfo));
     }
 }
