@@ -1,4 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { LoginInfo } from '../models/loginInfo';
 
@@ -10,15 +14,25 @@ export class LoginService {
 
   http = inject(HttpClient);
 
-  authenticate(loginInfo: LoginInfo, callback: any) {
+  authenticate(
+    loginInfo: LoginInfo,
+    callback?: (res?: string) => void,
+    errorCallback?: (errMesg?: string) => void
+  ) {
     this.http
       .post('http://localhost:8080/api/auth/login', loginInfo, {
         responseType: 'text',
       })
-      .subscribe((res) => {
-        console.log(res);
-        this.authenticated = true;
-        return callback && callback();
+      .subscribe({
+        next: (res) => {
+          this.authenticated = true;
+          return callback && callback(res);
+        },
+        error: (err: HttpErrorResponse) => {
+          return (
+            errorCallback && errorCallback(JSON.parse(err.error).description)
+          );
+        },
       });
   }
 }

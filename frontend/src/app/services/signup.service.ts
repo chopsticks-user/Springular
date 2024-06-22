@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { SignupInfo } from '../models/signupInfo';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -8,14 +8,21 @@ import { HttpClient } from '@angular/common/http';
 export class SignupService {
   http = inject(HttpClient);
 
-  register(signupInfo: SignupInfo, callback: any) {
+  register(
+    signupInfo: SignupInfo,
+    callback?: (res?: string) => void,
+    errorCallback?: (errMesg?: string) => void
+  ) {
     this.http
       .post('http://localhost:8080/api/auth/signup', signupInfo, {
         responseType: 'text',
       })
-      .subscribe((res) => {
-        console.log(res);
-        return callback && callback();
+      .subscribe({
+        next: (res) => {
+          return callback && callback(res);
+        },
+        error: (err: HttpErrorResponse) =>
+          errorCallback && errorCallback(JSON.parse(err.error).description),
       });
   }
 }

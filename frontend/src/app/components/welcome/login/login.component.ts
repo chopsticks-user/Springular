@@ -1,10 +1,5 @@
-import { Component, inject, model, signal } from '@angular/core';
-import {
-  Router,
-  RouterLink,
-  RouterLinkActive,
-  RouterOutlet,
-} from '@angular/router';
+import { Component, OnInit, inject, model, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -18,7 +13,7 @@ import {
 } from '@angular/forms';
 import { LoginService } from '../../../services/login.service';
 import { LoginInfo } from '../../../models/loginInfo';
-import { HttpClient } from '@angular/common/http';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -30,40 +25,65 @@ import { HttpClient } from '@angular/common/http';
     MatButtonModule,
     ReactiveFormsModule,
     MatIconModule,
+    NgIf,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
-export class LoginComponent {
-  hide = true;
+export class LoginComponent implements OnInit {
+  hidePassword = true;
+
+  loginStatus!: string;
 
   loginService = inject(LoginService);
 
   router = inject(Router);
 
-  login: FormGroup = new FormGroup({
-    email: new FormControl('', [Validators.email, Validators.required]),
-    password: new FormControl('', [
-      Validators.required,
-      Validators.minLength(3),
-    ]),
-  });
+  login!: FormGroup;
+
+  ngOnInit(): void {
+    this.login = new FormGroup({
+      email: new FormControl('', [Validators.email, Validators.required]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+      ]),
+    });
+  }
 
   get email() {
-    return this.login.get('email')?.value;
+    return this.login.get('email');
+  }
+
+  get emailInvalid() {
+    return this.email?.invalid && (this.email?.dirty || this.email?.touched);
   }
 
   get password() {
-    return this.login.get('password')?.value;
+    return this.login.get('password');
+  }
+
+  get passwordInvalid() {
+    return (
+      this.password?.invalid && (this.password?.dirty || this.password?.touched)
+    );
   }
 
   loginHandler() {
+    if (this.login.invalid) {
+      this.login.markAllAsTouched();
+      return;
+    }
+
     const loginInfo: LoginInfo = {
-      email: this.email,
-      password: this.password,
+      email: this.email?.value,
+      password: this.password?.value,
     };
-    this.loginService.authenticate(loginInfo, () => {
-      this.router.navigateByUrl('/home');
-    });
+
+    this.loginService.authenticate(
+      loginInfo,
+      () => this.router.navigateByUrl('/home'), // Todo: replace with a home service
+      (errMesg) => (this.loginStatus = errMesg as string)
+    );
   }
 }

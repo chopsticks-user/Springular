@@ -9,7 +9,9 @@
           matInput
         />
         <mat-icon matSuffix>badge</mat-icon>
-        <mat-hint style="color: var(--text-color)"></mat-hint>
+        <mat-hint *ngIf="firstNameInvalid" style="color: var(--text-color)">
+          {{ "First name is required" }}
+        </mat-hint>
       </mat-form-field>
     </p>
     <p>
@@ -21,7 +23,9 @@
           matInput
         />
         <mat-icon matSuffix>badge</mat-icon>
-        <mat-hint style="color: var(--text-color)"></mat-hint>
+        <mat-hint *ngIf="lastNameInvalid" style="color: var(--text-color)">
+          {{ "Last name is required" }}
+        </mat-hint>
       </mat-form-field>
     </p>
     <p>
@@ -33,7 +37,9 @@
           matInput
         />
         <mat-icon matSuffix>calendar_month</mat-icon>
-        <mat-hint style="color: var(--text-color)">mm/dd/yyyy</mat-hint>
+        <mat-hint *ngIf="dateOfBirthInvalid" style="color: var(--text-color)">
+          {{ "Date of birth is required" }}
+        </mat-hint>
       </mat-form-field>
     </p>
     <p>
@@ -45,7 +51,11 @@
           matInput
         />
         <mat-icon matSuffix>mail</mat-icon>
-        <mat-hint style="color: var(--text-color)"></mat-hint>
+        <mat-hint *ngIf="emailInvalid" style="color: var(--text-color)">
+          {{
+            email?.hasError("required") ? "Email is required" : "Invalid email"
+          }}
+        </mat-hint>
       </mat-form-field>
     </p>
     <p>
@@ -61,11 +71,22 @@
         <mat-icon matSuffix (click)="hide = !hide">
           {{ hide ? "visibility_off" : "visibility" }}
         </mat-icon>
-        <mat-hint style="color: var(--text-color)"></mat-hint>
+        <mat-hint *ngIf="passwordInvalid" style="color: var(--text-color)">
+          {{
+            password?.hasError("required")
+              ? "Password is required"
+              : "Insufficient password length"
+          }}
+        </mat-hint>
       </mat-form-field>
     </p>
     <div class="submit-container">
-      <p></p>
+      <p
+        *ngIf="signupStatus && signupStatus.length > 0"
+        style="color: var(--text-color); font-size: small"
+      >
+        {{ signupStatus }}
+      </p>
       <button mat-flat-button type="submit">Sign Up</button>
     </div>
   </form>
