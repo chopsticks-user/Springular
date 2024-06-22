@@ -3,7 +3,9 @@ package com.frost.springular.service;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
+import java.util.logging.Logger;
 
 import javax.crypto.SecretKey;
 
@@ -11,13 +13,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import com.frost.springular.dto.JwtAccessTokenDTO;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
 @Service
-public class JWTService {
+public class JwtAccessTokenService {
     @Value("${security.jwt.secret-key}")
     private String secretKey;
 
@@ -32,15 +36,25 @@ public class JWTService {
         return extractClaim(token, Claims::getSubject);
     }
 
-    public String generateToken(UserDetails userDetails) {
+    public JwtAccessTokenDTO generateToken(UserDetails userDetails) {
         return generateToken(new HashMap<>(), userDetails);
     }
 
-    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-        return Jwts.builder().claims().add(extraClaims).subject(userDetails.getUsername())
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + jwtExpiration)).and()
-                .signWith(getLoginKey(), Jwts.SIG.HS256).compact();
+    public JwtAccessTokenDTO generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+        Date expirationDate = new Date(System.currentTimeMillis() + jwtExpiration);
+        System.out.println(expirationDate);
+
+        return new JwtAccessTokenDTO(
+                Jwts.builder()
+                        .claims()
+                        .add(extraClaims)
+                        .subject(userDetails.getUsername())
+                        .issuedAt(new Date(System.currentTimeMillis()))
+                        .expiration(expirationDate)
+                        .and()
+                        .signWith(getLoginKey(), Jwts.SIG.HS256)
+                        .compact(),
+                expirationDate);
     }
 
     public long getExpirationTime() {
@@ -50,6 +64,10 @@ public class JWTService {
     public boolean isTokenValid(String token, UserDetails userDetails) {
         return (extractUsername(token).equals(userDetails.getUsername()))
                 && !extractExpiration(token).before(new Date());
+    }
+
+    // Todo:
+    public void revokeToken(String token) {
     }
 
     private Date extractExpiration(String token) {
