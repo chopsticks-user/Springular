@@ -20,6 +20,8 @@ public class GlobalExceptionHandler {
         exception.printStackTrace();
 
         return switch (exception) {
+            case JwtRefreshTokenExpiredException e ->
+                createHttpProblemDetail(401, exception, "Refresh token expired");
             case DuplicatedEmailException e ->
                 createHttpProblemDetail(409, exception, "Email address already in use");
             case BadCredentialsException e ->

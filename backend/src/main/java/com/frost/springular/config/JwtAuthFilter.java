@@ -1,6 +1,6 @@
 package com.frost.springular.config;
 
-import com.frost.springular.service.JWTService;
+import com.frost.springular.service.JwtAccessTokenService;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,13 +19,13 @@ import java.io.IOException;
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
     private final HandlerExceptionResolver handlerExceptionResolver;
-    private final JWTService jwtService;
+    private final JwtAccessTokenService jwtAccessTokenService;
     private final UserDetailsService userDetailsService;
 
-    public JwtAuthFilter(HandlerExceptionResolver handlerExceptionResolver, JWTService jwtService,
+    public JwtAuthFilter(HandlerExceptionResolver handlerExceptionResolver, JwtAccessTokenService jwtService,
             UserDetailsService userDetailsService) {
         this.handlerExceptionResolver = handlerExceptionResolver;
-        this.jwtService = jwtService;
+        this.jwtAccessTokenService = jwtService;
         this.userDetailsService = userDetailsService;
     }
 
@@ -41,12 +41,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         try {
             final String jwt = authHeader.substring(7);
-            final String username = jwtService.extractUsername(jwt);
+            final String username = jwtAccessTokenService.extractUsername(jwt);
 
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-                if (jwtService.isTokenValid(jwt, userDetails)) {
+                if (jwtAccessTokenService.isTokenValid(jwt, userDetails)) {
                     var authToken = new UsernamePasswordAuthenticationToken(userDetails, null,
                             userDetails.getAuthorities());
 
