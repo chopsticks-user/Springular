@@ -4,12 +4,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.logging.Logger;
 
 import javax.crypto.SecretKey;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+
+import com.frost.springular.dto.JWTAccessTokenDTO;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -32,15 +35,25 @@ public class JWTService {
         return extractClaim(token, Claims::getSubject);
     }
 
-    public String generateToken(UserDetails userDetails) {
+    public JWTAccessTokenDTO generateToken(UserDetails userDetails) {
         return generateToken(new HashMap<>(), userDetails);
     }
 
-    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-        return Jwts.builder().claims().add(extraClaims).subject(userDetails.getUsername())
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + jwtExpiration)).and()
-                .signWith(getLoginKey(), Jwts.SIG.HS256).compact();
+    public JWTAccessTokenDTO generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+        Date expirationDate = new Date(System.currentTimeMillis() + jwtExpiration);
+        System.out.println(expirationDate);
+
+        return new JWTAccessTokenDTO(
+                Jwts.builder()
+                        .claims()
+                        .add(extraClaims)
+                        .subject(userDetails.getUsername())
+                        .issuedAt(new Date(System.currentTimeMillis()))
+                        .expiration(expirationDate)
+                        .and()
+                        .signWith(getLoginKey(), Jwts.SIG.HS256)
+                        .compact(),
+                expirationDate);
     }
 
     public long getExpirationTime() {
