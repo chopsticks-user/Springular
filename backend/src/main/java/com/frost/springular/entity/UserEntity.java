@@ -28,7 +28,7 @@ public final class UserEntity implements UserDetails {
     @Column(nullable = false)
     private String dateOfBirth;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)

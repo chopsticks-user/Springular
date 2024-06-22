@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.frost.springular.dto.LoginDTO;
 import com.frost.springular.dto.SignupDTO;
 import com.frost.springular.entity.UserEntity;
+import com.frost.springular.exception.DuplicatedEmailException;
 import com.frost.springular.repository.UserRepository;
 
 @Service
@@ -24,7 +25,12 @@ public class AuthService {
         this.authenticationManager = authenticationManager;
     }
 
-    public UserEntity register(SignupDTO signupDTO) {
+    public UserEntity register(SignupDTO signupDTO)
+            throws DuplicatedEmailException {
+        if (userRepository.findByEmail(signupDTO.email()).isPresent()) {
+            throw new DuplicatedEmailException();
+        }
+
         return userRepository.save(new UserEntity()
                 .setFirstname(signupDTO.firstName())
                 .setLastname(signupDTO.lastName())

@@ -20,6 +20,8 @@ public class GlobalExceptionHandler {
         exception.printStackTrace();
 
         return switch (exception) {
+            case DuplicatedEmailException e ->
+                createHttpProblemDetail(409, exception, "Email address already in use");
             case BadCredentialsException e ->
                 createHttpProblemDetail(401, exception, "Email or password is incorrect");
             case ExpiredJwtException e ->
@@ -35,7 +37,8 @@ public class GlobalExceptionHandler {
     }
 
     private static ProblemDetail createHttpProblemDetail(int statusCode, Exception exception, String description) {
-        ProblemDetail detail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(401), exception.getMessage());
+        ProblemDetail detail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(statusCode),
+                exception.getMessage());
         detail.setProperty("description", description);
         return detail;
     }

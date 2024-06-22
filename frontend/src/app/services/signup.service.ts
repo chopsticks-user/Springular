@@ -21,8 +21,10 @@ export class SignupService {
         next: (res) => {
           return callback && callback(res);
         },
-        error: (err: HttpErrorResponse) =>
-          errorCallback && errorCallback(JSON.parse(err.error).description),
+        error: (err: HttpErrorResponse) => {
+          console.log(err);
+          errorCallback && errorCallback(JSON.parse(err.error).description);
+        },
       });
   }
 }
