@@ -4,8 +4,8 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { LoginInfo } from '../models/loginInfo';
-import { AuthResponse } from '../shared/types';
+import { TokenPack, LoginInfo } from '../shared/types';
+import { JwtKeeperService } from './jwt-keeper.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +14,8 @@ export class LoginService {
   authenticated: boolean = false;
 
   http = inject(HttpClient);
+
+  jwtKeeper = inject(JwtKeeperService);
 
   authenticate(
     loginInfo: LoginInfo,
@@ -27,16 +29,7 @@ export class LoginService {
       .subscribe({
         next: (res) => {
           this.authenticated = true;
-          const tokens: AuthResponse = JSON.parse(res);
-          console.log(tokens);
-          localStorage.setItem(
-            'accessToken',
-            JSON.stringify(tokens.accessToken)
-          );
-          localStorage.setItem(
-            'refreshToken',
-            JSON.stringify(tokens.refreshToken)
-          );
+          this.jwtKeeper.save(res);
           return callback && callback(res);
         },
         error: (err: HttpErrorResponse) => {
