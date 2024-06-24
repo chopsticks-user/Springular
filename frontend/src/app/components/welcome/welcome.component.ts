@@ -9,7 +9,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { MatIconModule } from '@angular/material/icon';
-import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-welcome',

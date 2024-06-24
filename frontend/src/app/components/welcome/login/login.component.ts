@@ -11,8 +11,8 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { LoginService } from '../../../services/login.service';
-import { LoginInfo } from '../../../shared/types';
+import { AuthService } from '@services/auth.service';
+import { LoginInfo } from '@shared/types';
 import { NgIf } from '@angular/common';
 
 @Component({
@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
 
   loginStatus!: string;
 
-  loginService = inject(LoginService);
+  authService = inject(AuthService);
 
   router = inject(Router);
 
@@ -80,7 +80,7 @@ export class LoginComponent implements OnInit {
       password: this.password?.value,
     };
 
-    this.loginService.authenticate(
+    this.authService.authenticate(
       loginInfo,
       () => this.router.navigateByUrl('/home'), // Todo: replace with a home service
       (errMesg) => (this.loginStatus = errMesg as string)

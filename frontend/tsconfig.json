@@ -4,6 +4,15 @@
   "compileOnSave": false,
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
+    "baseUrl": "./src/app",
+    "paths": {
+      // "*": ["*"],
+      "@components/*": ["components/*"],
+      "@services/*": ["services/*"],
+      "@guards/*": ["guards/*"],
+      "@interceptors/*": ["interceptors/*"],
+      "@shared/*": ["./shared/*"],
+    },
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
