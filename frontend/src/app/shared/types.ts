@@ -17,6 +17,6 @@ export interface Token {
 }
 
 export interface TokenPack {
-  accessToken: Token;
-  refreshToken: Token;
+  accessToken: Token | null;
+  refreshToken: Token | null;
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TokenPack } from '../shared/types';
+import { Token, TokenPack } from '../shared/types';
 
 @Injectable({
   providedIn: 'root',
@@ -16,8 +16,21 @@ export class JwtKeeperService {
 
   load(): TokenPack {
     return {
-      accessToken: JSON.parse(localStorage.getItem('accessToken') as string),
-      refreshToken: JSON.parse(localStorage.getItem('refreshToken') as string),
+      accessToken: this.accessToken,
+      refreshToken: this.refreshToken,
     };
+  }
+
+  clear(): void {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+  }
+
+  get accessToken(): Token | null {
+    return JSON.parse(localStorage.getItem('accessToken') ?? 'null');
+  }
+
+  get refreshToken(): Token | null {
+    return JSON.parse(localStorage.getItem('refreshToken') ?? 'null');
   }
 }
