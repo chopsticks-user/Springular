@@ -12,10 +12,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { SignupInfo } from '@shared/types';
-import { SignupService } from '@services/signup.service';
+import { AuthService } from '@services/auth.service';
 import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
-import { AuthService } from '@services/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -34,8 +33,6 @@ import { AuthService } from '@services/auth.service';
   styleUrl: './signup.component.css',
 })
 export class SignupComponent implements OnInit {
-  signupService = inject(SignupService);
-
   authService = inject(AuthService);
 
   signupStatus!: string;
@@ -124,7 +121,7 @@ export class SignupComponent implements OnInit {
       password: this.password?.value,
     };
 
-    this.signupService.register(
+    this.authService.register(
       signupInfo,
       () => {
         this.authService.authenticate(

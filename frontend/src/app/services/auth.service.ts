@@ -1,7 +1,12 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpContext,
+  HttpErrorResponse,
+} from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { LoginInfo, Token } from '@shared/types';
+import { LoginInfo, SignupInfo, Token } from '@shared/types';
 import { JwtKeeperService } from './jwt-keeper.service';
+import { BYPASS_AUTH_HEADER } from '@interceptors/auth-header.interceptor';
 
 // todo: rename to AuthService
 @Injectable({
@@ -34,6 +39,7 @@ export class AuthService {
     this.http
       .post('http://localhost:8080/api/auth/login', loginInfo, {
         responseType: 'text',
+        context: new HttpContext().set(BYPASS_AUTH_HEADER, true),
       })
       .subscribe({
         next: (res) => {
@@ -45,6 +51,26 @@ export class AuthService {
           return (
             errorCallback && errorCallback(JSON.parse(err.error).description)
           );
+        },
+      });
+  }
+
+  register(
+    signupInfo: SignupInfo,
+    callback?: (res?: string) => void,
+    errorCallback?: (errMesg?: string) => void
+  ) {
+    this.http
+      .post('http://localhost:8080/api/auth/signup', signupInfo, {
+        responseType: 'text',
+      })
+      .subscribe({
+        next: (res) => {
+          return callback && callback(res);
+        },
+        error: (err: HttpErrorResponse) => {
+          console.log(err);
+          errorCallback && errorCallback(JSON.parse(err.error).description);
         },
       });
   }
@@ -61,7 +87,8 @@ export class AuthService {
         'http://localhost:8080/api/auth/refresh',
         { refreshToken: refreshToken.token },
         {
-          responseType: 'text',
+          responseType: 'text', // todo: json
+          context: new HttpContext().set(BYPASS_AUTH_HEADER, true), // todo:
         }
       )
       .subscribe({
