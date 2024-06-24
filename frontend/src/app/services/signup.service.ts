@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { SignupInfo } from '../shared/types';
+import { SignupInfo } from '@shared/types';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({

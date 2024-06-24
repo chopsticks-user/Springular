@@ -1,13 +1,13 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { LoginInfo, Token } from '../shared/types';
+import { LoginInfo, Token } from '@shared/types';
 import { JwtKeeperService } from './jwt-keeper.service';
 
 // todo: rename to AuthService
 @Injectable({
   providedIn: 'root',
 })
-export class LoginService {
+export class AuthService {
   private _authenticated: boolean = false;
 
   private http = inject(HttpClient);

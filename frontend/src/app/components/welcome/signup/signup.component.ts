@@ -11,11 +11,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
-import { SignupInfo } from '../../../shared/types';
-import { SignupService } from '../../../services/signup.service';
+import { SignupInfo } from '@shared/types';
+import { SignupService } from '@services/signup.service';
 import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
-import { LoginService } from '../../../services/login.service';
+import { AuthService } from '@services/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -36,7 +36,7 @@ import { LoginService } from '../../../services/login.service';
 export class SignupComponent implements OnInit {
   signupService = inject(SignupService);
 
-  loginService = inject(LoginService);
+  authService = inject(AuthService);
 
   signupStatus!: string;
 
@@ -127,7 +127,7 @@ export class SignupComponent implements OnInit {
     this.signupService.register(
       signupInfo,
       () => {
-        this.loginService.authenticate(
+        this.authService.authenticate(
           { email: this.email?.value, password: this.password?.value },
           () => this.router.navigateByUrl('/home'), // Todo: replace with a home service
           (errMesg) => (this.signupStatus = errMesg as string)
