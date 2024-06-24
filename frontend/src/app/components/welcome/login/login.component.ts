@@ -12,7 +12,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { LoginService } from '../../../services/login.service';
-import { LoginInfo } from '../../../models/loginInfo';
+import { LoginInfo } from '../../../shared/types';
 import { NgIf } from '@angular/common';
 
 @Component({
