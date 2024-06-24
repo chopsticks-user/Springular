@@ -4,7 +4,7 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { LoginInfo, SignupInfo, Token } from '@shared/types';
+import { LoginInfo, SignupInfo, JwtToken } from '@shared/types';
 import { JwtKeeperService } from './jwt-keeper.service';
 import { BYPASS_AUTH_HEADER } from '@interceptors/auth-header.interceptor';
 
@@ -15,28 +15,32 @@ import { BYPASS_AUTH_HEADER } from '@interceptors/auth-header.interceptor';
 export class AuthService {
   private _authenticated: boolean = false;
 
-  private http = inject(HttpClient);
+  private _http = inject(HttpClient);
 
-  private jwtKeeperService = inject(JwtKeeperService);
+  private _jwtKeeperService = inject(JwtKeeperService);
 
   get authenticated(): boolean {
     return this._authenticated;
   }
 
   get accessToken() {
-    return this.jwtKeeperService.accessToken;
+    return this._jwtKeeperService.accessToken;
   }
 
   get refreshToken() {
-    return this.jwtKeeperService.refreshToken;
+    return this._jwtKeeperService.refreshToken;
+  }
+
+  get tokensValid(): boolean {
+    return this._jwtKeeperService.tokensValid;
   }
 
   authenticate(
     loginInfo: LoginInfo,
-    callback?: (res?: string) => void,
-    errorCallback?: (errMesg?: string) => void
+    onSuccess?: (res?: string) => void,
+    onFailure?: (errMesg?: string) => void
   ) {
-    this.http
+    this._http
       .post('http://localhost:8080/api/auth/login', loginInfo, {
         responseType: 'text',
         context: new HttpContext().set(BYPASS_AUTH_HEADER, true),
@@ -44,45 +48,46 @@ export class AuthService {
       .subscribe({
         next: (res) => {
           this._authenticated = true;
-          this.jwtKeeperService.save(res);
-          return callback && callback(res);
+          this._jwtKeeperService.save(res);
+          return onSuccess && onSuccess(res);
         },
         error: (err: HttpErrorResponse) => {
-          return (
-            errorCallback && errorCallback(JSON.parse(err.error).description)
-          );
+          return onFailure && onFailure(JSON.parse(err.error).description);
         },
       });
   }
 
   register(
     signupInfo: SignupInfo,
-    callback?: (res?: string) => void,
-    errorCallback?: (errMesg?: string) => void
+    onSuccess?: (res?: string) => void,
+    onFailure?: (errMesg?: string) => void
   ) {
-    this.http
+    this._http
       .post('http://localhost:8080/api/auth/signup', signupInfo, {
         responseType: 'text',
       })
       .subscribe({
         next: (res) => {
-          return callback && callback(res);
+          return onSuccess && onSuccess(res);
         },
         error: (err: HttpErrorResponse) => {
           console.log(err);
-          errorCallback && errorCallback(JSON.parse(err.error).description);
+          onFailure && onFailure(JSON.parse(err.error).description);
         },
       });
   }
 
-  refresh(): void {
-    const refreshToken: Token | null = this.jwtKeeperService.refreshToken;
+  refresh(
+    onSuccess?: (res?: string) => void,
+    onFailure?: (errMesg?: string) => void
+  ): void {
+    const refreshToken: JwtToken | null = this._jwtKeeperService.refreshToken;
 
     if (!refreshToken) {
       return;
     }
 
-    this.http
+    this._http
       .post(
         'http://localhost:8080/api/auth/refresh',
         { refreshToken: refreshToken.token },
@@ -94,11 +99,13 @@ export class AuthService {
       .subscribe({
         next: (res) => {
           this._authenticated = true;
-          this.jwtKeeperService.save(res);
+          this._jwtKeeperService.save(res);
+          return onSuccess && onSuccess(res);
         },
-        error: () => {
+        error: (err: HttpErrorResponse) => {
           this._authenticated = false;
-          this.jwtKeeperService.clear();
+          this._jwtKeeperService.clear();
+          return onFailure && onFailure(JSON.parse(err.error).description);
         },
       });
   }

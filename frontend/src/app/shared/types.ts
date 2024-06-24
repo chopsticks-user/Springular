@@ -11,12 +11,12 @@ export interface SignupInfo {
   password: string;
 }
 
-export interface Token {
+export interface JwtToken {
   token: string;
   expiresAt: string;
 }
 
-export interface TokenPack {
-  accessToken: Token | null;
-  refreshToken: Token | null;
+export interface JwtTokenPack {
+  accessToken: JwtToken | null;
+  refreshToken: JwtToken | null;
 }
