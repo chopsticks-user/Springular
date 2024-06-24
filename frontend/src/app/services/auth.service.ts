@@ -18,6 +18,14 @@ export class AuthService {
     return this._authenticated;
   }
 
+  get accessToken() {
+    return this.jwtKeeperService.accessToken;
+  }
+
+  get refreshToken() {
+    return this.jwtKeeperService.refreshToken;
+  }
+
   authenticate(
     loginInfo: LoginInfo,
     callback?: (res?: string) => void,
