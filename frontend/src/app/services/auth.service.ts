@@ -7,6 +7,7 @@ import { Injectable, inject } from '@angular/core';
 import { LoginInfo, SignupInfo, JwtToken } from '@shared/types';
 import { JwtKeeperService } from './jwt-keeper.service';
 import { BYPASS_AUTH_HEADER } from '@interceptors/auth-header.interceptor';
+import { ApiRouteService } from './api-route.service';
 
 // todo: rename to AuthService
 @Injectable({
@@ -18,6 +19,8 @@ export class AuthService {
   private _http = inject(HttpClient);
 
   private _jwtKeeperService = inject(JwtKeeperService);
+
+  private _apiRouteService = inject(ApiRouteService);
 
   get authenticated(): boolean {
     return this._authenticated;
@@ -41,7 +44,7 @@ export class AuthService {
     onFailure?: (errMesg?: string) => void
   ) {
     this._http
-      .post('http://localhost:8080/api/auth/login', loginInfo, {
+      .post(this._apiRouteService.route('/auth/login'), loginInfo, {
         responseType: 'text',
         context: new HttpContext().set(BYPASS_AUTH_HEADER, true),
       })
@@ -63,8 +66,9 @@ export class AuthService {
     onFailure?: (errMesg?: string) => void
   ) {
     this._http
-      .post('http://localhost:8080/api/auth/signup', signupInfo, {
+      .post(this._apiRouteService.route('/auth/signup'), signupInfo, {
         responseType: 'text',
+        context: new HttpContext().set(BYPASS_AUTH_HEADER, true),
       })
       .subscribe({
         next: (res) => {
@@ -89,7 +93,7 @@ export class AuthService {
 
     this._http
       .post(
-        'http://localhost:8080/api/auth/refresh',
+        this._apiRouteService.route('/auth/refresh'),
         { refreshToken: refreshToken.token },
         {
           responseType: 'text', // todo: json

@@ -47,10 +47,9 @@ export class JwtKeeperService {
   }
 
   private tokenValid(token: JwtToken | null): boolean {
-    if (!token) {
-      return false;
-    }
-
-    return new Date(Date.parse(token.expiresAt)) > new Date(Date.now());
+    return (
+      token != null &&
+      new Date(Date.parse(token.expiresAt)) > new Date(Date.now())
+    );
   }
 }
