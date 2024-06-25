@@ -6,6 +6,7 @@ import { PageNotFoundComponent } from '@components/page-not-found/page-not-found
 
 export const routes: Routes = [
   { path: '', component: WelcomeComponent, canActivate: [] },
-  { path: 'home', component: HomeComponent, canActivate: [authorizedGuard] },
+  // { path: 'home', component: HomeComponent, canActivate: [authorizedGuard] },
+  { path: 'home', component: HomeComponent },
   { path: '**', component: PageNotFoundComponent, canActivate: [] },
 ];
