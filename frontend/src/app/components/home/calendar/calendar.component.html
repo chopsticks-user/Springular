@@ -1,4 +1,29 @@
 <div class="container">
-  <div class="main-container"></div>
-  <div class="sidebar-container"></div>
+  <div class="calendar-view">
+    <header class="calendar-header"></header>
+    <main class="calendar-main">
+      <!-- Weekly schedule -->
+      <div class="date-view"></div>
+      <div class="timeline-view">
+        <div class="time-view">
+          @for (hour of hours; track hour){
+          <div class="time">
+            <p class="time-text">{{ hour }}</p>
+          </div>
+          }
+        </div>
+        <div class="grid-view">
+          <app-home-calendar-day></app-home-calendar-day>
+          <app-home-calendar-day></app-home-calendar-day>
+          <app-home-calendar-day></app-home-calendar-day>
+          <app-home-calendar-day></app-home-calendar-day>
+          <app-home-calendar-day></app-home-calendar-day>
+          <app-home-calendar-day></app-home-calendar-day>
+          <app-home-calendar-day></app-home-calendar-day>
+        </div>
+      </div>
+      <!--  -->
+    </main>
+  </div>
+  <div class="sidebar-view"></div>
 </div>

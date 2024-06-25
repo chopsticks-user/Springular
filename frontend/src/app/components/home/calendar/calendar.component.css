@@ -3,17 +3,77 @@
   height: 100%;
 }
 
-.main-container {
+.calendar-view {
   flex: 1;
   margin: 20px;
-  margin-bottom: 0;
+  /* margin-bottom: 0; */
   background-color: var(--background-secondary);
+  display: block;
+  flex-direction: column;
+  overflow-y: auto;
+  /* border-bottom: 1px solid gray; */
+  border-right: 1px solid gray;
 }
 
-.sidebar-container {
-  width: 10%;
+.calendar-header {
+  height: 2rem;
+  border: 1px solid green;
+  padding: 5px;
+}
+
+.calendar-main {
+  flex: 1;
+  padding-top: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.date-view {
+  height: 3rem;
+  width: 100%;
+}
+
+.timeline-view {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+}
+
+.time-view {
+  width: 5%;
+  display: flex;
+  flex-direction: column;
+}
+
+.time {
+  height: 50px; /* variable */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-top: 1px solid gray;
+  border-bottom: 1px hidden;
+}
+
+.time-text {
+  color: var(--foreground-light);
+  font-size: small;
+}
+
+.grid-view {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+}
+
+.grid-view ::ng-deep app-home-calendar-day {
+  flex: 1;
+}
+
+.sidebar-view {
+  width: 20%;
   margin: 20px;
-  margin-bottom: 0;
+  /* margin-bottom: 0; */
   margin-left: 0;
   background-color: var(--background-secondary);
 }
