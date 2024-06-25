@@ -1,0 +1,24 @@
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.container ::ng-deep app-home-sidebar {
+  width: 10%;
+}
+
+.main-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.main-container ::ng-deep app-home-header {
+  height: 5%;
+}
+
+.main-container ::ng-deep app-home-calendar {
+  height: 95%;
+}
