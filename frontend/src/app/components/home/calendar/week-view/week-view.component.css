@@ -80,15 +80,16 @@ p {
 .hour {
   height: 50px; /* variable */
   display: flex;
-  /* justify-content: center;
-  align-items: center; */
   border-top: 1px solid gray;
-  cursor: pointer;
+  padding-right: 5px;
+  padding-left: 5px;
 }
 
-.hour-1st {
-  height: 50%;
+.event {
   width: 100%;
-  border-bottom: 1px dashed gray;
-  align-self: flex-start;
+  height: calc(100px + 1px);
+  margin-top: calc(0px);
+  background-color: green;
+  border-radius: 5px;
+  cursor: pointer;
 }

@@ -22,7 +22,13 @@
     <div class="week-day-view">
       @for (hour of hours; track hour){
       <div class="hour">
-        <div class="hour-1st"></div>
+        @if(scheduled(hour, weekDay)){
+        <div
+          class="event"
+          (click)="clicked(hour, weekDay)"
+          [style]="'height: 50px; margin-top: 0px;'"
+        ></div>
+        }
       </div>
       }
     </div>

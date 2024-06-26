@@ -44,4 +44,18 @@ export class CalendarWeekViewComponent {
     { dayOfWeek: 'Friday', dayOfMonth: 20 },
     { dayOfWeek: 'Saturday', dayOfMonth: 21 },
   ];
+
+  scheduled(
+    hour: string,
+    weekDay: { dayOfWeek: string; dayOfMonth: number }
+  ): boolean {
+    return (
+      (hour === '12:00 PM' && weekDay.dayOfWeek === 'Monday') ||
+      (hour === '3:00 PM' && weekDay.dayOfWeek === 'Sunday')
+    );
+  }
+
+  clicked(hour: string, weekDay: { dayOfWeek: string; dayOfMonth: number }) {
+    console.log(hour, weekDay);
+  }
 }
