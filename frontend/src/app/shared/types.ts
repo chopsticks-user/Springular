@@ -11,6 +11,13 @@ export interface SignupInfo {
   password: string;
 }
 
+export interface UserInfo {
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
+  email: string;
+}
+
 export interface JwtToken {
   token: string;
   expiresAt: string;
@@ -23,9 +30,12 @@ export interface JwtTokenPack {
 
 export interface CalendarEvent {
   id: number;
+  // participants: UserInfo[];
+  title: string;
+  description: string;
+  color: string;
   start: Date;
   durationMinutes: number;
   repeat: 'daily' | 'weekly' | 'monthly' | 'yearly' | 'custom' | 'none';
   repeatEvery?: { value: number; unit: 'day' | 'week' | 'month' | 'year' };
-  color: string;
 }
