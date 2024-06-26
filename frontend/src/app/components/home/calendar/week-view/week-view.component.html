@@ -11,7 +11,7 @@
 </div>
 <div class="timeline-view">
   <div class="time-view">
-    @for (hour of hours; track hour){
+    @for (hour of hourTexts; track hour){
     <div class="time">
       <p class="time-text">{{ hour }}</p>
     </div>
@@ -22,13 +22,11 @@
     <div class="week-day-view">
       @for (hour of hours; track hour){
       <div class="hour">
-        @if(scheduled(hour, weekDay)){
-        <div
-          class="event"
-          (click)="clicked(hour, weekDay)"
-          [style]="'height: 50px; margin-top: 0px;'"
-        ></div>
-        }
+        <app-shared-calendar-event
+          [events]="scheduledEvents(hour, weekDay.dayOfMonth)"
+          [pixelsPerHour]="50"
+          [borderPixelWidth]="1"
+        ></app-shared-calendar-event>
       </div>
       }
     </div>

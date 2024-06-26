@@ -1,39 +1,19 @@
 import { Component } from '@angular/core';
+import { CalendarEvent } from '@shared/types';
+import { CalendarEventComponent } from '@shared/calendar-event/calendar-event.component';
 
 @Component({
   selector: 'app-home-calendar-week-view',
   standalone: true,
-  imports: [],
+  imports: [CalendarEventComponent],
   templateUrl: './week-view.component.html',
   styleUrl: './week-view.component.css',
 })
 export class CalendarWeekViewComponent {
-  hours: string[] = [
-    '12:00 AM',
-    '1:00 AM',
-    '2:00 AM',
-    '3:00 AM',
-    '4:00 AM',
-    '5:00 AM',
-    '6:00 AM',
-    '7:00 AM',
-    '8:00 AM',
-    '9:00 AM',
-    '10:00 AM',
-    '11:00 AM',
-    '12:00 PM',
-    '1:00 PM',
-    '2:00 PM',
-    '3:00 PM',
-    '4:00 PM',
-    '5:00 PM',
-    '6:00 PM',
-    '7:00 PM',
-    '8:00 PM',
-    '9:00 PM',
-    '10:00 PM',
-    '11:00 PM',
-  ];
+  hours: number[] = [...Array(24).keys()];
+  hourTexts: string[] = this.hours.map((hourNumber) =>
+    this.hourTotext(hourNumber)
+  );
 
   weekDays: { dayOfWeek: string; dayOfMonth: number }[] = [
     { dayOfWeek: 'Sunday', dayOfMonth: 15 },
@@ -45,17 +25,54 @@ export class CalendarWeekViewComponent {
     { dayOfWeek: 'Saturday', dayOfMonth: 21 },
   ];
 
-  scheduled(
-    hour: string,
-    weekDay: { dayOfWeek: string; dayOfMonth: number }
-  ): boolean {
-    return (
-      (hour === '12:00 PM' && weekDay.dayOfWeek === 'Monday') ||
-      (hour === '3:00 PM' && weekDay.dayOfWeek === 'Sunday')
-    );
+  // todo: events should be sorted
+  events: CalendarEvent[] = [
+    {
+      id: 0,
+      start: new Date(2024, 6, 15, 6, 30),
+      durationMinutes: 30,
+      repeat: 'none',
+      color: 'green',
+    },
+    {
+      id: 1,
+      start: new Date(2024, 6, 18, 15, 45),
+      durationMinutes: 60,
+      repeat: 'none',
+      color: 'yellow',
+    },
+    {
+      id: 2,
+      start: new Date(2024, 6, 18, 15, 15),
+      durationMinutes: 15,
+      repeat: 'none',
+      color: 'red',
+    },
+  ];
+
+  scheduledEvents(hour: number, dayOfMonth: number): CalendarEvent[] {
+    return this.events
+      .filter(
+        (event) =>
+          event.start.getDate() === dayOfMonth &&
+          event.start.getHours() === hour
+      )
+      .sort((a, b) => a.start.valueOf() - b.start.valueOf());
   }
 
   clicked(hour: string, weekDay: { dayOfWeek: string; dayOfMonth: number }) {
     console.log(hour, weekDay);
+  }
+
+  hourTotext(hour: number): string {
+    if (hour === 0) {
+      return '12:00 AM';
+    }
+
+    if (hour === 12) {
+      return '12:00 PM';
+    }
+
+    return hour < 12 ? `${hour}:00 AM` : `${hour - 12}:00 PM`;
   }
 }

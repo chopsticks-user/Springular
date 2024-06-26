@@ -81,15 +81,15 @@ p {
   height: 50px; /* variable */
   display: flex;
   border-top: 1px solid gray;
-  padding-right: 5px;
-  padding-left: 5px;
+  padding-right: 10px;
+  /* padding-left: 5px; */
 }
 
-.event {
+/* .event {
   width: 100%;
   height: calc(100px + 1px);
   margin-top: calc(0px);
   background-color: green;
   border-radius: 5px;
   cursor: pointer;
-}
+} */

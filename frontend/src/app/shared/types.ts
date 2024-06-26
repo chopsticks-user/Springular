@@ -21,10 +21,11 @@ export interface JwtTokenPack {
   refreshToken: JwtToken | null;
 }
 
-export interface EventInfo {
+export interface CalendarEvent {
+  id: number;
   start: Date;
   durationMinutes: number;
   repeat: 'daily' | 'weekly' | 'monthly' | 'yearly' | 'custom' | 'none';
   repeatEvery?: { value: number; unit: 'day' | 'week' | 'month' | 'year' };
-  allDay: boolean;
+  color: string;
 }
