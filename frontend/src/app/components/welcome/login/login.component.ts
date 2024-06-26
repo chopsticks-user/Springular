@@ -14,6 +14,7 @@ import {
 import { AuthService } from '@services/auth.service';
 import { LoginInfo } from '@shared/types';
 import { NgIf } from '@angular/common';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -39,6 +40,8 @@ export class LoginComponent implements OnInit {
 
   router = inject(Router);
 
+  location = inject(Location);
+
   login!: FormGroup;
 
   ngOnInit(): void {
@@ -49,6 +52,7 @@ export class LoginComponent implements OnInit {
         Validators.minLength(3),
       ]),
     });
+    this.location.go('/login');
   }
 
   get email() {

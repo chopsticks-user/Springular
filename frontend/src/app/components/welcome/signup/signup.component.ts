@@ -14,7 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { SignupInfo } from '@shared/types';
 import { AuthService } from '@services/auth.service';
 import { Router } from '@angular/router';
-import { NgIf } from '@angular/common';
+import { Location, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-signup',
@@ -39,6 +39,8 @@ export class SignupComponent implements OnInit {
 
   router = inject(Router);
 
+  location = inject(Location);
+
   hide = true;
 
   signup!: FormGroup;
@@ -54,6 +56,7 @@ export class SignupComponent implements OnInit {
         Validators.minLength(3),
       ]),
     });
+    this.location.go('/signup');
   }
 
   // TODO: verify input validity
