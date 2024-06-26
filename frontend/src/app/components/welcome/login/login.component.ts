@@ -15,6 +15,7 @@ import { AuthService } from '@services/auth.service';
 import { LoginInfo } from '@shared/types';
 import { NgIf } from '@angular/common';
 import { Location } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -84,10 +85,10 @@ export class LoginComponent implements OnInit {
       password: this.password?.value,
     };
 
-    this.authService.authenticate(
-      loginInfo,
-      () => this.router.navigateByUrl('/home'), // Todo: replace with a home service
-      (errMesg) => (this.loginStatus = errMesg as string)
-    );
+    this.authService.authenticate(loginInfo).subscribe({
+      next: () => this.router.navigateByUrl('/home'),
+      error: (error: HttpErrorResponse) =>
+        (this.loginStatus = JSON.parse(error.error).description as string),
+    });
   }
 }

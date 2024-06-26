@@ -15,6 +15,7 @@ import { SignupInfo } from '@shared/types';
 import { AuthService } from '@services/auth.service';
 import { Router } from '@angular/router';
 import { Location, NgIf } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-signup',
@@ -124,16 +125,22 @@ export class SignupComponent implements OnInit {
       password: this.password?.value,
     };
 
-    this.authService.register(
-      signupInfo,
-      () => {
-        this.authService.authenticate(
-          { email: this.email?.value, password: this.password?.value },
-          () => this.router.navigateByUrl('/home'), // Todo: replace with a home service
-          (errMesg) => (this.signupStatus = errMesg as string)
-        );
+    this.authService.register(signupInfo).subscribe({
+      next: () => {
+        this.authService
+          .authenticate({
+            email: signupInfo.email,
+            password: signupInfo.password,
+          })
+          .subscribe({
+            next: () => this.router.navigateByUrl('/home'),
+            error: (error: HttpErrorResponse) =>
+              (this.signupStatus = JSON.parse(error.error)
+                .description as string),
+          });
       },
-      (errMesg) => (this.signupStatus = errMesg as string)
-    );
+      error: (error: HttpErrorResponse) =>
+        (this.signupStatus = JSON.parse(error.error).description as string),
+    });
   }
 }
