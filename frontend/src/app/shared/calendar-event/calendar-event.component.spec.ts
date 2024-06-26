@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DayComponent } from './day.component';
+import { CalendarEventComponent } from './calendar-event.component';
 
-describe('DayComponent', () => {
-  let component: DayComponent;
-  let fixture: ComponentFixture<DayComponent>;
+describe('CalendarEventComponent', () => {
+  let component: CalendarEventComponent;
+  let fixture: ComponentFixture<CalendarEventComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DayComponent]
+      imports: [CalendarEventComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DayComponent);
+    fixture = TestBed.createComponent(CalendarEventComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

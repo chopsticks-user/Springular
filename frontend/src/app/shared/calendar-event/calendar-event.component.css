@@ -1,0 +1,11 @@
+:host {
+  width: 100%;
+  position: relative;
+}
+
+.event {
+  width: 100%;
+  background-color: green;
+  border-radius: 5px;
+  cursor: pointer;
+}
