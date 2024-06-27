@@ -12,7 +12,7 @@ export class CalendarEventComponent {
   @Input({ required: true }) events!: CalendarEvent[];
   @Input({ required: true }) pixelsPerHour!: number;
   @Input({ required: true }) borderPixelWidth!: number;
-  // @Input({ required: true }) onClick!: (event: any) => void;
+  @Input({ required: true }) onClick!: (event: any) => void;
 
   getStyle(event: CalendarEvent | undefined) {
     if (!event) {
@@ -24,8 +24,9 @@ export class CalendarEventComponent {
     let pixelMargin: number =
       (event.start.getMinutes() / 60) * this.pixelsPerHour;
 
-    console.log(pixelMargin);
-
-    return `background-color: ${event.color}; height: ${pixelHeight}px; position: absolute; top: ${pixelMargin}px;`;
+    return `background-color: ${event.color};
+      height: ${pixelHeight}px;
+      position: absolute;
+      top: ${pixelMargin}px`;
   }
 }

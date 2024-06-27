@@ -82,6 +82,7 @@ p {
   display: flex;
   border-top: 1px solid gray;
   padding-right: 10px;
+  /* overflow-y: visible; */
   /* padding-left: 5px; */
 }
 

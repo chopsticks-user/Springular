@@ -29,6 +29,8 @@ export class CalendarWeekViewComponent {
   events: CalendarEvent[] = [
     {
       id: 0,
+      title: 'Event',
+      description: '',
       start: new Date(2024, 6, 15, 6, 30),
       durationMinutes: 30,
       repeat: 'none',
@@ -36,6 +38,8 @@ export class CalendarWeekViewComponent {
     },
     {
       id: 1,
+      title: 'Event',
+      description: '',
       start: new Date(2024, 6, 18, 15, 45),
       durationMinutes: 60,
       repeat: 'none',
@@ -43,10 +47,30 @@ export class CalendarWeekViewComponent {
     },
     {
       id: 2,
+      title: 'Event',
+      description: '',
       start: new Date(2024, 6, 18, 15, 15),
       durationMinutes: 15,
       repeat: 'none',
       color: 'red',
+    },
+    {
+      id: 3,
+      title: 'Event',
+      description: '',
+      start: new Date(2024, 6, 18, 15),
+      durationMinutes: 5,
+      repeat: 'none',
+      color: 'blue',
+    },
+    {
+      id: 4,
+      title: 'Event',
+      description: '',
+      start: new Date(2024, 6, 18, 15, 5),
+      durationMinutes: 10,
+      repeat: 'none',
+      color: 'orange',
     },
   ];
 
@@ -62,6 +86,10 @@ export class CalendarWeekViewComponent {
 
   clicked(hour: string, weekDay: { dayOfWeek: string; dayOfMonth: number }) {
     console.log(hour, weekDay);
+  }
+
+  onClick(event: CalendarEvent) {
+    console.log(event);
   }
 
   hourTotext(hour: number): string {

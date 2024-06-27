@@ -8,6 +8,7 @@ import { LoginInfo, SignupInfo, JwtToken } from '@shared/types';
 import { JwtKeeperService } from './jwt-keeper.service';
 import { BYPASS_AUTH_HEADER } from '@interceptors/auth-header.interceptor';
 import { ApiRouteService } from './api-route.service';
+import { map, tap } from 'rxjs';
 
 // todo: rename to AuthService
 @Injectable({
@@ -38,47 +39,29 @@ export class AuthService {
     return this._jwtKeeperService.tokensValid;
   }
 
-  authenticate(
-    loginInfo: LoginInfo,
-    onSuccess?: (res?: string) => void,
-    onFailure?: (errMesg?: string) => void
-  ) {
-    this._http
+  authenticate(loginInfo: LoginInfo) {
+    return this._http
       .post(this._apiRouteService.route('/auth/login'), loginInfo, {
         responseType: 'text',
         context: new HttpContext().set(BYPASS_AUTH_HEADER, true),
       })
-      .subscribe({
-        next: (res) => {
+      .pipe(
+        tap((response) => {
           this._authenticated = true;
-          this._jwtKeeperService.save(res);
-          return onSuccess && onSuccess(res);
-        },
-        error: (err: HttpErrorResponse) => {
-          return onFailure && onFailure(JSON.parse(err.error).description);
-        },
-      });
+          this._jwtKeeperService.save(response);
+        })
+      );
   }
 
-  register(
-    signupInfo: SignupInfo,
-    onSuccess?: (res?: string) => void,
-    onFailure?: (errMesg?: string) => void
-  ) {
-    this._http
-      .post(this._apiRouteService.route('/auth/signup'), signupInfo, {
+  register(signupInfo: SignupInfo) {
+    return this._http.post(
+      this._apiRouteService.route('/auth/signup'),
+      signupInfo,
+      {
         responseType: 'text',
         context: new HttpContext().set(BYPASS_AUTH_HEADER, true),
-      })
-      .subscribe({
-        next: (res) => {
-          return onSuccess && onSuccess(res);
-        },
-        error: (err: HttpErrorResponse) => {
-          console.log(err);
-          onFailure && onFailure(JSON.parse(err.error).description);
-        },
-      });
+      }
+    );
   }
 
   refresh(
