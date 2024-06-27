@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.frost.springular.dto.LoginRequestDTO;
+import com.frost.springular.config.SecurityConfig;
 import com.frost.springular.dto.JwtAccessTokenDTO;
 import com.frost.springular.dto.JwtRefreshTokenDTO;
 import com.frost.springular.dto.JwtRefreshTokenRequestDto;
@@ -22,7 +23,7 @@ import com.frost.springular.service.JwtAccessTokenService;
 import com.frost.springular.service.JwtRefreshTokenService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+// @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/auth")
 public class AuthController {
     private final JwtAccessTokenService jwtAccessTokenService;

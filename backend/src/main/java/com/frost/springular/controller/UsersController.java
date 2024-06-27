@@ -14,7 +14,7 @@ import com.frost.springular.entity.UserEntity;
 import com.frost.springular.service.UserService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+// @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/users")
 public class UsersController {
     private final UserService userService;
