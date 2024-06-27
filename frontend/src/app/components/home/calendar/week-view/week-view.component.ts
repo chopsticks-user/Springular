@@ -28,7 +28,7 @@ export class CalendarWeekViewComponent {
   // todo: events should be sorted
   events: CalendarEvent[] = [
     {
-      id: 0,
+      id: '0',
       title: 'Event',
       description: '',
       start: new Date(2024, 6, 15, 6, 30),
@@ -37,7 +37,7 @@ export class CalendarWeekViewComponent {
       color: 'green',
     },
     {
-      id: 1,
+      id: '1',
       title: 'Event',
       description: '',
       start: new Date(2024, 6, 18, 15, 45),
@@ -46,7 +46,7 @@ export class CalendarWeekViewComponent {
       color: 'yellow',
     },
     {
-      id: 2,
+      id: '2',
       title: 'Event',
       description: '',
       start: new Date(2024, 6, 18, 15, 15),
@@ -55,7 +55,7 @@ export class CalendarWeekViewComponent {
       color: 'red',
     },
     {
-      id: 3,
+      id: '3',
       title: 'Event',
       description: '',
       start: new Date(2024, 6, 18, 15),
@@ -64,7 +64,7 @@ export class CalendarWeekViewComponent {
       color: 'blue',
     },
     {
-      id: 4,
+      id: '4',
       title: 'Event',
       description: '',
       start: new Date(2024, 6, 18, 15, 5),

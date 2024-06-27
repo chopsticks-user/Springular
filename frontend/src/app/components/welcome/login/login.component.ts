@@ -33,22 +33,23 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class LoginComponent implements OnInit {
   public hidePassword = true;
   public loginStatus: string = '';
-  public loginFormGroup!: FormGroup;
+  public loginFormGroup: FormGroup = new FormGroup({
+    email: new FormControl('', [Validators.email, Validators.required]),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3),
+    ]),
+  });
 
   private _authService = inject(AuthService);
   private _router = inject(Router);
   private _location = inject(Location);
 
-  public ngOnInit(): void {
-    this.loginFormGroup = new FormGroup({
-      email: new FormControl('', [Validators.email, Validators.required]),
-      password: new FormControl('', [
-        Validators.required,
-        Validators.minLength(3),
-      ]),
-    });
+  public constructor() {
     this._location.go('/login');
   }
+
+  public ngOnInit(): void {}
 
   public get email() {
     return this.loginFormGroup.get('email');

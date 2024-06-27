@@ -1,7 +1,6 @@
 package com.frost.springular.entity;
 
 import java.time.Instant;
-import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,8 +23,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class JwtRefreshTokenEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(nullable = false, updatable = false, unique = true)
+    private String id;
 
     @Column(nullable = true)
     private String token;
@@ -34,6 +34,6 @@ public class JwtRefreshTokenEntity {
     private Instant expirationDate;
 
     @OneToOne
-    @JoinColumn(name = "user_email", referencedColumnName = "email", nullable = false, unique = true)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, unique = true)
     private UserEntity userEntity;
 }

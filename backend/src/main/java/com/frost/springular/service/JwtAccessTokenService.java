@@ -42,7 +42,6 @@ public class JwtAccessTokenService {
 
     public JwtAccessTokenDTO generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
         Date expirationDate = new Date(System.currentTimeMillis() + jwtExpiration);
-        System.out.println(expirationDate);
 
         return new JwtAccessTokenDTO(
                 Jwts.builder()
