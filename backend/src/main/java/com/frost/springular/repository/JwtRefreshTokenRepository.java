@@ -11,7 +11,8 @@ import com.frost.springular.entity.JwtRefreshTokenEntity;
 import com.frost.springular.entity.UserEntity;
 
 @Repository
-public interface JwtRefreshTokenRepository extends CrudRepository<JwtRefreshTokenEntity, Integer> {
+public interface JwtRefreshTokenRepository
+        extends CrudRepository<JwtRefreshTokenEntity, String> {
     Optional<JwtRefreshTokenEntity> findByToken(String token);
 
     Optional<JwtRefreshTokenEntity> findByUserEntity(UserEntity userEntity);

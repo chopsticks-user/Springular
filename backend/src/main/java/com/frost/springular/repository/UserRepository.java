@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.frost.springular.entity.UserEntity;
 
 @Repository
-public interface UserRepository extends CrudRepository<UserEntity, Integer> {
+public interface UserRepository extends CrudRepository<UserEntity, String> {
     Optional<UserEntity> findByEmail(String email);
 }

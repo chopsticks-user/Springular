@@ -31,12 +31,14 @@ public class AuthService {
             throw new DuplicatedEmailException();
         }
 
-        return userRepository.save(new UserEntity()
-                .setFirstname(signupDTO.firstName())
-                .setLastname(signupDTO.lastName())
-                .setDateOfBirth(signupDTO.dateOfBirth())
-                .setEmail(signupDTO.email())
-                .setPassword(passwordEncoder.encode(signupDTO.password())));
+        return userRepository.save(
+                UserEntity.builder()
+                        .firstName(signupDTO.firstName())
+                        .lastName(signupDTO.lastName())
+                        .dateOfBirth(signupDTO.dateOfBirth())
+                        .email(signupDTO.email())
+                        .password(passwordEncoder.encode(signupDTO.password()))
+                        .build());
     }
 
     public UserEntity authenticate(LoginRequestDTO loginDTO) {

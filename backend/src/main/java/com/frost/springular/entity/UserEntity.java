@@ -9,14 +9,22 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Table(name = "users")
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public final class UserEntity implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(nullable = false, updatable = false, unique = true)
+    private String id;
 
     @Column(nullable = false)
     private String firstName;
@@ -44,7 +52,7 @@ public final class UserEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return id;
     }
 
     @Override
@@ -70,30 +78,5 @@ public final class UserEntity implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public UserEntity setFirstname(String firstName) {
-        this.firstName = firstName;
-        return this;
-    }
-
-    public UserEntity setLastname(String lastName) {
-        this.lastName = lastName;
-        return this;
-    }
-
-    public UserEntity setDateOfBirth(String dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-        return this;
-    }
-
-    public UserEntity setEmail(String email) {
-        this.email = email;
-        return this;
-    }
-
-    public UserEntity setPassword(String password) {
-        this.password = password;
-        return this;
     }
 }
