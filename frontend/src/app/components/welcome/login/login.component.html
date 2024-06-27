@@ -1,5 +1,5 @@
 <div class="container">
-  <form [formGroup]="login" (submit)="loginHandler()">
+  <form [formGroup]="loginFormGroup" (submit)="loginHandler()">
     <p>
       <mat-form-field appearance="outline">
         <mat-label>Email</mat-label>
@@ -10,11 +10,13 @@
           required
         />
         <mat-icon matSuffix>mail</mat-icon>
-        <mat-hint *ngIf="emailInvalid" style="color: var(--text-color)">
+        @if(emailInvalid){
+        <mat-hint style="color: var(--text-color)">
           {{
             email?.hasError("required") ? "Email is required" : "Invalid email"
           }}
         </mat-hint>
+        }
       </mat-form-field>
     </p>
     <p>
@@ -30,21 +32,20 @@
         <mat-icon matSuffix (click)="hidePassword = !hidePassword">
           {{ hidePassword ? "visibility_off" : "visibility" }}
         </mat-icon>
-        <mat-hint *ngIf="passwordInvalid" style="color: var(--text-color)">
+        @if(passwordInvalid){
+        <mat-hint style="color: var(--text-color)">
           {{
             password?.hasError("required")
               ? "Password is required"
               : "Insufficient password length"
           }}
         </mat-hint>
+        }
       </mat-form-field>
     </p>
     <div class="submit-container">
-      <p
-        *ngIf="loginStatus && loginStatus.length > 0"
-        style="color: var(--text-color); font-size: small"
-      >
-        {{ loginStatus }}
+      <p style="color: var(--text-color); font-size: small">
+        {{ loginStatus || "" }}
       </p>
       <button mat-flat-button type="submit">Sign In</button>
     </div>

@@ -9,12 +9,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { SignupInfo } from '@shared/types';
 import { AuthService } from '@services/auth.service';
 import { Router } from '@angular/router';
-import { Location, NgIf } from '@angular/common';
+import { Location } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -27,93 +26,89 @@ import { HttpErrorResponse } from '@angular/common/http';
     ReactiveFormsModule,
     MatDatepickerModule,
     MatButtonModule,
-    NgIf,
   ],
-  providers: [provideNativeDateAdapter()],
+  providers: [],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css',
 })
 export class SignupComponent implements OnInit {
-  authService = inject(AuthService);
+  public hidePassword = true;
+  public signupStatus: string = '';
+  public signupFormGroup: FormGroup = new FormGroup({
+    firstName: new FormControl('', [Validators.required]),
+    lastName: new FormControl('', [Validators.required]),
+    dateOfBirth: new FormControl('', [Validators.required]), // TODO: custom validator
+    email: new FormControl('', [Validators.email, Validators.required]),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3),
+    ]),
+  });
 
-  signupStatus!: string;
+  private _authService = inject(AuthService);
+  private _router = inject(Router);
+  private _location = inject(Location);
 
-  router = inject(Router);
-
-  location = inject(Location);
-
-  hide = true;
-
-  signup!: FormGroup;
-
-  ngOnInit(): void {
-    this.signup = new FormGroup({
-      firstName: new FormControl('', [Validators.required]),
-      lastName: new FormControl('', [Validators.required]),
-      dateOfBirth: new FormControl('', [Validators.required]), // TODO: custom validator
-      email: new FormControl('', [Validators.email, Validators.required]),
-      password: new FormControl('', [
-        Validators.required,
-        Validators.minLength(3),
-      ]),
-    });
-    this.location.go('/signup');
+  constructor() {
+    this._location.go('/signup');
   }
+
+  public ngOnInit(): void {}
 
   // TODO: verify input validity
-  get firstName() {
-    return this.signup.get('firstName');
+  public get firstName() {
+    return this.signupFormGroup.get('firstName');
   }
 
-  get firstNameInvalid() {
+  public get firstNameInvalid() {
     return (
       this.firstName?.invalid &&
       (this.firstName?.dirty || this.firstName?.touched)
     );
   }
 
-  get lastName() {
-    return this.signup.get('lastName');
+  public get lastName() {
+    return this.signupFormGroup.get('lastName');
   }
 
-  get lastNameInvalid() {
+  public get lastNameInvalid() {
     return (
       this.lastName?.invalid && (this.lastName?.dirty || this.lastName?.touched)
     );
   }
 
-  get dateOfBirth() {
-    return this.signup.get('dateOfBirth');
+  public get dateOfBirth() {
+    return this.signupFormGroup.get('dateOfBirth');
   }
 
-  get dateOfBirthInvalid() {
+  public get dateOfBirthInvalid() {
     return (
       this.dateOfBirth?.invalid &&
       (this.dateOfBirth?.dirty || this.dateOfBirth?.touched)
     );
   }
 
-  get email() {
-    return this.signup.get('email');
+  public get email() {
+    return this.signupFormGroup.get('email');
   }
 
-  get emailInvalid() {
+  public get emailInvalid() {
     return this.email?.invalid && (this.email?.dirty || this.email?.touched);
   }
 
-  get password() {
-    return this.signup.get('password');
+  public get password() {
+    return this.signupFormGroup.get('password');
   }
 
-  get passwordInvalid() {
+  public get passwordInvalid() {
     return (
       this.password?.invalid && (this.password?.dirty || this.password?.touched)
     );
   }
 
-  signupHandler() {
-    if (this.signup.invalid) {
-      this.signup.markAllAsTouched();
+  public signupHandler() {
+    if (this.signupFormGroup.invalid) {
+      this.signupFormGroup.markAllAsTouched();
       return;
     }
 
@@ -125,15 +120,15 @@ export class SignupComponent implements OnInit {
       password: this.password?.value,
     };
 
-    this.authService.register(signupInfo).subscribe({
+    this._authService.register(signupInfo).subscribe({
       next: () => {
-        this.authService
+        this._authService
           .authenticate({
             email: signupInfo.email,
             password: signupInfo.password,
           })
           .subscribe({
-            next: () => this.router.navigateByUrl('/home'),
+            next: () => this._router.navigateByUrl('/home'),
             error: (error: HttpErrorResponse) =>
               (this.signupStatus = JSON.parse(error.error)
                 .description as string),
