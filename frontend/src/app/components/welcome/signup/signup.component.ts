@@ -8,7 +8,6 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonModule } from '@angular/material/button';
 import { SignupInfo } from '@shared/types';
 import { AuthService } from '@services/auth.service';
@@ -24,7 +23,6 @@ import { HttpErrorResponse } from '@angular/common/http';
     MatInputModule,
     MatIconModule,
     ReactiveFormsModule,
-    MatDatepickerModule,
     MatButtonModule,
   ],
   providers: [],
@@ -49,7 +47,7 @@ export class SignupComponent implements OnInit {
   private _router = inject(Router);
   private _location = inject(Location);
 
-  constructor() {
+  public constructor() {
     this._location.go('/signup');
   }
 
