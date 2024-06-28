@@ -4,7 +4,7 @@ import {
   HttpErrorResponse,
   HttpResponse,
 } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { Injectable, OnInit, inject } from '@angular/core';
 import { LoginInfo, SignupInfo, JwtToken, JwtTokenPack } from '@shared/types';
 import { JwtKeeperService } from './jwt-keeper.service';
 import { BYPASS_AUTH_HEADER } from '@interceptors/auth-header.interceptor';
@@ -15,14 +15,15 @@ import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
+export class AuthService implements OnInit {
   private _authenticated$ = new BehaviorSubject<boolean>(false);
-
   private _http = inject(HttpClient);
-
   private _jwtKeeperService = inject(JwtKeeperService);
-
   private _apiRouteService = inject(ApiRouteService);
+
+  ngOnInit(): void {
+    // this._authenticated$
+  }
 
   get authenticated$(): Observable<boolean> {
     return this._authenticated$.asObservable();

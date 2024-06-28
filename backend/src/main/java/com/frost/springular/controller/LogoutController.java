@@ -14,7 +14,7 @@ import com.frost.springular.service.JwtRefreshTokenService;
 
 // Todo: /logout
 @RestController
-// @CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/logout")
 public class LogoutController {
     private final JwtAccessTokenService jwtAccessTokenService;

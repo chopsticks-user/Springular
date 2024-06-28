@@ -82,8 +82,9 @@ export class LoginComponent implements OnInit {
 
     this._authService.authenticate(loginInfo).subscribe({
       next: () => this._router.navigateByUrl('/home'),
-      error: (error: HttpErrorResponse) =>
-        (this.loginStatus = JSON.parse(error.error).description as string),
+      error: (res: HttpErrorResponse) =>
+        // (this.loginStatus = JSON.parse(error.error).description as string),
+        (this.loginStatus = res.error.description),
     });
   }
 }
