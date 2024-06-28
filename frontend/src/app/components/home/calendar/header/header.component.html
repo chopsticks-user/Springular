@@ -1,8 +1,8 @@
 <div class="calendar-header-left">
   <div
     class="calendar-header-left-today"
-    (mouseenter)="onTodayHovered()"
-    (click)="onTodayClicked()"
+    (mouseenter)="todayButtonHovered.emit()"
+    (click)="todayButtonClicked.emit()"
   >
     <p style="color: var(--foreground-light); font-size: small">Today</p>
   </div>
@@ -17,7 +17,7 @@
   <mat-icon
     style="color: var(--foreground-light); cursor: pointer"
     matSuffix
-    (click)="prevButtonHandler()"
+    (click)="prevButtonClicked.emit()"
     >arrow_back_ios</mat-icon
   >
   <p style="color: white">
@@ -30,7 +30,7 @@
   <mat-icon
     style="color: var(--foreground-light); cursor: pointer"
     matSuffix
-    (click)="nextButtonHandler()"
+    (click)="nextButtonClicked.emit()"
     >arrow_forward_ios</mat-icon
   >
 </div>

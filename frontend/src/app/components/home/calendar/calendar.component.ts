@@ -94,10 +94,20 @@ export class CalendarComponent {
   public get today(): string {
     return this.$today.value.toLocaleString(DateTime.DATETIME_MED);
   }
-  public onTodayHovered = () => this.$today.next(DateTime.local());
-  public onTodayClicked = () => this.$currentTime.next(DateTime.local());
-  public nextButtonHandler = () =>
+
+  public onTodayButtonHovered() {
+    this.$today.next(DateTime.local());
+  }
+
+  public onTodayButtonClicked() {
+    this.$currentTime.next(DateTime.local());
+  }
+
+  public onNextButtonClicked() {
     this.$currentTime.next(this.$currentTime.value.plus({ days: 7 }));
-  public prevButtonHandler = () =>
+  }
+
+  public onPrevButtonClicked() {
     this.$currentTime.next(this.$currentTime.value.minus({ days: 7 }));
+  }
 }

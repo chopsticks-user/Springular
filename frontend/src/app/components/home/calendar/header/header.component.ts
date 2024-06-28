@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { CalendarWeekViewComponent } from '../week-view/week-view.component';
 import { Observable } from 'rxjs';
@@ -14,11 +14,12 @@ import { DateTime } from 'luxon';
   styleUrl: './header.component.css',
 })
 export class CalendarHeaderComponent {
+  @Input({ required: true }) public today!: string;
   @Input({ required: true }) public firstWeekday!: DateTime | null;
   @Input({ required: true }) public lastWeekday!: DateTime | null;
-  @Input({ required: true }) public today!: string;
-  @Input({ required: true }) public onTodayHovered!: () => void;
-  @Input({ required: true }) public onTodayClicked!: () => void;
-  @Input({ required: true }) public nextButtonHandler!: () => void;
-  @Input({ required: true }) public prevButtonHandler!: () => void;
+
+  @Output() public todayButtonHovered = new EventEmitter<void>();
+  @Output() public todayButtonClicked = new EventEmitter<void>();
+  @Output() public nextButtonClicked = new EventEmitter<void>();
+  @Output() public prevButtonClicked = new EventEmitter<void>();
 }

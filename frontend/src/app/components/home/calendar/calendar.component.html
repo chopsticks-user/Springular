@@ -2,13 +2,13 @@
   <div class="calendar-view">
     <header class="calendar-header">
       <app-home-calendar-header
+        [today]="today"
         [firstWeekday]="currentFirstDayOfWeek$ | async"
         [lastWeekday]="currentLastDayOfWeek$ | async"
-        [today]="today"
-        [onTodayHovered]="onTodayHovered"
-        [onTodayClicked]="onTodayClicked"
-        [nextButtonHandler]="nextButtonHandler"
-        [prevButtonHandler]="prevButtonHandler"
+        (todayButtonHovered)="onTodayButtonHovered()"
+        (todayButtonClicked)="onTodayButtonClicked()"
+        (nextButtonClicked)="onNextButtonClicked()"
+        (prevButtonClicked)="onPrevButtonClicked()"
       />
     </header>
     <main class="calendar-main">
