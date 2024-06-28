@@ -41,10 +41,10 @@ public class AuthService {
                         .build());
     }
 
-    public UserEntity authenticate(LoginRequestDTO loginDTO) {
+    public UserEntity authenticate(LoginRequestDTO loginDto) {
         // TODO: implement business logic for dto objects
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginDTO.email(), loginDTO.password()));
-        return userRepository.findByEmail(loginDTO.email()).orElseThrow();
+                new UsernamePasswordAuthenticationToken(loginDto.email(), loginDto.password()));
+        return userRepository.findByEmail(loginDto.email()).orElseThrow();
     }
 }

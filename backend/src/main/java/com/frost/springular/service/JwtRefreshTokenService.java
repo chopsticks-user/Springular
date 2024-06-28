@@ -26,10 +26,10 @@ public class JwtRefreshTokenService {
     @Value("${security.jwt.refresh.expiration-time}")
     private long expirationTime;
 
-    public JwtRefreshTokenEntity generateToken(String userId) {
+    public JwtRefreshTokenEntity generateToken(String userEmail) {
         Instant expiresAt = Instant.now().plusMillis(expirationTime);
 
-        JwtRefreshTokenEntity existingToken = findByUserId(userId)
+        JwtRefreshTokenEntity existingToken = findByUserEmail(userEmail)
                 .orElse(null);
 
         if (isTokenValid(existingToken)) {
@@ -39,7 +39,7 @@ public class JwtRefreshTokenService {
         return jwtRefreshTokenRepository.save(
                 JwtRefreshTokenEntity.builder()
                         .userEntity(userRepository
-                                .findById(userId)
+                                .findByEmail(userEmail)
                                 .orElseThrow())
                         .token(UUID.randomUUID().toString())
                         .expirationDate(expiresAt)

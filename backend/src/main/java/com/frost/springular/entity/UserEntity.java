@@ -52,7 +52,7 @@ public final class UserEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return id;
+        return email;
     }
 
     @Override
