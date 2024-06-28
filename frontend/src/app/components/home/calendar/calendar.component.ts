@@ -1,5 +1,7 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 import { CalendarWeekViewComponent } from './week-view/week-view.component';
+import { CalendarHeaderComponent } from './header/header.component';
+import { CalendarSidebarComponent } from './sidebar/sidebar.component';
 import { DateTime, Info } from 'luxon';
 import { BehaviorSubject, Observable, map, of } from 'rxjs';
 import { CalendarEvent, CalendarWeekDay } from '@shared/types';
@@ -9,7 +11,13 @@ import { MatIcon } from '@angular/material/icon';
 @Component({
   selector: 'app-home-calendar',
   standalone: true,
-  imports: [CalendarWeekViewComponent, AsyncPipe, MatIcon],
+  imports: [
+    CalendarWeekViewComponent,
+    AsyncPipe,
+    MatIcon,
+    CalendarHeaderComponent,
+    CalendarSidebarComponent,
+  ],
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.css',
 })
@@ -83,23 +91,13 @@ export class CalendarComponent {
     ]
   );
 
-  get today() {
+  public get today(): string {
     return this.$today.value.toLocaleString(DateTime.DATETIME_MED);
   }
-
-  onTodayHovered() {
-    this.$today.next(DateTime.local());
-  }
-
-  resetCurrentTime() {
-    this.$currentTime.next(DateTime.local());
-  }
-
-  nextHandler() {
+  public onTodayHovered = () => this.$today.next(DateTime.local());
+  public onTodayClicked = () => this.$currentTime.next(DateTime.local());
+  public nextButtonHandler = () =>
     this.$currentTime.next(this.$currentTime.value.plus({ days: 7 }));
-  }
-
-  prevHandler() {
+  public prevButtonHandler = () =>
     this.$currentTime.next(this.$currentTime.value.minus({ days: 7 }));
-  }
 }
