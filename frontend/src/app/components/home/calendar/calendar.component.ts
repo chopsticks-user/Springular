@@ -1,7 +1,9 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 import { CalendarWeekViewComponent } from './week-view/week-view.component';
+import { CalendarHeaderComponent } from './header/header.component';
+import { CalendarSidebarComponent } from './sidebar/sidebar.component';
 import { DateTime, Info } from 'luxon';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map, of } from 'rxjs';
 import { CalendarEvent, CalendarWeekDay } from '@shared/types';
 import { AsyncPipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
@@ -9,7 +11,13 @@ import { MatIcon } from '@angular/material/icon';
 @Component({
   selector: 'app-home-calendar',
   standalone: true,
-  imports: [CalendarWeekViewComponent, AsyncPipe, MatIcon],
+  imports: [
+    CalendarWeekViewComponent,
+    AsyncPipe,
+    MatIcon,
+    CalendarHeaderComponent,
+    CalendarSidebarComponent,
+  ],
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.css',
 })
@@ -17,7 +25,6 @@ export class CalendarComponent {
   private $today = new BehaviorSubject<DateTime>(DateTime.local());
   private $currentTime = new BehaviorSubject<DateTime>(DateTime.local());
 
-  public today$: Observable<DateTime> = this.$today.asObservable();
   public currentFirstDayOfWeek$: Observable<DateTime> = this.$currentTime.pipe(
     map((currentTime) => currentTime.startOf('week').toLocal())
   );
@@ -33,7 +40,7 @@ export class CalendarComponent {
         }))
       )
     );
-  public calendarEvents$ = new BehaviorSubject<CalendarEvent[]>(
+  public calendarEvents$ = of<CalendarEvent[]>(
     // todo: events should be sorted
     [
       {
@@ -84,15 +91,23 @@ export class CalendarComponent {
     ]
   );
 
-  get todayFormat() {
-    return DateTime.DATETIME_MED;
+  public get today(): string {
+    return this.$today.value.toLocaleString(DateTime.DATETIME_MED);
   }
 
-  nextHandler() {
+  public onTodayButtonHovered() {
+    this.$today.next(DateTime.local());
+  }
+
+  public onTodayButtonClicked() {
+    this.$currentTime.next(DateTime.local());
+  }
+
+  public onNextButtonClicked() {
     this.$currentTime.next(this.$currentTime.value.plus({ days: 7 }));
   }
 
-  prevHandler() {
+  public onPrevButtonClicked() {
     this.$currentTime.next(this.$currentTime.value.minus({ days: 7 }));
   }
 }

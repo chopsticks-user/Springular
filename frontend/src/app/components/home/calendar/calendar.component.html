@@ -1,46 +1,24 @@
 <div class="container">
   <div class="calendar-view">
     <header class="calendar-header">
-      <div class="calendar-header-left">
-        <div class="calendar-header-left-today">
-          <p style="color: var(--foreground-light); font-size: small">Today</p>
-        </div>
-        <div
-          class="calendar-header-left-today-info"
-          style="color: var(--foreground-light); font-size: small"
-        >
-          {{ (today$ | async)?.toLocaleString(todayFormat) }}
-        </div>
-      </div>
-      <div class="calendar-header-navigation">
-        <mat-icon
-          style="color: var(--foreground-light); cursor: pointer"
-          matSuffix
-          (click)="prevHandler()"
-          >arrow_back_ios</mat-icon
-        >
-        <p style="color: white">
-          {{ (currentFirstDayOfWeek$ | async)?.toFormat("MMMM dd, yyyy") }}
-        </p>
-        <div style="width: 100px"></div>
-        <p style="color: white">
-          {{ (currentLastDayOfWeek$ | async)?.toFormat("MMMM dd, yyyy") }}
-        </p>
-        <mat-icon
-          style="color: var(--foreground-light); cursor: pointer"
-          matSuffix
-          (click)="nextHandler()"
-          >arrow_forward_ios</mat-icon
-        >
-      </div>
-      <div class="calendar-header-right"></div>
+      <app-home-calendar-header
+        [today]="today"
+        [firstWeekday]="currentFirstDayOfWeek$ | async"
+        [lastWeekday]="currentLastDayOfWeek$ | async"
+        (todayButtonHovered)="onTodayButtonHovered()"
+        (todayButtonClicked)="onTodayButtonClicked()"
+        (nextButtonClicked)="onNextButtonClicked()"
+        (prevButtonClicked)="onPrevButtonClicked()"
+      />
     </header>
     <main class="calendar-main">
       <app-home-calendar-week-view
         [calendarEvents]="calendarEvents$ | async"
         [weekDays]="currentWeekDays$ | async"
-      ></app-home-calendar-week-view>
+      />
     </main>
   </div>
-  <div class="sidebar-view"></div>
+  <div class="sidebar-view">
+    <app-home-calendar-sidebar />
+  </div>
 </div>
