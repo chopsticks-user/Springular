@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CalendarWeekViewComponent } from './week-view/week-view.component';
 import { DateTime, Info } from 'luxon';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map, of } from 'rxjs';
 import { CalendarEvent, CalendarWeekDay } from '@shared/types';
 import { AsyncPipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
@@ -17,7 +17,6 @@ export class CalendarComponent {
   private $today = new BehaviorSubject<DateTime>(DateTime.local());
   private $currentTime = new BehaviorSubject<DateTime>(DateTime.local());
 
-  public today$: Observable<DateTime> = this.$today.asObservable();
   public currentFirstDayOfWeek$: Observable<DateTime> = this.$currentTime.pipe(
     map((currentTime) => currentTime.startOf('week').toLocal())
   );
@@ -33,7 +32,7 @@ export class CalendarComponent {
         }))
       )
     );
-  public calendarEvents$ = new BehaviorSubject<CalendarEvent[]>(
+  public calendarEvents$ = of<CalendarEvent[]>(
     // todo: events should be sorted
     [
       {
@@ -84,8 +83,16 @@ export class CalendarComponent {
     ]
   );
 
-  get todayFormat() {
-    return DateTime.DATETIME_MED;
+  get today() {
+    return this.$today.value.toLocaleString(DateTime.DATETIME_MED);
+  }
+
+  onTodayHovered() {
+    this.$today.next(DateTime.local());
+  }
+
+  resetCurrentTime() {
+    this.$currentTime.next(DateTime.local());
   }
 
   nextHandler() {

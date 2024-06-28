@@ -2,14 +2,18 @@
   <div class="calendar-view">
     <header class="calendar-header">
       <div class="calendar-header-left">
-        <div class="calendar-header-left-today">
+        <div
+          class="calendar-header-left-today"
+          (mouseenter)="onTodayHovered()"
+          (click)="resetCurrentTime()"
+        >
           <p style="color: var(--foreground-light); font-size: small">Today</p>
         </div>
         <div
           class="calendar-header-left-today-info"
           style="color: var(--foreground-light); font-size: small"
         >
-          {{ (today$ | async)?.toLocaleString(todayFormat) }}
+          {{ today }}
         </div>
       </div>
       <div class="calendar-header-navigation">
