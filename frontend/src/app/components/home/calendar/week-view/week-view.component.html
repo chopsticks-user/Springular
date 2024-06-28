@@ -18,7 +18,7 @@
     }
   </div>
   <div class="week-view">
-    @for (weekDay of weekDays; track weekDay){
+    @for (weekDay of weekDays; track weekDay.dayOfWeek){
     <div class="week-day-view">
       @for (hour of hours; track hour){
       <div class="hour">

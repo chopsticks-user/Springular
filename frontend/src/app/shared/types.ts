@@ -39,3 +39,8 @@ export interface CalendarEvent {
   repeat: 'daily' | 'weekly' | 'monthly' | 'yearly' | 'custom' | 'none';
   repeatEvery?: { value: number; unit: 'day' | 'week' | 'month' | 'year' };
 }
+
+export interface CalendarWeekDay {
+  dayOfWeek: string;
+  dayOfMonth: number;
+}
