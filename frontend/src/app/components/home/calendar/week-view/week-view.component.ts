@@ -19,16 +19,6 @@ export class CalendarWeekViewComponent {
     this.hourTotext(hourNumber)
   );
 
-  // weekDays: { dayOfWeek: string; dayOfMonth: number }[] = [
-  //   { dayOfWeek: 'Sunday', dayOfMonth: 15 },
-  //   { dayOfWeek: 'Monday', dayOfMonth: 16 },
-  //   { dayOfWeek: 'Tuesday', dayOfMonth: 17 },
-  //   { dayOfWeek: 'Wednesday', dayOfMonth: 18 },
-  //   { dayOfWeek: 'Thursday', dayOfMonth: 19 },
-  //   { dayOfWeek: 'Friday', dayOfMonth: 20 },
-  //   { dayOfWeek: 'Saturday', dayOfMonth: 21 },
-  // ];
-
   scheduledEvents(hour: number, dayOfMonth: number): CalendarEvent[] {
     if (!this.calendarEvents) {
       return [];

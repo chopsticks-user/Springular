@@ -1,22 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { CalendarWeekViewComponent } from './week-view/week-view.component';
 import { DateTime, Info } from 'luxon';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { CalendarEvent, CalendarWeekDay } from '@shared/types';
 import { AsyncPipe } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-home-calendar',
   standalone: true,
-  imports: [CalendarWeekViewComponent, AsyncPipe],
+  imports: [CalendarWeekViewComponent, AsyncPipe, MatIcon],
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.css',
 })
 export class CalendarComponent {
-  public today$ = new BehaviorSubject<DateTime>(DateTime.local());
-  public currentTime$ = new BehaviorSubject<DateTime>(DateTime.local());
-  public currentFirstDayOfWeek$: Observable<DateTime> = this.currentTime$.pipe(
+  private $today = new BehaviorSubject<DateTime>(DateTime.local());
+  private $currentTime = new BehaviorSubject<DateTime>(DateTime.local());
+
+  public today$: Observable<DateTime> = this.$today.asObservable();
+  public currentFirstDayOfWeek$: Observable<DateTime> = this.$currentTime.pipe(
     map((currentTime) => currentTime.startOf('week').toLocal())
+  );
+  public currentLastDayOfWeek$: Observable<DateTime> = this.$currentTime.pipe(
+    map((currentTime) => currentTime.endOf('week').toLocal())
   );
   public currentWeekDays$: Observable<CalendarWeekDay[]> =
     this.currentFirstDayOfWeek$.pipe(
@@ -27,7 +33,6 @@ export class CalendarComponent {
         }))
       )
     );
-
   public calendarEvents$ = new BehaviorSubject<CalendarEvent[]>(
     // todo: events should be sorted
     [
@@ -79,8 +84,15 @@ export class CalendarComponent {
     ]
   );
 
-  updateTime() {
-    this.currentTime$.next(this.currentTime$.value.plus({ days: 10 }));
-    console.log(this.currentTime$.value);
+  get todayFormat() {
+    return DateTime.DATETIME_MED;
+  }
+
+  nextHandler() {
+    this.$currentTime.next(this.$currentTime.value.plus({ days: 7 }));
+  }
+
+  prevHandler() {
+    this.$currentTime.next(this.$currentTime.value.minus({ days: 7 }));
   }
 }
