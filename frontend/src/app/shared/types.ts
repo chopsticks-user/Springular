@@ -29,7 +29,7 @@ export interface JwtTokenPack {
 }
 
 export interface CalendarEvent {
-  id: string;
+  id?: string;
   // participants: UserInfo[];
   title: string;
   description: string;
