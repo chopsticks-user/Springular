@@ -23,7 +23,7 @@ import com.frost.springular.service.JwtAccessTokenService;
 import com.frost.springular.service.JwtRefreshTokenService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+// @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/auth")
 public class AuthController {
     private final JwtAccessTokenService jwtAccessTokenService;

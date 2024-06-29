@@ -14,7 +14,7 @@ export const authHeaderInterceptor: HttpInterceptorFn = (req, next) => {
     req.clone({
       headers: req.headers.append(
         'Authorization',
-        `Bearer ${inject(AuthService).accessToken}`
+        `Bearer ${inject(AuthService).accessToken?.token}`
       ),
     })
   );

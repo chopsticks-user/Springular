@@ -43,11 +43,6 @@ export class LoginComponent implements OnInit {
 
   private _authService = inject(AuthService);
   private _router = inject(Router);
-  private _location = inject(Location);
-
-  public constructor() {
-    this._location.go('/login');
-  }
 
   public ngOnInit(): void {}
 

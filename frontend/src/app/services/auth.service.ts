@@ -49,6 +49,29 @@ export class AuthService {
       );
   }
 
+  verify(): Observable<HttpResponse<void>> | null {
+    const refreshToken: JwtToken | null = this.refreshToken;
+
+    if (!refreshToken) {
+      return null;
+    }
+
+    // todo: an interceptor to refresh access token
+    return inject(HttpClient)
+      .post<void>(
+        '/verify',
+        { refreshToken: refreshToken.token },
+        { observe: 'response' }
+      )
+      .pipe(
+        tap((response) => {
+          if (response.ok) {
+            this.$authenticated.next(true);
+          }
+        })
+      );
+  }
+
   register(signupInfo: SignupInfo): Observable<HttpResponse<SignupInfo>> {
     // todo: backend should return nothing
     return this._http.post<SignupInfo>('/auth/signup', signupInfo, {

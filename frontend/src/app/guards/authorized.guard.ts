@@ -6,22 +6,9 @@ import { lastValueFrom, map } from 'rxjs';
 export const authorizedGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
 
-  // todo: implement token verification
-  if (authService.authenticated || authService.tokensValid) {
+  if (authService.authenticated) {
     return true;
   }
-
-  // return lastValueFrom(
-  //   authService.authenticated$.pipe(
-  //     map((authenticated) => {
-  //       if (authenticated) {
-  //         return true;
-  //       }
-  //       void inject(Router).navigate(['']);
-  //       return false;
-  //     })
-  //   )
-  // );
 
   void inject(Router).navigate(['']);
   return false;

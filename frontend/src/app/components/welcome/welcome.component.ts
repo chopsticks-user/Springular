@@ -1,12 +1,5 @@
+import { Component, ElementRef, ViewChild, inject } from '@angular/core';
 import {
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild,
-  inject,
-} from '@angular/core';
-import {
-  ActivatedRoute,
   Router,
   RouterLink,
   RouterLinkActive,
@@ -16,7 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { MatIconModule } from '@angular/material/icon';
-import { Location } from '@angular/common';
+import { AuthService } from '@services/auth.service';
 
 @Component({
   selector: 'app-welcome',
@@ -33,36 +26,23 @@ import { Location } from '@angular/common';
   templateUrl: './welcome.component.html',
   styleUrl: './welcome.component.css',
 })
-export class WelcomeComponent implements OnInit {
+export class WelcomeComponent {
   @ViewChild('authModal', { static: true })
   private _authModal!: ElementRef<HTMLDialogElement>;
-
-  private _location = inject(Location);
-
-  private _route = inject(ActivatedRoute);
+  private _router = inject(Router);
 
   showModal: boolean = false;
   showLogin: boolean = false;
 
-  // todo: ping endpoint
-  constructor() {}
+  constructor() {
+    const verifyResponse$ = inject(AuthService).verify();
 
-  ngOnInit(): void {
-    this._route.data.subscribe((data) => {
-      switch (data['action']) {
-        case 'login': {
-          this.showLogin = true;
-          this.openAuthModal();
-          return;
-        }
-        case 'signup': {
-          this.showLogin = false;
-          this.openAuthModal();
-          return;
-        }
-        default:
-          return;
-      }
+    if (!verifyResponse$) {
+      return;
+    }
+
+    verifyResponse$.subscribe(() => {
+      void this._router.navigate(['/home']);
     });
   }
 
@@ -73,7 +53,6 @@ export class WelcomeComponent implements OnInit {
 
   closeAuthModal() {
     this.showModal = false;
-    this._location.go('/');
     this._authModal.nativeElement.close();
   }
 }
