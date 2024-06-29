@@ -1,8 +1,7 @@
-import { HttpContextToken, HttpInterceptorFn } from '@angular/common/http';
+import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { AuthService } from '@services/auth.service';
-
-export const BYPASS_AUTH_HEADER = new HttpContextToken<boolean>(() => false);
+import { BYPASS_AUTH_HEADER } from '@shared/constants';
 
 export const authHeaderInterceptor: HttpInterceptorFn = (req, next) => {
   if (req.context.get(BYPASS_AUTH_HEADER) === true) {
@@ -12,9 +11,9 @@ export const authHeaderInterceptor: HttpInterceptorFn = (req, next) => {
   // todo: something is wrong here
   return next(
     req.clone({
-      headers: req.headers.append(
+      headers: req.headers.set(
         'Authorization',
-        `Bearer ${inject(AuthService).accessToken}`
+        `Bearer ${inject(AuthService).accessToken?.token}`
       ),
     })
   );

@@ -2,7 +2,7 @@ import { HttpClient, HttpContext, HttpResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { LoginInfo, SignupInfo, JwtToken, JwtTokenPack } from '@shared/types';
 import { JwtKeeperService } from './jwt-keeper.service';
-import { BYPASS_AUTH_HEADER } from '@interceptors/auth-header.interceptor';
+import { BYPASS_AUTH_HEADER } from '@shared/constants';
 import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 
 @Injectable({
@@ -44,6 +44,29 @@ export class AuthService {
           if (response.ok) {
             this.$authenticated.next(true);
             this._jwtKeeperService.save(response.body as JwtTokenPack);
+          }
+        })
+      );
+  }
+
+  verify(): Observable<HttpResponse<void>> | null {
+    const refreshToken: JwtToken | null = this.refreshToken;
+
+    if (!refreshToken) {
+      return null;
+    }
+
+    // todo: an interceptor to refresh access token
+    return inject(HttpClient)
+      .post<void>(
+        '/verify',
+        { refreshToken: refreshToken.token },
+        { observe: 'response' }
+      )
+      .pipe(
+        tap((response) => {
+          if (response.ok) {
+            this.$authenticated.next(true);
           }
         })
       );

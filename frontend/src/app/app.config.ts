@@ -7,6 +7,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authHeaderInterceptor } from '@interceptors/auth-header.interceptor';
 import { jsonResponseInterceptor } from '@interceptors/json-response.interceptor';
 import { apiRouteInterceptor } from '@interceptors/api-route.interceptor';
+import { refreshTokenInterceptor } from '@interceptors/refresh-token.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,6 +19,7 @@ export const appConfig: ApplicationConfig = {
         jsonResponseInterceptor,
         apiRouteInterceptor,
         authHeaderInterceptor,
+        refreshTokenInterceptor,
       ])
     ),
   ],

@@ -5,24 +5,9 @@ import { authorizedGuard } from '@guards/authorized.guard';
 import { PageNotFoundComponent } from '@components/page-not-found/page-not-found.component';
 
 export const routes: Routes = [
-  {
-    path: '',
-    component: WelcomeComponent,
-    canActivate: [],
-  },
-  {
-    path: 'login',
-    component: WelcomeComponent,
-    canActivate: [],
-    data: { action: 'login' },
-  },
-  {
-    path: 'signup',
-    component: WelcomeComponent,
-    canActivate: [],
-    data: { action: 'signup' },
-  },
-  // { path: 'home', component: HomeComponent, canActivate: [authorizedGuard] },
-  { path: 'home', component: HomeComponent },
-  { path: '**', component: PageNotFoundComponent, canActivate: [] },
+  { path: '', component: WelcomeComponent },
+  { path: 'login', redirectTo: '' },
+  { path: 'signup', redirectTo: '' },
+  { path: 'home', component: HomeComponent, canActivate: [authorizedGuard] },
+  { path: '**', component: PageNotFoundComponent },
 ];

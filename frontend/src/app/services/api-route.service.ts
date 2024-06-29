@@ -7,8 +7,12 @@ import appEnv from '@environments';
 export class ApiRouteService {
   private _rootAddr: string = this._dropSuffixSlashes(appEnv.apiRootAddr);
 
-  route(relativePath: string): string {
-    return `${this._rootAddr}/${this._dropPrefixSlashes(relativePath)}`;
+  route(path: string): string {
+    // todo:
+    if (path.startsWith('http://') || path.startsWith('https://')) {
+      return path;
+    }
+    return `${this._rootAddr}/${this._dropPrefixSlashes(path)}`;
   }
 
   private _dropPrefixSlashes(path: string): string {
