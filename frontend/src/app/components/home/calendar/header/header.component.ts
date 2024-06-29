@@ -2,8 +2,6 @@ import { AsyncPipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { CalendarWeekViewComponent } from '../week-view/week-view.component';
-import { Observable } from 'rxjs';
-import { CalendarWeekDay } from '@shared/types';
 import { DateTime } from 'luxon';
 
 @Component({
