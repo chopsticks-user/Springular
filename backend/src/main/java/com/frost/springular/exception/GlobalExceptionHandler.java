@@ -27,7 +27,7 @@ public class GlobalExceptionHandler {
             case BadCredentialsException e ->
                 createHttpProblemDetail(401, exception, "Email or password is incorrect");
             case ExpiredJwtException e ->
-                createHttpProblemDetail(403, exception, "JWT token has expired");
+                createHttpProblemDetail(401, exception, "JWT token has expired");
             case SignatureException e ->
                 createHttpProblemDetail(403, exception, "Invalid JWT signature");
             case AccessDeniedException e ->

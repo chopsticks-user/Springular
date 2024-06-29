@@ -42,6 +42,7 @@ export class WelcomeComponent {
     }
 
     verifyResponse$.subscribe(() => {
+      // todo: navigate to the prev route if exists
       void this._router.navigate(['/home']);
     });
   }
