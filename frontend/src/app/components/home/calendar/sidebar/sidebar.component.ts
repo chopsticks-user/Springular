@@ -7,4 +7,6 @@ import { Component } from '@angular/core';
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
 })
-export class CalendarSidebarComponent {}
+export class CalendarSidebarComponent {
+  // public
+}

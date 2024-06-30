@@ -13,7 +13,6 @@ import {
 } from '@angular/forms';
 import { AuthService } from '@services/auth.service';
 import { LoginInfo } from '@shared/types';
-import { Location } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
