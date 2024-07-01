@@ -1,15 +1,17 @@
+import { AsyncPipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CalendarEvent } from '@shared/types';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-shared-calendar-event',
   standalone: true,
-  imports: [],
+  imports: [AsyncPipe],
   templateUrl: './calendar-event.component.html',
   styleUrl: './calendar-event.component.css',
 })
 export class CalendarEventComponent {
-  @Input({ required: true }) public events!: CalendarEvent[];
+  @Input({ required: true }) public events$!: Observable<CalendarEvent[]>;
   @Input({ required: true }) public pixelsPerHour!: number;
   @Input({ required: true }) public borderPixelWidth!: number;
   @Output() public eventClicked = new EventEmitter<CalendarEvent>();

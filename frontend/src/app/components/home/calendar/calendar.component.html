@@ -13,8 +13,8 @@
     </header>
     <main class="calendar-main">
       <app-home-calendar-week-view
-        [calendarEvents]="calendarEvents$ | async"
-        [weekDays]="currentWeekDays$ | async"
+        [calendarEvents$]="calendarEvents$"
+        [weekDays$]="currentWeekDays$"
       />
     </main>
   </div>

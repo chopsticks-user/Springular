@@ -1,36 +1,44 @@
 import { Component, Input } from '@angular/core';
 import { CalendarEvent, CalendarWeekDay } from '@shared/types';
 import { CalendarEventComponent } from '@shared/calendar-event/calendar-event.component';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-home-calendar-week-view',
   standalone: true,
-  imports: [CalendarEventComponent],
+  imports: [CalendarEventComponent, AsyncPipe],
   templateUrl: './week-view.component.html',
   styleUrl: './week-view.component.css',
 })
 export class CalendarWeekViewComponent {
-  @Input({ required: true }) weekDays!: CalendarWeekDay[] | null;
-  @Input({ required: true }) calendarEvents!: CalendarEvent[] | null;
+  @Input({ required: true }) weekDays$!: Observable<CalendarWeekDay[]>;
+  @Input({ required: true }) calendarEvents$!: Observable<CalendarEvent[]>;
 
-  public hours: number[] = [...Array(24).keys()];
-  public hourTexts: string[] = this.hours.map((hourNumber) =>
+  public readonly hours: number[] = [...Array(24).keys()];
+  public readonly hourTexts: string[] = this.hours.map((hourNumber) =>
     this.hourTotext(hourNumber)
   );
 
-  scheduledEvents(hour: number, dayOfMonth: number): CalendarEvent[] {
-    if (!this.calendarEvents) {
-      return [];
-    }
+  scheduledEvents(
+    hour: number,
+    dayOfMonth: number
+  ): Observable<CalendarEvent[]> {
+    return this.calendarEvents$.pipe(
+      map((calendarEvents) => {
+        if (!calendarEvents) {
+          return [];
+        }
 
-    return this.calendarEvents
-      .filter(
-        (event) =>
-          event.start.getDate() === dayOfMonth &&
-          event.start.getHours() === hour
-      )
-      .sort((a, b) => a.start.valueOf() - b.start.valueOf());
+        return calendarEvents
+          .filter(
+            (event) =>
+              event.start.getDate() === dayOfMonth &&
+              event.start.getHours() === hour
+          )
+          .sort((a, b) => a.start.valueOf() - b.start.valueOf());
+      })
+    );
   }
 
   clicked(hour: string, weekDay: { dayOfWeek: string; dayOfMonth: number }) {

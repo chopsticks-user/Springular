@@ -1,7 +1,8 @@
-@if(events.length > 0){ @for(event of events; track event.id){
+@if(((events$| async) || []).length > 0; as events ) { @for(event of events$
+|async; track event.id){
 <div
   class="event"
   (click)="eventClicked.emit(event)"
   [style]="getStyle(event)"
 ></div>
-} }
+}}
