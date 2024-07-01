@@ -47,4 +47,9 @@
 }
 
 .calendar-header-right {
+  display: flex;
+  flex-direction: row;
+  border-left: 1px solid gray;
+  padding-right: 10px;
+  padding-left: 10px;
 }

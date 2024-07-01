@@ -3,24 +3,27 @@ import { CalendarEvent, CalendarWeekDay } from '@shared/types';
 import { CalendarEventComponent } from '@shared/calendar-event/calendar-event.component';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-home-calendar-week-view',
   standalone: true,
-  imports: [CalendarEventComponent, AsyncPipe],
+  imports: [CalendarEventComponent, AsyncPipe, MatIcon],
   templateUrl: './week-view.component.html',
   styleUrl: './week-view.component.css',
 })
 export class CalendarWeekViewComponent {
-  @Input({ required: true }) weekDays$!: Observable<CalendarWeekDay[]>;
-  @Input({ required: true }) calendarEvents$!: Observable<CalendarEvent[]>;
+  @Input({ required: true }) public weekDays$!: Observable<CalendarWeekDay[]>;
+  @Input({ required: true }) public calendarEvents$!: Observable<
+    CalendarEvent[]
+  >;
 
   public readonly hours: number[] = [...Array(24).keys()];
   public readonly hourTexts: string[] = this.hours.map((hourNumber) =>
     this.hourTotext(hourNumber)
   );
 
-  scheduledEvents(
+  public scheduledEvents(
     hour: number,
     dayOfMonth: number
   ): Observable<CalendarEvent[]> {
@@ -41,23 +44,18 @@ export class CalendarWeekViewComponent {
     );
   }
 
-  clicked(hour: string, weekDay: { dayOfWeek: string; dayOfMonth: number }) {
-    console.log(hour, weekDay);
-  }
-
-  onEventClicked(calendarEvent: CalendarEvent) {
+  public onEventClicked(calendarEvent: CalendarEvent) {
     console.log(calendarEvent);
   }
 
-  hourTotext(hour: number): string {
-    if (hour === 0) {
-      return '12:00 AM';
+  public hourTotext(hour: number): string {
+    switch (hour) {
+      case 0:
+        return '12:00 AM';
+      case 12:
+        return '12:00 PM';
+      default:
+        return hour < 12 ? `${hour}:00 AM` : `${hour - 12}:00 PM`;
     }
-
-    if (hour === 12) {
-      return '12:00 PM';
-    }
-
-    return hour < 12 ? `${hour}:00 AM` : `${hour - 12}:00 PM`;
   }
 }

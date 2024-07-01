@@ -9,6 +9,7 @@
         ($todayButtonClicked)="onTodayButtonClicked()"
         ($nextButtonClicked)="onNextButtonClicked()"
         ($prevButtonClicked)="onPrevButtonClicked()"
+        ($addEventButtonClicked)="onAddEventButtonClicked()"
       />
     </header>
     <main class="calendar-main">
@@ -16,6 +17,7 @@
         [calendarEvents$]="calendarEvents$"
         [weekDays$]="currentWeekDays$"
       />
+      <dialog #eventEditorModal></dialog>
     </main>
   </div>
   <!-- <div class="sidebar-view">

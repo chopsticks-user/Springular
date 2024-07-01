@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CalendarWeekViewComponent } from './week-view/week-view.component';
 import { CalendarHeaderComponent } from './header/header.component';
 import { CalendarSidebarComponent } from './sidebar/sidebar.component';
@@ -24,6 +24,9 @@ import { MatIcon } from '@angular/material/icon';
 export class CalendarComponent {
   private $today = new BehaviorSubject<DateTime>(DateTime.local());
   private $currentTime = new BehaviorSubject<DateTime>(DateTime.local());
+
+  @ViewChild('eventEditorModal', { static: true })
+  private _eventEditorModal!: ElementRef<HTMLDialogElement>;
 
   public currentFirstDayOfWeek$: Observable<DateTime> = this.$currentTime.pipe(
     map((currentTime) => currentTime.startOf('week').toLocal())
@@ -111,5 +114,13 @@ export class CalendarComponent {
 
   public onPrevButtonClicked() {
     this.$currentTime.next(this.$currentTime.value.minus({ days: 7 }));
+  }
+
+  public onAddEventButtonClicked() {
+    this._eventEditorModal.nativeElement.showModal();
+  }
+
+  public onCloseAddEventButtonClicked() {
+    this._eventEditorModal.nativeElement.close();
   }
 }

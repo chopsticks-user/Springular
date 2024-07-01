@@ -21,4 +21,5 @@ export class CalendarHeaderComponent {
   @Output() public $todayButtonClicked = new EventEmitter<void>();
   @Output() public $nextButtonClicked = new EventEmitter<void>();
   @Output() public $prevButtonClicked = new EventEmitter<void>();
+  @Output() public $addEventButtonClicked = new EventEmitter<void>();
 }

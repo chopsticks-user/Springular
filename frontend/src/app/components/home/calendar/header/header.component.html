@@ -34,4 +34,11 @@
     >arrow_forward_ios</mat-icon
   >
 </div>
-<div class="calendar-header-right"></div>
+<div class="calendar-header-right">
+  <mat-icon
+    matSuffix
+    style="color: var(--foreground-light); cursor: pointer; align-self: center"
+    (click)="$addEventButtonClicked.emit()"
+    >edit_calendar</mat-icon
+  >
+</div>
