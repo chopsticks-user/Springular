@@ -37,8 +37,8 @@ export class CalendarWeekViewComponent {
     console.log(hour, weekDay);
   }
 
-  onClick(event: CalendarEvent) {
-    console.log(event);
+  onEventClicked(calendarEvent: CalendarEvent) {
+    console.log(calendarEvent);
   }
 
   hourTotext(hour: number): string {
