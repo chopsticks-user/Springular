@@ -91,8 +91,10 @@ export class CalendarComponent {
     ]
   );
 
-  public get today(): string {
-    return this.$today.value.toLocaleString(DateTime.DATETIME_MED);
+  public get today(): Observable<string> {
+    return this.$today.pipe(
+      map((today) => today.toLocaleString(DateTime.DATETIME_MED))
+    );
   }
 
   public onTodayButtonHovered() {

@@ -1,8 +1,8 @@
 <div class="calendar-header-left">
   <div
     class="calendar-header-left-today"
-    (mouseenter)="todayButtonHovered.emit()"
-    (click)="todayButtonClicked.emit()"
+    (mouseenter)="$todayButtonHovered.emit()"
+    (click)="$todayButtonClicked.emit()"
   >
     <p style="color: var(--foreground-light); font-size: small">Today</p>
   </div>
@@ -10,27 +10,27 @@
     class="calendar-header-left-today-info"
     style="color: var(--foreground-light); font-size: small"
   >
-    {{ today }}
+    {{ today$ | async }}
   </div>
 </div>
 <div class="calendar-header-navigation">
   <mat-icon
     style="color: var(--foreground-light); cursor: pointer"
     matSuffix
-    (click)="prevButtonClicked.emit()"
+    (click)="$prevButtonClicked.emit()"
     >arrow_back_ios</mat-icon
   >
   <p style="color: white">
-    {{ firstWeekday?.toFormat("MMMM dd, yyyy") }}
+    {{ (firstWeekday$ | async)?.toFormat("MMMM dd, yyyy") }}
   </p>
   <div style="width: 100px"></div>
   <p style="color: white">
-    {{ lastWeekday?.toFormat("MMMM dd, yyyy") }}
+    {{ (lastWeekday$ | async)?.toFormat("MMMM dd, yyyy") }}
   </p>
   <mat-icon
     style="color: var(--foreground-light); cursor: pointer"
     matSuffix
-    (click)="nextButtonClicked.emit()"
+    (click)="$nextButtonClicked.emit()"
     >arrow_forward_ios</mat-icon
   >
 </div>
