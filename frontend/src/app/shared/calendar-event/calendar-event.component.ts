@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CalendarEvent } from '@shared/types';
 
 @Component({
@@ -9,12 +9,12 @@ import { CalendarEvent } from '@shared/types';
   styleUrl: './calendar-event.component.css',
 })
 export class CalendarEventComponent {
-  @Input({ required: true }) events!: CalendarEvent[];
-  @Input({ required: true }) pixelsPerHour!: number;
-  @Input({ required: true }) borderPixelWidth!: number;
-  @Input({ required: true }) onClick!: (event: any) => void;
+  @Input({ required: true }) public events!: CalendarEvent[];
+  @Input({ required: true }) public pixelsPerHour!: number;
+  @Input({ required: true }) public borderPixelWidth!: number;
+  @Output() public eventClicked = new EventEmitter<CalendarEvent>();
 
-  getStyle(event: CalendarEvent | undefined) {
+  public getStyle(event: CalendarEvent | undefined) {
     if (!event) {
       return '';
     }
@@ -27,6 +27,6 @@ export class CalendarEventComponent {
     return `background-color: ${event.color};
       height: ${pixelHeight}px;
       position: absolute;
-      top: ${pixelMargin}px`;
+      top: ${pixelMargin}px;`;
   }
 }

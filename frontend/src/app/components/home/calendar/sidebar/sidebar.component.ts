@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatFormField } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-home-calendar-sidebar',
@@ -7,4 +8,6 @@ import { Component } from '@angular/core';
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
 })
-export class CalendarSidebarComponent {}
+export class CalendarSidebarComponent {
+  // public
+}

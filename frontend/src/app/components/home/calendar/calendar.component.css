@@ -41,7 +41,7 @@
 .sidebar-view {
   width: 20%;
   margin: 20px;
-  /* margin-bottom: 0; */
   margin-left: 0;
   background-color: var(--background-secondary);
+  display: flex;
 }

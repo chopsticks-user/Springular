@@ -12,7 +12,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { SignupInfo } from '@shared/types';
 import { AuthService } from '@services/auth.service';
 import { Router } from '@angular/router';
-import { Location } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({

@@ -1,3 +1,7 @@
 @if(events.length > 0){ @for(event of events; track event.id){
-<div class="event" (click)="onClick(event)" [style]="getStyle(event)"></div>
+<div
+  class="event"
+  (click)="eventClicked.emit(event)"
+  [style]="getStyle(event)"
+></div>
 } }
