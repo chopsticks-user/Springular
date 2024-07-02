@@ -1,12 +1,14 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, getPlatform } from '@angular/core';
 import { CalendarWeekViewComponent } from './week-view/week-view.component';
 import { CalendarHeaderComponent } from './header/header.component';
 import { CalendarSidebarComponent } from './sidebar/sidebar.component';
+import { CalendarEventDialogComponent } from '@shared/calendar-event-dialog/calendar-event-dialog.component';
 import { DateTime, Info } from 'luxon';
 import { BehaviorSubject, Observable, map, of } from 'rxjs';
 import { CalendarEvent, CalendarWeekDay } from '@shared/types';
 import { AsyncPipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
+import { OverlayContainer } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-home-calendar',
@@ -17,6 +19,7 @@ import { MatIcon } from '@angular/material/icon';
     MatIcon,
     CalendarHeaderComponent,
     CalendarSidebarComponent,
+    CalendarEventDialogComponent,
   ],
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.css',
@@ -116,11 +119,11 @@ export class CalendarComponent {
     this.$currentTime.next(this.$currentTime.value.minus({ days: 7 }));
   }
 
-  public onAddEventButtonClicked() {
+  public openEventEditor() {
     this._eventEditorModal.nativeElement.showModal();
   }
 
-  public onCloseAddEventButtonClicked() {
+  public closeEventEditor() {
     this._eventEditorModal.nativeElement.close();
   }
 }
