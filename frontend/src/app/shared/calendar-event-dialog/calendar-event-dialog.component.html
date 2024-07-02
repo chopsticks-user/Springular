@@ -1,1 +1,68 @@
-<p>calendar-event-dialog works!</p>
+<form [formGroup]="eventFormGroup" (submit)="submitEvent()">
+  <p>
+    <mat-form-field appearance="outline" color="primary">
+      <mat-label>Title</mat-label>
+      <input
+        style="color: var(--foreground-light)"
+        formControlName="title"
+        matInput
+      />
+      <mat-icon matSuffix>badge</mat-icon>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="outline" color="primary">
+      <mat-label>Description</mat-label>
+      <input
+        style="color: var(--foreground-light)"
+        formControlName="description"
+        matInput
+      />
+      <mat-icon matSuffix>badge</mat-icon>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="outline" color="primary">
+      <mat-label>Start</mat-label>
+      <input
+        style="color: var(--foreground-light)"
+        formControlName="start"
+        matInput
+      />
+      <mat-icon matSuffix>badge</mat-icon>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="outline" color="primary">
+      <mat-label>End</mat-label>
+      <input
+        style="color: var(--foreground-light)"
+        formControlName="end"
+        matInput
+      />
+      <mat-icon matSuffix>badge</mat-icon>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="outline" color="primary">
+      <mat-label>Repeat</mat-label>
+      <select
+        style="color: var(--foreground-light)"
+        formControlName="repeat"
+        matNativeControl
+      >
+        <option>None</option>
+        <option>Daily</option>
+        <option>Weekly</option>
+        <option>Monthly</option>
+        <option>Yearly</option>
+        <option>Custom</option>
+      </select>
+      <mat-icon matSuffix>badge</mat-icon>
+    </mat-form-field>
+  </p>
+  <div class="button-container">
+    <button type="submit">Submit</button>
+    <button (click)="$cancelButtonClicked.emit()">Cancel</button>
+  </div>
+</form>

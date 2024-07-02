@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild, getPlatform } from '@angular/core';
 import { CalendarWeekViewComponent } from './week-view/week-view.component';
 import { CalendarHeaderComponent } from './header/header.component';
 import { CalendarSidebarComponent } from './sidebar/sidebar.component';
+import { CalendarEventDialogComponent } from '@shared/calendar-event-dialog/calendar-event-dialog.component';
 import { DateTime, Info } from 'luxon';
 import { BehaviorSubject, Observable, map, of } from 'rxjs';
 import { CalendarEvent, CalendarWeekDay } from '@shared/types';
 import { AsyncPipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
+import { OverlayContainer } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-home-calendar',
@@ -17,6 +19,7 @@ import { MatIcon } from '@angular/material/icon';
     MatIcon,
     CalendarHeaderComponent,
     CalendarSidebarComponent,
+    CalendarEventDialogComponent,
   ],
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.css',
@@ -24,6 +27,9 @@ import { MatIcon } from '@angular/material/icon';
 export class CalendarComponent {
   private $today = new BehaviorSubject<DateTime>(DateTime.local());
   private $currentTime = new BehaviorSubject<DateTime>(DateTime.local());
+
+  @ViewChild('eventEditorModal', { static: true })
+  private _eventEditorModal!: ElementRef<HTMLDialogElement>;
 
   public currentFirstDayOfWeek$: Observable<DateTime> = this.$currentTime.pipe(
     map((currentTime) => currentTime.startOf('week').toLocal())
@@ -111,5 +117,13 @@ export class CalendarComponent {
 
   public onPrevButtonClicked() {
     this.$currentTime.next(this.$currentTime.value.minus({ days: 7 }));
+  }
+
+  public openEventEditor() {
+    this._eventEditorModal.nativeElement.showModal();
+  }
+
+  public closeEventEditor() {
+    this._eventEditorModal.nativeElement.close();
   }
 }
