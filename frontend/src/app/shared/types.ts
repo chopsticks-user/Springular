@@ -28,6 +28,32 @@ export interface JwtTokenPack {
   refreshToken: JwtToken | null;
 }
 
+export const calendarEventRepeatOptions = [
+  'daily',
+  'weekly',
+  'monthly',
+  'yearly',
+  'custom',
+  'none',
+] as const;
+
+export type CalendarEventRepeat = (typeof calendarEventRepeatOptions)[number];
+
+export const calendarEventRepeatEveryUnits = [
+  'days',
+  'weeks',
+  'months',
+  'years',
+] as const;
+
+export type CalendarEventRepeatEveryUnit =
+  (typeof calendarEventRepeatEveryUnits)[number];
+
+export interface CalendarEventRepeatEvery {
+  value: number; // interger
+  unit: CalendarEventRepeatEveryUnit;
+}
+
 export interface CalendarEvent {
   id?: string;
   // participants: UserInfo[];
@@ -36,8 +62,8 @@ export interface CalendarEvent {
   color: string;
   start: Date;
   durationMinutes: number;
-  repeat: 'daily' | 'weekly' | 'monthly' | 'yearly' | 'custom' | 'none';
-  repeatEvery?: { value: number; unit: 'day' | 'week' | 'month' | 'year' };
+  repeat: CalendarEventRepeat;
+  repeatEvery?: CalendarEventRepeatEvery;
 }
 
 export interface CalendarWeekDay {

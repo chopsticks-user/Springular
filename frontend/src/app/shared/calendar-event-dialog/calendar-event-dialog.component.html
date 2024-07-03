@@ -45,6 +45,17 @@
   </p>
   <p>
     <mat-form-field appearance="outline" color="primary">
+      <mat-label>Color</mat-label>
+      <input
+        style="color: var(--foreground-light)"
+        formControlName="color"
+        matInput
+      />
+      <mat-icon matSuffix>badge</mat-icon>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="outline" color="primary">
       <mat-label>Repeat</mat-label>
       <select
         style="color: var(--foreground-light)"
@@ -61,8 +72,26 @@
       <mat-icon matSuffix>badge</mat-icon>
     </mat-form-field>
   </p>
+  @if(repeatEveryEnabled$ | async){
+  <p>
+    <mat-form-field appearance="outline" color="primary">
+      <mat-label>Repeat every</mat-label>
+      <select
+        style="color: var(--foreground-light)"
+        formControlName="repeatEvery"
+        matNativeControl
+      >
+        <option>days</option>
+        <option>weeks</option>
+        <option>months</option>
+        <option>years</option>
+      </select>
+      <mat-icon matSuffix>badge</mat-icon>
+    </mat-form-field>
+  </p>
+  }
   <div class="button-container">
     <button type="submit">Submit</button>
-    <button (click)="$cancelButtonClicked.emit()">Cancel</button>
+    <button (click)="$cancelButtonClicked.emit()" type="button">Cancel</button>
   </div>
 </form>
