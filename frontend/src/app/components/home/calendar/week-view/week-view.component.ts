@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CalendarEvent, CalendarWeekDay } from '@shared/types';
 import { CalendarEventComponent } from '@shared/calendar-event/calendar-event.component';
 import { BehaviorSubject, Observable, map } from 'rxjs';
@@ -17,6 +17,7 @@ export class CalendarWeekViewComponent {
   @Input({ required: true }) public calendarEvents$!: Observable<
     CalendarEvent[]
   >;
+  @Output() public $eventClicked = new EventEmitter<CalendarEvent>();
 
   public readonly hours: number[] = [...Array(24).keys()];
   public readonly hourTexts: string[] = this.hours.map((hourNumber) =>
@@ -45,7 +46,7 @@ export class CalendarWeekViewComponent {
   }
 
   public onEventClicked(calendarEvent: CalendarEvent) {
-    console.log(calendarEvent);
+    this.$eventClicked.emit(calendarEvent);
   }
 
   public hourTotext(hour: number): string {

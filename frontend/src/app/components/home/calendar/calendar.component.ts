@@ -4,7 +4,7 @@ import { CalendarHeaderComponent } from './header/header.component';
 import { CalendarSidebarComponent } from './sidebar/sidebar.component';
 import { CalendarEventDialogComponent } from '@shared/calendar-event-dialog/calendar-event-dialog.component';
 import { DateTime, Info } from 'luxon';
-import { BehaviorSubject, Observable, map, of } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, map, of } from 'rxjs';
 import { CalendarEvent, CalendarWeekDay } from '@shared/types';
 import { AsyncPipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
@@ -25,12 +25,15 @@ import { OverlayContainer } from '@angular/cdk/overlay';
   styleUrl: './calendar.component.css',
 })
 export class CalendarComponent {
+  @ViewChild('eventEditorModal', { static: true })
+  private _eventEditorModal!: ElementRef<HTMLDialogElement>;
+
   private $today = new BehaviorSubject<DateTime>(DateTime.local());
   private $currentTime = new BehaviorSubject<DateTime>(DateTime.local());
 
-  @ViewChild('eventEditorModal', { static: true })
-  private _eventEditorModal!: ElementRef<HTMLDialogElement>;
-  private $eventEditorVisible = new BehaviorSubject<boolean>(false);
+  private _selectedCalendarEvent: CalendarEvent | null = null;
+  private _eventEditorVisible: boolean = false;
+  private _eventEditorType: 'add' | 'edit' = 'add';
 
   public currentFirstDayOfWeek$: Observable<DateTime> = this.$currentTime.pipe(
     map((currentTime) => currentTime.startOf('week').toLocal())
@@ -98,8 +101,16 @@ export class CalendarComponent {
     ]
   );
 
-  public get eventEditorVisible$(): Observable<boolean> {
-    return this.$eventEditorVisible.asObservable();
+  public get eventEditorVisible(): boolean {
+    return this._eventEditorVisible;
+  }
+
+  public get selectedCalendarEvent(): CalendarEvent | null {
+    return this._selectedCalendarEvent;
+  }
+
+  public get eventEditorType(): 'add' | 'edit' {
+    return this._eventEditorType;
   }
 
   public get today(): Observable<string> {
@@ -124,13 +135,28 @@ export class CalendarComponent {
     this.$currentTime.next(this.$currentTime.value.minus({ days: 7 }));
   }
 
-  public openEventEditor() {
-    this.$eventEditorVisible.next(true);
+  public openEventEditor(calendarEvent?: CalendarEvent) {
+    if (calendarEvent) {
+      this._eventEditorType = 'edit';
+      this._selectedCalendarEvent = calendarEvent;
+    } else {
+      this._selectedCalendarEvent = null;
+      this._eventEditorType = 'add';
+    }
+
+    this._eventEditorVisible = true;
     this._eventEditorModal.nativeElement.showModal();
   }
 
   public closeEventEditor() {
-    this.$eventEditorVisible.next(false);
+    console.log('close');
+    this._eventEditorVisible = false;
+    this._eventEditorModal.nativeElement.close();
+  }
+
+  public deleteCalendarEvent() {
+    console.log('deleted');
+    this._eventEditorVisible = false;
     this._eventEditorModal.nativeElement.close();
   }
 }

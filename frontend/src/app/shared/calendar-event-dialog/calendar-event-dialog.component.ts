@@ -28,9 +28,11 @@ import { AsyncPipe } from '@angular/common';
   styleUrl: './calendar-event-dialog.component.css',
 })
 export class CalendarEventDialogComponent {
-  @Input() public calendarEvent$!: Observable<CalendarEvent>;
+  @Input({ required: true }) public type!: 'add' | 'edit';
+  @Input({ required: true }) public calendarEvent!: CalendarEvent | null;
   @Output() public $cancelButtonClicked = new EventEmitter();
   @Output() public $submitButtonClicked = new EventEmitter();
+  @Output() public $deleteButtonClicked = new EventEmitter();
 
   public eventFormGroup: FormGroup = new FormGroup({
     title: new FormControl<string>('', [Validators.required]),
@@ -40,6 +42,34 @@ export class CalendarEventDialogComponent {
     color: new FormControl<string>('green', [Validators.required]),
     repeat: new FormControl<string>('None', [Validators.required]),
   });
+
+  ngOnChanges(): void {
+    if (this.type === 'edit') {
+      this.eventFormGroup = new FormGroup({
+        title: new FormControl<string>(this.calendarEvent?.title || '', [
+          Validators.required,
+        ]),
+        description: new FormControl<string>(
+          this.calendarEvent?.description || '',
+          [Validators.required]
+        ),
+        start: new FormControl<string>(
+          this.calendarEvent?.start.toString() || '',
+          [Validators.required]
+        ),
+        end: new FormControl<string>(
+          this.calendarEvent?.start.toString() || '',
+          [Validators.required]
+        ),
+        color: new FormControl<string>(this.calendarEvent?.color || 'green', [
+          Validators.required,
+        ]),
+        repeat: new FormControl<string>(this.calendarEvent?.repeat || 'None', [
+          Validators.required,
+        ]),
+      });
+    }
+  }
 
   public get repeatEveryEnabled$(): Observable<boolean> {
     return this.eventFormGroup.get('repeat')?.valueChanges.pipe(
