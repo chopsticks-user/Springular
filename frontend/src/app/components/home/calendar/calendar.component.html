@@ -20,12 +20,13 @@
       />
       <dialog #eventEditorModal (close)="closeEventEditor()">
         @if(eventEditorVisible){
-        <app-shared-calendar-event-dialog
+        <app-shared-calendar-event-editor
           [type]="eventEditorType"
           [calendarEvent]="selectedCalendarEvent"
+          ($submitButtonClicked)="submitCalendarEvent($event)"
           ($cancelButtonClicked)="closeEventEditor()"
-          ($deleteButtonClicked)="deleteCalendarEvent()"
-        ></app-shared-calendar-event-dialog>
+          ($deleteButtonClicked)="deleteCalendarEvent($event)"
+        ></app-shared-calendar-event-editor>
         }
       </dialog>
     </main>

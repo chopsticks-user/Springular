@@ -8,13 +8,13 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { CalendarEvent } from '@shared/types';
+import { CalendarEvent, EventEditorActions } from '@shared/types';
 import { Observable, map, startWith } from 'rxjs';
 import { MatSelectModule } from '@angular/material/select';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-shared-calendar-event-dialog',
+  selector: 'app-shared-calendar-event-editor',
   standalone: true,
   imports: [
     ReactiveFormsModule,
@@ -24,15 +24,15 @@ import { AsyncPipe } from '@angular/common';
     MatSelectModule,
     AsyncPipe,
   ],
-  templateUrl: './calendar-event-dialog.component.html',
-  styleUrl: './calendar-event-dialog.component.css',
+  templateUrl: './calendar-event-editor.component.html',
+  styleUrl: './calendar-event-editor.component.css',
 })
-export class CalendarEventDialogComponent {
-  @Input({ required: true }) public type!: 'add' | 'edit';
+export class CalendarEventEditorComponent {
+  @Input({ required: true }) public type!: EventEditorActions;
   @Input({ required: true }) public calendarEvent!: CalendarEvent | null;
-  @Output() public $cancelButtonClicked = new EventEmitter();
-  @Output() public $submitButtonClicked = new EventEmitter();
-  @Output() public $deleteButtonClicked = new EventEmitter();
+  @Output() public $cancelButtonClicked = new EventEmitter<void>();
+  @Output() public $submitButtonClicked = new EventEmitter<CalendarEvent>();
+  @Output() public $deleteButtonClicked = new EventEmitter<CalendarEvent>();
 
   public eventFormGroup: FormGroup = new FormGroup({
     title: new FormControl<string>('', [Validators.required]),
@@ -90,26 +90,27 @@ export class CalendarEventDialogComponent {
   }
 
   public submitEvent(): void {
-    if (this.eventFormGroup.valid) {
-      const calendarEvent: CalendarEvent = {
-        title: this.eventFormGroup.get('title')?.value,
-        description: this.eventFormGroup.get('description')?.value,
-        color: this.eventFormGroup.get('color')?.value,
-        start: this.eventFormGroup.get('start')?.value,
-        durationMinutes: 60,
-        repeat: this.eventFormGroup.get('repeat')?.value,
-      };
-
-      if (this.eventFormGroup.contains('repeatEvery')) {
-        calendarEvent.repeatEvery = {
-          value: 60,
-          unit: this.eventFormGroup.get('repeatEvery')?.value,
-        };
-      }
-
-      return console.log(calendarEvent);
+    if (!this.eventFormGroup.valid) {
+      // todo:
+      return;
     }
 
-    console.log('Invalid form');
+    const calendarEvent: CalendarEvent = {
+      title: this.eventFormGroup.get('title')?.value,
+      description: this.eventFormGroup.get('description')?.value,
+      color: this.eventFormGroup.get('color')?.value,
+      start: this.eventFormGroup.get('start')?.value,
+      durationMinutes: 60,
+      repeat: this.eventFormGroup.get('repeat')?.value,
+    };
+
+    if (this.eventFormGroup.contains('repeatEvery')) {
+      calendarEvent.repeatEvery = {
+        value: 60,
+        unit: this.eventFormGroup.get('repeatEvery')?.value,
+      };
+    }
+
+    this.$submitButtonClicked.emit(calendarEvent);
   }
 }

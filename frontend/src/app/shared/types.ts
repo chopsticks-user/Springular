@@ -70,3 +70,5 @@ export interface CalendarWeekDay {
   dayOfWeek: string;
   dayOfMonth: number;
 }
+
+export type EventEditorActions = 'add' | 'edit';
