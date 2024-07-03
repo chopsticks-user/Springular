@@ -16,11 +16,17 @@
       <app-home-calendar-week-view
         [calendarEvents$]="calendarEvents$"
         [weekDays$]="currentWeekDays$"
+        ($eventClicked)="openEventEditor($event)"
       />
-      <dialog #eventEditorModal>
+      <dialog #eventEditorModal (close)="closeEventEditor()">
+        @if(eventEditorVisible){
         <app-shared-calendar-event-dialog
+          [type]="eventEditorType"
+          [calendarEvent]="selectedCalendarEvent"
           ($cancelButtonClicked)="closeEventEditor()"
+          ($deleteButtonClicked)="deleteCalendarEvent()"
         ></app-shared-calendar-event-dialog>
+        }
       </dialog>
     </main>
   </div>

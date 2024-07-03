@@ -92,6 +92,7 @@
   }
   <div class="button-container">
     <button type="submit">Submit</button>
+    <button (click)="$deleteButtonClicked.emit()" type="button">Delete</button>
     <button (click)="$cancelButtonClicked.emit()" type="button">Cancel</button>
   </div>
 </form>
