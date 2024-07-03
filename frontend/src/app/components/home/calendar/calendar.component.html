@@ -18,9 +18,11 @@
         [weekDays$]="currentWeekDays$"
       />
       <dialog #eventEditorModal>
+        @if(eventEditorVisible$ | async){
         <app-shared-calendar-event-dialog
           ($cancelButtonClicked)="closeEventEditor()"
         ></app-shared-calendar-event-dialog>
+        }
       </dialog>
     </main>
   </div>

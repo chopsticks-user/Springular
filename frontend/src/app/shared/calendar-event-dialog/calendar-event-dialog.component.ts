@@ -38,7 +38,7 @@ export class CalendarEventDialogComponent {
     start: new FormControl<string>('', [Validators.required]),
     end: new FormControl<string>('', [Validators.required]),
     color: new FormControl<string>('green', [Validators.required]),
-    repeat: new FormControl<string>('None', []),
+    repeat: new FormControl<string>('None', [Validators.required]),
   });
 
   public get repeatEveryEnabled$(): Observable<boolean> {

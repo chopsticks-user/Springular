@@ -30,6 +30,7 @@ export class CalendarComponent {
 
   @ViewChild('eventEditorModal', { static: true })
   private _eventEditorModal!: ElementRef<HTMLDialogElement>;
+  private $eventEditorVisible = new BehaviorSubject<boolean>(false);
 
   public currentFirstDayOfWeek$: Observable<DateTime> = this.$currentTime.pipe(
     map((currentTime) => currentTime.startOf('week').toLocal())
@@ -97,6 +98,10 @@ export class CalendarComponent {
     ]
   );
 
+  public get eventEditorVisible$(): Observable<boolean> {
+    return this.$eventEditorVisible.asObservable();
+  }
+
   public get today(): Observable<string> {
     return this.$today.pipe(
       map((today) => today.toLocaleString(DateTime.DATETIME_MED))
@@ -120,10 +125,12 @@ export class CalendarComponent {
   }
 
   public openEventEditor() {
+    this.$eventEditorVisible.next(true);
     this._eventEditorModal.nativeElement.showModal();
   }
 
   public closeEventEditor() {
+    this.$eventEditorVisible.next(false);
     this._eventEditorModal.nativeElement.close();
   }
 }
