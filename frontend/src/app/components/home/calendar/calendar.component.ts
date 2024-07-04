@@ -8,7 +8,7 @@ import { BehaviorSubject, Observable, map, of } from 'rxjs';
 import {
   CalendarEvent,
   CalendarWeekDay,
-  EventEditorActions,
+  EventEditorTypes,
 } from '@shared/types';
 import { AsyncPipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
@@ -35,7 +35,7 @@ export class CalendarComponent {
   private $currentTime = new BehaviorSubject<DateTime>(DateTime.local());
   private _selectedCalendarEvent: CalendarEvent | null = null;
   private _eventEditorVisible: boolean = false;
-  private _eventEditorType: EventEditorActions = 'add';
+  private _eventEditorType: EventEditorTypes = 'add';
 
   public currentFirstDayOfWeek$: Observable<DateTime> = this.$currentTime.pipe(
     map((currentTime) => currentTime.startOf('week').toLocal())
@@ -111,7 +111,7 @@ export class CalendarComponent {
     return this._selectedCalendarEvent;
   }
 
-  public get eventEditorType(): EventEditorActions {
+  public get eventEditorType(): EventEditorTypes {
     return this._eventEditorType;
   }
 

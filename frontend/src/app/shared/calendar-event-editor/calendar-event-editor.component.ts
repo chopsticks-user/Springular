@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -8,10 +8,16 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { CalendarEvent, EventEditorActions } from '@shared/types';
+import {
+  CalendarEvent,
+  CalendarEventRepeat,
+  CalendarEventRepeatEveryUnit,
+  EventEditorTypes,
+} from '@shared/types';
 import { Observable, map, startWith } from 'rxjs';
 import { MatSelectModule } from '@angular/material/select';
 import { AsyncPipe } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-shared-calendar-event-editor',
@@ -23,12 +29,13 @@ import { AsyncPipe } from '@angular/common';
     MatIconModule,
     MatSelectModule,
     AsyncPipe,
+    MatButtonModule,
   ],
   templateUrl: './calendar-event-editor.component.html',
   styleUrl: './calendar-event-editor.component.css',
 })
 export class CalendarEventEditorComponent {
-  @Input({ required: true }) public type!: EventEditorActions;
+  @Input({ required: true }) public type!: EventEditorTypes;
   @Input({ required: true }) public calendarEvent!: CalendarEvent | null;
   @Output() public $cancelButtonClicked = new EventEmitter<void>();
   @Output() public $submitButtonClicked = new EventEmitter<CalendarEvent>();
@@ -37,8 +44,8 @@ export class CalendarEventEditorComponent {
   public eventFormGroup: FormGroup = new FormGroup({
     title: new FormControl<string>('', [Validators.required]),
     description: new FormControl<string>('', [Validators.required]),
-    start: new FormControl<string>('', [Validators.required]),
-    end: new FormControl<string>('', [Validators.required]),
+    start: new FormControl<Date | null>(null, [Validators.required]),
+    duration: new FormControl<number>(15, [Validators.required]),
     color: new FormControl<string>('green', [Validators.required]),
     repeat: new FormControl<string>('None', [Validators.required]),
   });
@@ -57,8 +64,8 @@ export class CalendarEventEditorComponent {
           this.calendarEvent?.start.toString() || '',
           [Validators.required]
         ),
-        end: new FormControl<string>(
-          this.calendarEvent?.start.toString() || '',
+        duration: new FormControl<number>(
+          this.calendarEvent?.durationMinutes || 15,
           [Validators.required]
         ),
         color: new FormControl<string>(this.calendarEvent?.color || 'green', [
@@ -81,8 +88,12 @@ export class CalendarEventEditorComponent {
         }
 
         this.eventFormGroup.addControl(
-          'repeatEvery',
-          new FormControl<string>('', [Validators.required])
+          'repeatEveryUnit',
+          new FormControl<string>('weeks', [Validators.required])
+        );
+        this.eventFormGroup.addControl(
+          'repeatEveryValue',
+          new FormControl<number>(1, [Validators.required])
         );
         return true;
       })
@@ -96,18 +107,22 @@ export class CalendarEventEditorComponent {
     }
 
     const calendarEvent: CalendarEvent = {
-      title: this.eventFormGroup.get('title')?.value,
-      description: this.eventFormGroup.get('description')?.value,
-      color: this.eventFormGroup.get('color')?.value,
-      start: this.eventFormGroup.get('start')?.value,
-      durationMinutes: 60,
-      repeat: this.eventFormGroup.get('repeat')?.value,
+      title: this.eventFormGroup.get('title')?.value as string,
+      description: this.eventFormGroup.get('description')?.value as string,
+      color: this.eventFormGroup.get('color')?.value as string,
+      start: this.eventFormGroup.get('start')?.value as Date,
+      durationMinutes: this.eventFormGroup.get('duration')?.value as number,
+      repeat: this.eventFormGroup.get('repeat')?.value as CalendarEventRepeat,
     };
 
-    if (this.eventFormGroup.contains('repeatEvery')) {
+    if (
+      this.eventFormGroup.contains('repeatEveryValue') &&
+      this.eventFormGroup.contains('repeatEveryUnit')
+    ) {
       calendarEvent.repeatEvery = {
-        value: 60,
-        unit: this.eventFormGroup.get('repeatEvery')?.value,
+        value: this.eventFormGroup.get('repeatEveryValue')?.value as number,
+        unit: this.eventFormGroup.get('repeatEveryUnit')
+          ?.value as CalendarEventRepeatEveryUnit,
       };
     }
 
