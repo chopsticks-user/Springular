@@ -28,19 +28,19 @@
         style="color: var(--foreground-light)"
         formControlName="start"
         matInput
+        type="datetime-local"
       />
-      <mat-icon matSuffix>badge</mat-icon>
     </mat-form-field>
   </p>
   <p>
     <mat-form-field appearance="outline" color="primary">
-      <mat-label>End</mat-label>
+      <mat-label>Duration (minutes)</mat-label>
       <input
         style="color: var(--foreground-light)"
-        formControlName="end"
+        formControlName="duration"
         matInput
       />
-      <mat-icon matSuffix>badge</mat-icon>
+      <mat-icon matSuffix>timer</mat-icon>
     </mat-form-field>
   </p>
   <p>
@@ -50,8 +50,9 @@
         style="color: var(--foreground-light)"
         formControlName="color"
         matInput
+        type="color"
       />
-      <mat-icon matSuffix>badge</mat-icon>
+      <mat-icon matSuffix>palette</mat-icon>
     </mat-form-field>
   </p>
   <p>
@@ -62,12 +63,12 @@
         formControlName="repeat"
         matNativeControl
       >
-        <option>None</option>
-        <option>Daily</option>
-        <option>Weekly</option>
-        <option>Monthly</option>
-        <option>Yearly</option>
-        <option>Custom</option>
+        <option>none</option>
+        <option>daily</option>
+        <option>weekly</option>
+        <option>monthly</option>
+        <option>yearly</option>
+        <option>custom</option>
       </select>
       <mat-icon matSuffix>badge</mat-icon>
     </mat-form-field>
@@ -76,23 +77,40 @@
   <p>
     <mat-form-field appearance="outline" color="primary">
       <mat-label>Repeat every</mat-label>
-      <select
-        style="color: var(--foreground-light)"
-        formControlName="repeatEvery"
-        matNativeControl
-      >
-        <option>days</option>
-        <option>weeks</option>
-        <option>months</option>
-        <option>years</option>
-      </select>
+      <div style="display: flex">
+        <input
+          style="color: var(--foreground-light)"
+          matInput
+          formControlName="repeatEveryValue"
+        />
+        <select
+          style="color: var(--foreground-light)"
+          formControlName="repeatEveryUnit"
+          matNativeControl
+        >
+          <option>days</option>
+          <option>weeks</option>
+          <option>months</option>
+          <option>years</option>
+        </select>
+      </div>
       <mat-icon matSuffix>badge</mat-icon>
     </mat-form-field>
   </p>
   }
   <div class="button-container">
-    <button type="submit">Submit</button>
-    <button (click)="$deleteButtonClicked.emit()" type="button">Delete</button>
-    <button (click)="$cancelButtonClicked.emit()" type="button">Cancel</button>
+    <button mat-flat-button type="submit">Submit</button>
+    <button mat-flat-button (click)="$cancelButtonClicked.emit()" type="button">
+      Cancel
+    </button>
+    @if(type === "edit" && calendarEvent){
+    <button
+      mat-flat-button
+      (click)="$deleteButtonClicked.emit(calendarEvent)"
+      type="button"
+    >
+      Delete
+    </button>
+    }
   </div>
 </form>
