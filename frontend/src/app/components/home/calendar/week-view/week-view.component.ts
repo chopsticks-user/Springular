@@ -34,13 +34,16 @@ export class CalendarWeekViewComponent {
           return [];
         }
 
-        return calendarEvents
-          .filter(
-            (event) =>
-              event.start.getDate() === dayOfMonth &&
-              event.start.getHours() === hour
-          )
-          .sort((a, b) => a.start.valueOf() - b.start.valueOf());
+        return calendarEvents;
+
+        // todo: start must be a string
+        // return calendarEvents
+        //   .filter(
+        //     (event) =>
+        //       event.start.getDate() === dayOfMonth &&
+        //       event.start.getHours() === hour
+        //   )
+        //   .sort((a, b) => a.start.valueOf() - b.start.valueOf());
       })
     );
   }

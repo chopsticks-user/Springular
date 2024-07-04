@@ -54,53 +54,7 @@ export class CalendarComponent {
     );
   public calendarEvents$ = of<CalendarEvent[]>(
     // todo: events should be sorted
-    [
-      {
-        id: '0',
-        title: 'Event',
-        description: '',
-        start: new Date(2024, 6, 28, 6, 30),
-        durationMinutes: 30,
-        repeat: 'none',
-        color: 'green',
-      },
-      {
-        id: '1',
-        title: 'Event',
-        description: '',
-        start: new Date(2024, 6, 27, 15, 45),
-        durationMinutes: 60,
-        repeat: 'none',
-        color: 'yellow',
-      },
-      {
-        id: '2',
-        title: 'Event',
-        description: '',
-        start: new Date(2024, 6, 28, 15, 15),
-        durationMinutes: 15,
-        repeat: 'none',
-        color: 'red',
-      },
-      {
-        id: '3',
-        title: 'Event',
-        description: '',
-        start: new Date(2024, 6, 28, 15),
-        durationMinutes: 5,
-        repeat: 'none',
-        color: 'blue',
-      },
-      {
-        id: '4',
-        title: 'Event',
-        description: '',
-        start: new Date(2024, 6, 27, 15, 5),
-        durationMinutes: 10,
-        repeat: 'none',
-        color: 'orange',
-      },
-    ]
+    []
   );
 
   public get eventEditorVisible(): boolean {
