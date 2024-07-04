@@ -51,7 +51,7 @@ export class CalendarEventEditorComponent {
     ),
     duration: new FormControl<number>(15, [Validators.required]),
     color: new FormControl<string>('#7cfc00', [Validators.required]),
-    repeat: new FormControl<string>('None', [Validators.required]),
+    repeat: new FormControl<CalendarEventRepeat>('none', [Validators.required]),
   });
 
   ngOnChanges(): void {
@@ -65,7 +65,7 @@ export class CalendarEventEditorComponent {
           [Validators.required]
         ),
         start: new FormControl<string>(
-          this.calendarEvent?.start ||
+          this._formatDate(this.calendarEvent?.start) ||
             this._formatDate(DateTime.local().toJSDate()),
           [Validators.required]
         ),
@@ -76,9 +76,10 @@ export class CalendarEventEditorComponent {
         color: new FormControl<string>(this.calendarEvent?.color || 'green', [
           Validators.required,
         ]),
-        repeat: new FormControl<string>(this.calendarEvent?.repeat || 'none', [
-          Validators.required,
-        ]),
+        repeat: new FormControl<CalendarEventRepeat>(
+          this.calendarEvent?.repeat || 'none',
+          [Validators.required]
+        ),
       });
     }
   }
@@ -94,7 +95,9 @@ export class CalendarEventEditorComponent {
 
         this.eventFormGroup.addControl(
           'repeatEveryUnit',
-          new FormControl<string>('weeks', [Validators.required])
+          new FormControl<CalendarEventRepeatEveryUnit>('weeks', [
+            Validators.required,
+          ])
         );
         this.eventFormGroup.addControl(
           'repeatEveryValue',
@@ -115,7 +118,7 @@ export class CalendarEventEditorComponent {
       title: this.eventFormGroup.get('title')?.value as string,
       description: this.eventFormGroup.get('description')?.value as string,
       color: this.eventFormGroup.get('color')?.value as string,
-      start: this.eventFormGroup.get('start')?.value as string,
+      start: new Date(this.eventFormGroup.get('start')?.value as string),
       durationMinutes: this.eventFormGroup.get('duration')?.value as number,
       repeat: this.eventFormGroup.get('repeat')?.value as CalendarEventRepeat,
     };
@@ -134,7 +137,11 @@ export class CalendarEventEditorComponent {
     this.$submitButtonClicked.emit(calendarEvent);
   }
 
-  private _formatDate(date: Date): string {
+  private _formatDate(date?: Date): string {
+    if (!date) {
+      date = new Date();
+    }
+
     const padZero = (num: number) => (num < 10 ? `0${num}` : `${num}`);
 
     const year = date.getFullYear();

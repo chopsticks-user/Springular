@@ -7,7 +7,7 @@
         formControlName="title"
         matInput
       />
-      <mat-icon matSuffix>badge</mat-icon>
+      <mat-icon matSuffix>title</mat-icon>
     </mat-form-field>
   </p>
   <p>
@@ -18,7 +18,7 @@
         formControlName="description"
         matInput
       />
-      <mat-icon matSuffix>badge</mat-icon>
+      <mat-icon matSuffix>description</mat-icon>
     </mat-form-field>
   </p>
   <p>
@@ -70,7 +70,7 @@
         <option>yearly</option>
         <option>custom</option>
       </select>
-      <mat-icon matSuffix>badge</mat-icon>
+      <mat-icon matSuffix>event_repeat</mat-icon>
     </mat-form-field>
   </p>
   @if(repeatEveryEnabled$ | async){
@@ -94,7 +94,7 @@
           <option>years</option>
         </select>
       </div>
-      <mat-icon matSuffix>badge</mat-icon>
+      <mat-icon matSuffix>repeat</mat-icon>
     </mat-form-field>
   </p>
   }

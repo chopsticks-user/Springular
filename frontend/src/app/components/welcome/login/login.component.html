@@ -6,8 +6,8 @@
         <input
           style="color: var(--text-color)"
           formControlName="email"
+          type="email"
           matInput
-          required
         />
         <mat-icon matSuffix>mail</mat-icon>
         @if(emailInvalid){
@@ -26,7 +26,6 @@
           matInput
           [type]="hidePassword ? 'password' : 'text'"
           formControlName="password"
-          required
           style="color: var(--text-color)"
         />
         <mat-icon matSuffix (click)="hidePassword = !hidePassword">

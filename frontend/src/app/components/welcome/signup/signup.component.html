@@ -39,6 +39,7 @@
           style="color: var(--text-color)"
           formControlName="dateOfBirth"
           matInput
+          type="date"
         />
         <mat-icon matSuffix>calendar_month</mat-icon>
         @if(dateOfBirthInvalid){
@@ -74,7 +75,6 @@
           matInput
           [type]="hidePassword ? 'password' : 'text'"
           formControlName="password"
-          required
         />
         <mat-icon matSuffix (click)="hidePassword = !hidePassword">
           {{ hidePassword ? "visibility_off" : "visibility" }}

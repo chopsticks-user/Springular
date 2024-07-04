@@ -32,11 +32,11 @@ export class SignupComponent implements OnInit {
   public hidePassword = true;
   public signupStatus: string = '';
   public signupFormGroup: FormGroup = new FormGroup({
-    firstName: new FormControl('', [Validators.required]),
-    lastName: new FormControl('', [Validators.required]),
-    dateOfBirth: new FormControl('', [Validators.required]), // TODO: custom validator
-    email: new FormControl('', [Validators.email, Validators.required]),
-    password: new FormControl('', [
+    firstName: new FormControl<string>('', [Validators.required]),
+    lastName: new FormControl<string>('', [Validators.required]),
+    dateOfBirth: new FormControl<Date>(new Date(), [Validators.required]), // TODO: custom validator
+    email: new FormControl<string>('', [Validators.email, Validators.required]),
+    password: new FormControl<string>('', [
       Validators.required,
       Validators.minLength(3),
     ]),
