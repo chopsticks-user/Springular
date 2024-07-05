@@ -24,7 +24,7 @@ public class CalendarEventDto {
     @NoArgsConstructor
     public static class RepeatEvery {
         public static enum Unit {
-            day, week, month, year
+            days, weeks, months, years
         }
 
         private int value;
@@ -39,4 +39,5 @@ public class CalendarEventDto {
     private int durationMinutes;
     private Repeat repeat;
     private RepeatEvery repeatEvery;
+    private String userId;
 }

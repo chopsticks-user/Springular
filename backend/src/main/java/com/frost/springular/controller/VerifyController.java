@@ -14,7 +14,6 @@ import com.frost.springular.exception.JwtRefreshTokenExpiredException;
 import com.frost.springular.service.JwtRefreshTokenService;
 
 @RestController
-// @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/verify")
 public class VerifyController {
     private final JwtRefreshTokenService jwtRefreshTokenService;
