@@ -22,6 +22,8 @@ import com.frost.springular.service.AuthService;
 import com.frost.springular.service.JwtAccessTokenService;
 import com.frost.springular.service.JwtRefreshTokenService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -39,7 +41,8 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<JwtTokenResponseDto> authenticate(@RequestBody LoginRequestDTO loginInfo) {
+    public ResponseEntity<JwtTokenResponseDto> authenticate(
+            @Valid @RequestBody LoginRequestDTO loginInfo) {
         UserEntity authenticatedUser = authService.authenticate(loginInfo);
         var refreshToken = jwtRefreshTokenService.generateToken(authenticatedUser.getUsername());
         var response = new JwtTokenResponseDto(
@@ -49,17 +52,18 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<UserEntity> register(@RequestBody SignupRequestDTO signupInfo)
+    public ResponseEntity<UserEntity> register(
+            @Valid @RequestBody SignupRequestDTO signupInfo)
             throws DuplicatedEmailException {
         return ResponseEntity.ok(authService.register(signupInfo));
     }
 
     @PostMapping("/refresh")
     public ResponseEntity<JwtTokenResponseDto> refreshAccessToken(
-            @RequestBody JwtRefreshTokenRequestDto request)
+            @Valid @RequestBody JwtRefreshTokenRequestDto request)
             throws JwtRefreshTokenExpiredException {
         JwtRefreshTokenEntity refreshToken = jwtRefreshTokenService
-                .findByToken(request.refreshToken()).orElse(null);
+                .findByToken(request.getRefreshToken()).orElse(null);
 
         if (refreshToken == null) {
             throw new JwtRefreshTokenExpiredException();

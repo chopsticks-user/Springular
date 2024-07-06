@@ -1,6 +1,7 @@
 package com.frost.springular.entity;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public final class UserEntity implements UserDetails {
 
     // TODO: dob should be of type Date
     @Column(nullable = false)
-    private String dateOfBirth;
+    private LocalDate dateOfBirth;
 
     @Column(nullable = false, unique = true)
     private String email;

@@ -27,24 +27,25 @@ public class AuthService {
 
     public UserEntity register(SignupRequestDTO signupDTO)
             throws DuplicatedEmailException {
-        if (userRepository.findByEmail(signupDTO.email()).isPresent()) {
+        if (userRepository.findByEmail(signupDTO.getEmail()).isPresent()) {
             throw new DuplicatedEmailException();
         }
 
         return userRepository.save(
                 UserEntity.builder()
-                        .firstName(signupDTO.firstName())
-                        .lastName(signupDTO.lastName())
-                        .dateOfBirth(signupDTO.dateOfBirth())
-                        .email(signupDTO.email())
-                        .password(passwordEncoder.encode(signupDTO.password()))
+                        .firstName(signupDTO.getFirstName())
+                        .lastName(signupDTO.getLastName())
+                        .dateOfBirth(signupDTO.getDateOfBirth())
+                        .email(signupDTO.getEmail())
+                        .password(passwordEncoder.encode(signupDTO.getPassword()))
                         .build());
     }
 
     public UserEntity authenticate(LoginRequestDTO loginDto) {
         // TODO: implement business logic for dto objects
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginDto.email(), loginDto.password()));
-        return userRepository.findByEmail(loginDto.email()).orElseThrow();
+                new UsernamePasswordAuthenticationToken(
+                        loginDto.getEmail(), loginDto.getPassword()));
+        return userRepository.findByEmail(loginDto.getEmail()).orElseThrow();
     }
 }

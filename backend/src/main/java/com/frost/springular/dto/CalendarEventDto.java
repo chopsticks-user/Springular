@@ -2,24 +2,24 @@ package com.frost.springular.dto;
 
 import java.time.Instant;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+@Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class CalendarEventDto {
     public static enum Repeat {
         daily, weekly, monthly, yearly, custom, none
     }
 
-    @Getter
-    @Setter
+    @Data
     @AllArgsConstructor
     @NoArgsConstructor
     public static class RepeatEvery {
@@ -32,12 +32,27 @@ public class CalendarEventDto {
     }
 
     private String id;
+
+    @NotBlank(message = "Title is required.")
+    @Size(max = 50, message = "Title must be at most 50 characters.")
     private String title;
+
+    @Size(max = 200, message = "Description must be at most 200 characters.")
     private String description;
+
+    @NotBlank(message = "Color is required.")
+    @Pattern(regexp = "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$", message = "Invalid color hex code.")
     private String color;
+
+    @NotBlank(message = "Start time is required.")
     private Instant start;
+
+    @NotBlank(message = "Duration is required.")
     private int durationMinutes;
-    private Repeat repeat;
-    private RepeatEvery repeatEvery;
-    private String userId;
+
+    @Builder.Default()
+    private Repeat repeat = Repeat.none;
+
+    @Builder.Default()
+    private RepeatEvery repeatEvery = null;
 }

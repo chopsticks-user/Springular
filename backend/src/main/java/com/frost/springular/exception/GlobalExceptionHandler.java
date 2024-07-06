@@ -11,6 +11,11 @@ import io.jsonwebtoken.security.SignatureException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AccountStatusException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+
+import java.time.format.DateTimeParseException;
+
+import org.springframework.http.converter.HttpMessageConversionException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -20,27 +25,35 @@ public class GlobalExceptionHandler {
         exception.printStackTrace();
 
         return switch (exception) {
+            case DateTimeParseException e ->
+                createHttpProblemDetail(400, e, "Invalid date format");
+            case MethodArgumentNotValidException e ->
+                createHttpProblemDetail(400, e,
+                        e.getBindingResult().getFieldError().getDefaultMessage());
             case JwtRefreshTokenExpiredException e ->
-                createHttpProblemDetail(401, exception, "Refresh token expired");
+                createHttpProblemDetail(401, e, "Refresh token expired");
             case DuplicatedEmailException e ->
-                createHttpProblemDetail(409, exception, "Email address already in use");
+                createHttpProblemDetail(409, e, "Email address already in use");
             case BadCredentialsException e ->
-                createHttpProblemDetail(401, exception, "Email or password is incorrect");
+                createHttpProblemDetail(401, e, "Email or password is incorrect");
             case ExpiredJwtException e ->
-                createHttpProblemDetail(401, exception, "JWT token has expired");
+                createHttpProblemDetail(401, e, "JWT token has expired");
             case SignatureException e ->
-                createHttpProblemDetail(403, exception, "Invalid JWT signature");
+                createHttpProblemDetail(403, e, "Invalid JWT signature");
             case AccessDeniedException e ->
-                createHttpProblemDetail(403, exception, "You are not authorized to access this resource");
+                createHttpProblemDetail(403, e, "You are not authorized to access this resource");
             case AccountStatusException e ->
-                createHttpProblemDetail(403, exception, "Your account is locked");
-            default -> createHttpProblemDetail(500, exception, "Unknown internal server error");
+                createHttpProblemDetail(403, e, "Your account is locked");
+            case HttpMessageConversionException e ->
+                createHttpProblemDetail(400, e, "Invalid http request format");
+            default -> createHttpProblemDetail(
+                    500, exception, "Unknown internal server error");
         };
     }
 
     private static ProblemDetail createHttpProblemDetail(int statusCode, Exception exception, String description) {
-        ProblemDetail detail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(statusCode),
-                exception.getMessage());
+        ProblemDetail detail = ProblemDetail.forStatusAndDetail(
+                HttpStatusCode.valueOf(statusCode), exception.getMessage());
         detail.setProperty("description", description);
         return detail;
     }
