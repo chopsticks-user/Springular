@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import com.frost.springular.dto.JwtAccessTokenDTO;
+import com.frost.springular.object.response.AccessTokenResponse;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -21,7 +21,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
 @Service
-public class JwtAccessTokenService {
+public class AccessTokenService {
     @Value("${security.jwt.secret-key}")
     private String secretKey;
 
@@ -36,14 +36,14 @@ public class JwtAccessTokenService {
         return extractClaim(token, Claims::getSubject);
     }
 
-    public JwtAccessTokenDTO generateToken(UserDetails userDetails) {
+    public AccessTokenResponse generateToken(UserDetails userDetails) {
         return generateToken(new HashMap<>(), userDetails);
     }
 
-    public JwtAccessTokenDTO generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+    public AccessTokenResponse generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
         Date expirationDate = new Date(System.currentTimeMillis() + jwtExpiration);
 
-        return new JwtAccessTokenDTO(
+        return new AccessTokenResponse(
                 Jwts.builder()
                         .claims()
                         .add(extraClaims)

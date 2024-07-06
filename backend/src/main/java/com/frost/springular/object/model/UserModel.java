@@ -1,4 +1,4 @@
-package com.frost.springular.entity;
+package com.frost.springular.object.model;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public final class UserEntity implements UserDetails {
+public final class UserModel implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(nullable = false, updatable = false, unique = true)

@@ -1,4 +1,4 @@
-package com.frost.springular.exception;
+package com.frost.springular.object.exception;
 
 public class JwtRefreshTokenExpiredException extends Exception {
     public JwtRefreshTokenExpiredException() {

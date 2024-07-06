@@ -1,4 +1,4 @@
-package com.frost.springular.dto;
+package com.frost.springular.object.request;
 
 import java.time.Instant;
 
@@ -17,7 +17,7 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CalendarEventDto {
+public class CalendarEventRequest {
     @ToString
     public static enum Repeat {
         daily, weekly, monthly, yearly, custom, none

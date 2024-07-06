@@ -1,8 +1,8 @@
-package com.frost.springular.dto;
+package com.frost.springular.object.response;
 
 import java.time.LocalDate;
 
-import com.frost.springular.entity.UserEntity;
+import com.frost.springular.object.model.UserModel;
 
 import java.sql.Date;
 
@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserInfoResponseDto {
+public class UserInfoResponse {
     private String id;
     private String firstName;
     private String lastName;
@@ -23,7 +23,7 @@ public class UserInfoResponseDto {
     private String email;
     private Date createdAt;
 
-    public UserInfoResponseDto(UserEntity userEntity) {
+    public UserInfoResponse(UserModel userEntity) {
         id = userEntity.getId();
         firstName = userEntity.getFirstName();
         lastName = userEntity.getLastName();

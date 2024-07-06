@@ -7,33 +7,33 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.frost.springular.dto.JwtRefreshTokenRequestDto;
-import com.frost.springular.entity.JwtRefreshTokenEntity;
-import com.frost.springular.entity.UserEntity;
-import com.frost.springular.exception.JwtRefreshTokenExpiredException;
-import com.frost.springular.service.JwtRefreshTokenService;
+import com.frost.springular.object.exception.JwtRefreshTokenExpiredException;
+import com.frost.springular.object.model.RefreshTokenModel;
+import com.frost.springular.object.model.UserModel;
+import com.frost.springular.object.request.RefreshTokenRequest;
+import com.frost.springular.service.RefreshTokenService;
 
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/verify")
 public class VerifyController {
-    private final JwtRefreshTokenService jwtRefreshTokenService;
+    private final RefreshTokenService jwtRefreshTokenService;
 
-    public VerifyController(JwtRefreshTokenService jwtRefreshTokenService) {
+    public VerifyController(RefreshTokenService jwtRefreshTokenService) {
         this.jwtRefreshTokenService = jwtRefreshTokenService;
     }
 
     @PostMapping({ "", "/" })
-    public void verify(@Valid @RequestBody JwtRefreshTokenRequestDto request)
+    public void verify(@Valid @RequestBody RefreshTokenRequest request)
             throws JwtRefreshTokenExpiredException {
         // todo: extract user from header
-        var currentUser = (UserEntity) SecurityContextHolder
+        var currentUser = (UserModel) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
 
-        JwtRefreshTokenEntity currentUserRefreshToken = jwtRefreshTokenService
+        RefreshTokenModel currentUserRefreshToken = jwtRefreshTokenService
                 .findByToken(request.getRefreshToken())
                 // user already logged out
                 .orElseThrow(() -> new JwtRefreshTokenExpiredException());

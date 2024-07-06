@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.frost.springular.dto.UserInfoResponseDto;
-import com.frost.springular.entity.UserEntity;
+import com.frost.springular.object.model.UserModel;
+import com.frost.springular.object.response.UserInfoResponse;
 import com.frost.springular.service.UserService;
 
 @RestController
@@ -24,8 +24,8 @@ public class UsersController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<UserInfoResponseDto> authenticatedUser() {
-        var currentUser = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return ResponseEntity.ok(new UserInfoResponseDto(currentUser));
+    public ResponseEntity<UserInfoResponse> authenticatedUser() {
+        var currentUser = (UserModel) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return ResponseEntity.ok(new UserInfoResponse(currentUser));
     }
 }

@@ -1,4 +1,4 @@
-package com.frost.springular.dto;
+package com.frost.springular.object.request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class JwtRefreshTokenRequestDto {
+public class RefreshTokenRequest {
     @NotBlank()
     private String refreshToken;
 }

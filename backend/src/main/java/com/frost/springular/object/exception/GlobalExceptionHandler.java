@@ -1,4 +1,4 @@
-package com.frost.springular.exception;
+package com.frost.springular.object.exception;
 
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ProblemDetail;
