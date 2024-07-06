@@ -25,6 +25,8 @@ public class GlobalExceptionHandler {
         exception.printStackTrace();
 
         return switch (exception) {
+            case CustomRepeatIntervalException e ->
+                createHttpProblemDetail(400, e, e.getMessage());
             case DateTimeParseException e ->
                 createHttpProblemDetail(400, e, "Invalid date format");
             case MethodArgumentNotValidException e ->

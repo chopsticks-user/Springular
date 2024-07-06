@@ -3,18 +3,22 @@ package com.frost.springular.dto;
 import java.time.Instant;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class CalendarEventDto {
+    @ToString
     public static enum Repeat {
         daily, weekly, monthly, yearly, custom, none
     }
@@ -23,6 +27,7 @@ public class CalendarEventDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class RepeatEvery {
+        @ToString
         public static enum Unit {
             days, weeks, months, years
         }
@@ -44,10 +49,10 @@ public class CalendarEventDto {
     @Pattern(regexp = "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$", message = "Invalid color hex code.")
     private String color;
 
-    @NotBlank(message = "Start time is required.")
+    @NotNull(message = "Start time is required.")
     private Instant start;
 
-    @NotBlank(message = "Duration is required.")
+    @Positive(message = "Duration is required.")
     private int durationMinutes;
 
     @Builder.Default()

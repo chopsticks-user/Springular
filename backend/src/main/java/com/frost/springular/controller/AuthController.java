@@ -14,6 +14,7 @@ import com.frost.springular.dto.JwtRefreshTokenDTO;
 import com.frost.springular.dto.JwtRefreshTokenRequestDto;
 import com.frost.springular.dto.JwtTokenResponseDto;
 import com.frost.springular.dto.SignupRequestDTO;
+import com.frost.springular.dto.UserInfoResponseDto;
 import com.frost.springular.entity.JwtRefreshTokenEntity;
 import com.frost.springular.entity.UserEntity;
 import com.frost.springular.exception.DuplicatedEmailException;
@@ -52,10 +53,11 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<UserEntity> register(
+    public ResponseEntity<UserInfoResponseDto> register(
             @Valid @RequestBody SignupRequestDTO signupInfo)
             throws DuplicatedEmailException {
-        return ResponseEntity.ok(authService.register(signupInfo));
+        return ResponseEntity.ok(
+                new UserInfoResponseDto(authService.register(signupInfo)));
     }
 
     @PostMapping("/refresh")
