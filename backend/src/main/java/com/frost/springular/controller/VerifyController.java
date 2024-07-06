@@ -27,6 +27,7 @@ public class VerifyController {
     @PostMapping({ "", "/" })
     public void verify(@Valid @RequestBody JwtRefreshTokenRequestDto request)
             throws JwtRefreshTokenExpiredException {
+        // todo: extract user from header
         var currentUser = (UserEntity) SecurityContextHolder
                 .getContext()
                 .getAuthentication()

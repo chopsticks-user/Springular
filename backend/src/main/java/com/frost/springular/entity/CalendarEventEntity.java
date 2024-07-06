@@ -8,10 +8,13 @@ import com.frost.springular.dto.CalendarEventDto.RepeatEvery.Unit;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -47,15 +50,17 @@ public class CalendarEventEntity {
     private int durationMinutes;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Repeat repeat;
 
-    @Column()
-    private int repeatEveryValue;
+    @Column
+    private Integer repeatEveryValue;
 
-    @Column()
+    @Column
+    @Enumerated(EnumType.STRING)
     private Unit repeatEveryUnit;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, unique = true)
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private UserEntity userEntity;
 }
