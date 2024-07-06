@@ -3,6 +3,7 @@ package com.frost.springular.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.frost.springular.entity.UserEntity;
@@ -21,5 +22,13 @@ public class UserService {
         var users = new ArrayList<UserEntity>();
         userRepository.findAll().forEach(users::add);
         return users;
+    }
+
+    public UserEntity getCurrentUser() {
+        // todo: null exception
+        return (UserEntity) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
     }
 }

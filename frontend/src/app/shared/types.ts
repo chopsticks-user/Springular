@@ -60,7 +60,7 @@ export interface CalendarEvent {
   title: string;
   description: string;
   color: string;
-  start: string;
+  start: Date;
   durationMinutes: number;
   repeat: CalendarEventRepeat;
   repeatEvery?: CalendarEventRepeatEvery;

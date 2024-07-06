@@ -13,8 +13,9 @@ import com.frost.springular.entity.UserEntity;
 import com.frost.springular.exception.JwtRefreshTokenExpiredException;
 import com.frost.springular.service.JwtRefreshTokenService;
 
+import jakarta.validation.Valid;
+
 @RestController
-// @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/verify")
 public class VerifyController {
     private final JwtRefreshTokenService jwtRefreshTokenService;
@@ -24,7 +25,7 @@ public class VerifyController {
     }
 
     @PostMapping({ "", "/" })
-    public void verify(@RequestBody JwtRefreshTokenRequestDto request)
+    public void verify(@Valid @RequestBody JwtRefreshTokenRequestDto request)
             throws JwtRefreshTokenExpiredException {
         var currentUser = (UserEntity) SecurityContextHolder
                 .getContext()
@@ -32,7 +33,7 @@ public class VerifyController {
                 .getPrincipal();
 
         JwtRefreshTokenEntity currentUserRefreshToken = jwtRefreshTokenService
-                .findByToken(request.refreshToken())
+                .findByToken(request.getRefreshToken())
                 // user already logged out
                 .orElseThrow(() -> new JwtRefreshTokenExpiredException());
 
