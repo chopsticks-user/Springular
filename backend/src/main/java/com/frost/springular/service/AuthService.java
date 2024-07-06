@@ -5,11 +5,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.frost.springular.dto.LoginRequestDTO;
-import com.frost.springular.dto.SignupRequestDTO;
-import com.frost.springular.entity.UserEntity;
-import com.frost.springular.exception.DuplicatedEmailException;
-import com.frost.springular.repository.UserRepository;
+import com.frost.springular.object.exception.DuplicatedEmailException;
+import com.frost.springular.object.model.UserModel;
+import com.frost.springular.object.repository.UserRepository;
+import com.frost.springular.object.request.LoginRequest;
+import com.frost.springular.object.request.SignupRequest;
 
 @Service
 public class AuthService {
@@ -25,14 +25,14 @@ public class AuthService {
         this.authenticationManager = authenticationManager;
     }
 
-    public UserEntity register(SignupRequestDTO signupDTO)
+    public UserModel register(SignupRequest signupDTO)
             throws DuplicatedEmailException {
         if (userRepository.findByEmail(signupDTO.getEmail()).isPresent()) {
             throw new DuplicatedEmailException();
         }
 
         return userRepository.save(
-                UserEntity.builder()
+                UserModel.builder()
                         .firstName(signupDTO.getFirstName())
                         .lastName(signupDTO.getLastName())
                         .dateOfBirth(signupDTO.getDateOfBirth())
@@ -41,7 +41,7 @@ public class AuthService {
                         .build());
     }
 
-    public UserEntity authenticate(LoginRequestDTO loginDto) {
+    public UserModel authenticate(LoginRequest loginDto) {
         // TODO: implement business logic for dto objects
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(

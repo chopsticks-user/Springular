@@ -1,6 +1,6 @@
 package com.frost.springular.config;
 
-import com.frost.springular.service.JwtAccessTokenService;
+import com.frost.springular.service.AccessTokenService;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,10 +19,10 @@ import java.io.IOException;
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
     private final HandlerExceptionResolver handlerExceptionResolver;
-    private final JwtAccessTokenService jwtAccessTokenService;
+    private final AccessTokenService jwtAccessTokenService;
     private final UserDetailsService userDetailsService;
 
-    public JwtAuthFilter(HandlerExceptionResolver handlerExceptionResolver, JwtAccessTokenService jwtService,
+    public JwtAuthFilter(HandlerExceptionResolver handlerExceptionResolver, AccessTokenService jwtService,
             UserDetailsService userDetailsService) {
         this.handlerExceptionResolver = handlerExceptionResolver;
         this.jwtAccessTokenService = jwtService;

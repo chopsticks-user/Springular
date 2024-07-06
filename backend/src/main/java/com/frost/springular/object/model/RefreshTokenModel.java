@@ -1,4 +1,4 @@
-package com.frost.springular.entity;
+package com.frost.springular.object.model;
 
 import java.time.Instant;
 
@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class JwtRefreshTokenEntity {
+public class RefreshTokenModel {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(nullable = false, updatable = false, unique = true)
@@ -35,5 +35,5 @@ public class JwtRefreshTokenEntity {
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, unique = true)
-    private UserEntity userEntity;
+    private UserModel userEntity;
 }

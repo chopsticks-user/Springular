@@ -1,10 +1,10 @@
-package com.frost.springular.entity;
+package com.frost.springular.object.model;
 
 import java.time.Instant;
 
-import com.frost.springular.dto.CalendarEventDto.Repeat;
-import com.frost.springular.dto.CalendarEventDto.RepeatEvery;
-import com.frost.springular.dto.CalendarEventDto.RepeatEvery.Unit;
+import com.frost.springular.object.request.CalendarEventRequest.Repeat;
+import com.frost.springular.object.request.CalendarEventRequest.RepeatEvery;
+import com.frost.springular.object.request.CalendarEventRequest.RepeatEvery.Unit;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,7 +28,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CalendarEventEntity {
+public class CalendarEventModel {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(nullable = false, updatable = false, unique = true)
@@ -62,5 +62,5 @@ public class CalendarEventEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private UserEntity userEntity;
+    private UserModel userEntity;
 }

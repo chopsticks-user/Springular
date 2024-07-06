@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.frost.springular.dto.CalendarEventDto;
-import com.frost.springular.dto.CalendarEventDto.Repeat;
-import com.frost.springular.dto.CalendarEventReponseDto;
-import com.frost.springular.entity.CalendarEventEntity;
-import com.frost.springular.entity.UserEntity;
-import com.frost.springular.exception.CustomRepeatIntervalException;
-import com.frost.springular.repository.CalendarEventRepository;
+import com.frost.springular.object.exception.CustomRepeatIntervalException;
+import com.frost.springular.object.model.CalendarEventModel;
+import com.frost.springular.object.model.UserModel;
+import com.frost.springular.object.repository.CalendarEventRepository;
+import com.frost.springular.object.request.CalendarEventRequest;
+import com.frost.springular.object.request.CalendarEventRequest.Repeat;
+import com.frost.springular.object.response.CalendarEventReponse;
 import com.frost.springular.service.UserService;
 
 import jakarta.validation.Valid;
@@ -32,8 +32,8 @@ public class EventsController {
     }
 
     @PostMapping({ "", "/" })
-    public ResponseEntity<CalendarEventReponseDto> addEvent(
-            @Valid @RequestBody CalendarEventDto event) {
+    public ResponseEntity<CalendarEventReponse> addEvent(
+            @Valid @RequestBody CalendarEventRequest event) {
         // todo: define a custom bean validator
         if (event.getRepeat() == Repeat.custom) {
             if (event.getRepeatEvery() == null) {
@@ -43,8 +43,8 @@ public class EventsController {
             event.setRepeatEvery(null);
         }
 
-        CalendarEventEntity newEvent = calendarEventRepository.save(
-                CalendarEventEntity.builder()
+        CalendarEventModel newEvent = calendarEventRepository.save(
+                CalendarEventModel.builder()
                         .title(event.getTitle())
                         .description(event.getDescription())
                         .color(event.getColor())
@@ -62,6 +62,6 @@ public class EventsController {
                         .userEntity(userService.getCurrentUser())
                         .build());
 
-        return ResponseEntity.ok(new CalendarEventReponseDto(newEvent));
+        return ResponseEntity.ok(new CalendarEventReponse(newEvent));
     }
 }

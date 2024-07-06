@@ -1,18 +1,18 @@
-package com.frost.springular.dto.convertor;
-
-import com.frost.springular.dto.CalendarEventDto;
+package com.frost.springular.object.enumerated;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
 import java.util.Arrays;
 
+import com.frost.springular.object.request.CalendarEventRequest;
+
 @Converter(autoApply = true)
-public class UnitConverter
-        implements AttributeConverter<CalendarEventDto.RepeatEvery.Unit, String> {
+public class CalendarEventRepeatUnitConverter
+        implements AttributeConverter<CalendarEventRequest.RepeatEvery.Unit, String> {
     @Override
     public String convertToDatabaseColumn(
-            CalendarEventDto.RepeatEvery.Unit repeat) {
+            CalendarEventRequest.RepeatEvery.Unit repeat) {
         if (repeat == null) {
             return null;
         }
@@ -20,13 +20,13 @@ public class UnitConverter
     }
 
     @Override
-    public CalendarEventDto.RepeatEvery.Unit convertToEntityAttribute(
+    public CalendarEventRequest.RepeatEvery.Unit convertToEntityAttribute(
             String code) {
         if (code == null) {
             return null;
         }
 
-        return Arrays.stream(CalendarEventDto.RepeatEvery.Unit.values())
+        return Arrays.stream(CalendarEventRequest.RepeatEvery.Unit.values())
                 .filter(c -> c.toString().equals(code))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);

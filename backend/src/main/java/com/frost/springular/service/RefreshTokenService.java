@@ -8,17 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.frost.springular.entity.JwtRefreshTokenEntity;
-import com.frost.springular.entity.UserEntity;
-import com.frost.springular.exception.JwtRefreshTokenExpiredException;
-import com.frost.springular.repository.JwtRefreshTokenRepository;
-import com.frost.springular.repository.UserRepository;
+import com.frost.springular.object.exception.JwtRefreshTokenExpiredException;
+import com.frost.springular.object.model.RefreshTokenModel;
+import com.frost.springular.object.model.UserModel;
+import com.frost.springular.object.repository.RefreshTokenRepository;
+import com.frost.springular.object.repository.UserRepository;
 
 @Service
-public class JwtRefreshTokenService {
+public class RefreshTokenService {
 
     @Autowired
-    private JwtRefreshTokenRepository jwtRefreshTokenRepository;
+    private RefreshTokenRepository jwtRefreshTokenRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -26,10 +26,10 @@ public class JwtRefreshTokenService {
     @Value("${security.jwt.refresh.expiration-time}")
     private long expirationTime;
 
-    public JwtRefreshTokenEntity generateToken(String userEmail) {
+    public RefreshTokenModel generateToken(String userEmail) {
         Instant expiresAt = Instant.now().plusMillis(expirationTime);
 
-        JwtRefreshTokenEntity existingToken = findByUserEmail(userEmail)
+        RefreshTokenModel existingToken = findByUserEmail(userEmail)
                 .orElse(null);
 
         if (isTokenValid(existingToken)) {
@@ -37,7 +37,7 @@ public class JwtRefreshTokenService {
         }
 
         return jwtRefreshTokenRepository.save(
-                JwtRefreshTokenEntity.builder()
+                RefreshTokenModel.builder()
                         .userEntity(userRepository
                                 .findByEmail(userEmail)
                                 .orElseThrow())
@@ -50,12 +50,12 @@ public class JwtRefreshTokenService {
         return expirationTime;
     }
 
-    public Optional<JwtRefreshTokenEntity> findByToken(String token) {
+    public Optional<RefreshTokenModel> findByToken(String token) {
         return jwtRefreshTokenRepository.findByToken(token);
     }
 
-    public Optional<JwtRefreshTokenEntity> findByUserEmail(String userEmail) {
-        UserEntity userEntity = userRepository
+    public Optional<RefreshTokenModel> findByUserEmail(String userEmail) {
+        UserModel userEntity = userRepository
                 .findByEmail(userEmail)
                 .orElse(null);
 
@@ -66,8 +66,8 @@ public class JwtRefreshTokenService {
         return jwtRefreshTokenRepository.findByUserEntity(userEntity);
     }
 
-    public Optional<JwtRefreshTokenEntity> findByUserId(String userId) {
-        UserEntity userEntity = userRepository
+    public Optional<RefreshTokenModel> findByUserId(String userId) {
+        UserModel userEntity = userRepository
                 .findById(userId)
                 .orElse(null);
 
@@ -79,7 +79,7 @@ public class JwtRefreshTokenService {
     }
 
     public void verifyExpiration(
-            JwtRefreshTokenEntity tokenEntity)
+            RefreshTokenModel tokenEntity)
             throws JwtRefreshTokenExpiredException {
         if (!isTokenValid(tokenEntity)) {
             jwtRefreshTokenRepository.delete(tokenEntity);
@@ -87,8 +87,8 @@ public class JwtRefreshTokenService {
         }
     }
 
-    public void revokeToken(UserEntity userEntity) {
-        JwtRefreshTokenEntity tokenEntity = jwtRefreshTokenRepository
+    public void revokeToken(UserModel userEntity) {
+        RefreshTokenModel tokenEntity = jwtRefreshTokenRepository
                 .findByUserEntity(userEntity)
                 .orElse(null);
         if (tokenEntity == null) {
@@ -98,7 +98,7 @@ public class JwtRefreshTokenService {
         jwtRefreshTokenRepository.delete(tokenEntity);
     }
 
-    private boolean isTokenValid(JwtRefreshTokenEntity tokenEntity) {
+    private boolean isTokenValid(RefreshTokenModel tokenEntity) {
         return tokenEntity != null
                 && tokenEntity.getExpirationDate().compareTo(Instant.now()) > 0;
     }

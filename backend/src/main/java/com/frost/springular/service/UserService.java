@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.frost.springular.entity.UserEntity;
-import com.frost.springular.repository.UserRepository;
+import com.frost.springular.object.model.UserModel;
+import com.frost.springular.object.repository.UserRepository;
 
 @Service
 public class UserService {
@@ -18,15 +18,15 @@ public class UserService {
     }
 
     // * for testing purposes
-    public List<UserEntity> allUsers() {
-        var users = new ArrayList<UserEntity>();
+    public List<UserModel> allUsers() {
+        var users = new ArrayList<UserModel>();
         userRepository.findAll().forEach(users::add);
         return users;
     }
 
-    public UserEntity getCurrentUser() {
+    public UserModel getCurrentUser() {
         // todo: null exception
-        return (UserEntity) SecurityContextHolder
+        return (UserModel) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
