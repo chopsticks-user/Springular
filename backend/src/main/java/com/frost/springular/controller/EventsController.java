@@ -7,6 +7,7 @@ import com.frost.springular.object.model.UserModel;
 import com.frost.springular.object.repository.CalendarEventRepository;
 import com.frost.springular.object.request.CalendarEventRequest;
 import com.frost.springular.object.response.CalendarEventReponse;
+import com.frost.springular.service.CalendarEventService;
 import com.frost.springular.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -24,12 +25,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/events")
 public class EventsController {
   private final UserService userService;
-  private final CalendarEventRepository calendarEventRepository;
+  private final CalendarEventService calendarEventService;
 
   public EventsController(UserService userService,
-                          CalendarEventRepository calendarEventRepository) {
+                          CalendarEventService calendarEventService) {
     this.userService = userService;
-    this.calendarEventRepository = calendarEventRepository;
+    this.calendarEventService = calendarEventService;
   }
 
   @PostMapping("")
@@ -52,24 +53,25 @@ public class EventsController {
             .build();
 
     return ResponseEntity.ok(
-        new CalendarEventReponse(calendarEventRepository.save(newEvent)));
+        new CalendarEventReponse(calendarEventService.update(newEvent)));
   }
 
   @PutMapping("/{id}")
   public ResponseEntity<CalendarEventReponse>
   editCalendarEvent(@PathVariable String id,
                     @Valid @RequestBody CalendarEventRequest calendarEvent) {
+    validateRepeat(calendarEvent);
+
     // todo: implement an exception class
     CalendarEventModel existedEvent =
-        calendarEventRepository.findById(id).orElseThrow(
+        calendarEventService.findById(id).orElseThrow(
             () -> new RuntimeException("PUT /events/{id}"));
-
-    validateRepeat(calendarEvent);
 
     existedEvent.setTitle(calendarEvent.getTitle());
     existedEvent.setDescription(calendarEvent.getDescription());
     existedEvent.setColor(calendarEvent.getColor());
     existedEvent.setStart(calendarEvent.getStart());
+    existedEvent.setDurationMinutes(calendarEvent.getDurationMinutes());
     existedEvent.setRepeat(calendarEvent.getRepeat());
     existedEvent.setRepeatEveryValue(calendarEvent.getRepeatEvery().getValue());
     existedEvent.setRepeatEveryUnit(calendarEvent.getRepeatEvery().getUnit());
@@ -77,12 +79,12 @@ public class EventsController {
     // todo: CalendarEventRequest should also contain userEntity
 
     return ResponseEntity.ok(
-        new CalendarEventReponse(calendarEventRepository.save(existedEvent)));
+        new CalendarEventReponse(calendarEventService.update(existedEvent)));
   }
 
   @DeleteMapping("/{id}")
   public void deleteCalendarEvent(@PathVariable String id) {
-    calendarEventRepository.deleteById(id);
+    calendarEventService.deleteById(id);
   }
 
   private static void validateRepeat(CalendarEventRequest calendarEvent) {
