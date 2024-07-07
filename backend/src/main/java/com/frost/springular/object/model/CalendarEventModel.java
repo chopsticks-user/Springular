@@ -2,9 +2,8 @@ package com.frost.springular.object.model;
 
 import java.time.Instant;
 
-import com.frost.springular.object.request.CalendarEventRequest.Repeat;
-import com.frost.springular.object.request.CalendarEventRequest.RepeatEvery;
-import com.frost.springular.object.request.CalendarEventRequest.RepeatEvery.Unit;
+import com.frost.springular.object.enumerated.CalendarEventRepeat;
+import com.frost.springular.object.enumerated.CalendarEventRepeatUnit;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,7 +14,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -51,14 +49,14 @@ public class CalendarEventModel {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Repeat repeat;
+    private CalendarEventRepeat repeat;
 
     @Column
     private Integer repeatEveryValue;
 
     @Column
     @Enumerated(EnumType.STRING)
-    private Unit repeatEveryUnit;
+    private CalendarEventRepeatUnit repeatEveryUnit;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)

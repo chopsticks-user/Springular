@@ -15,7 +15,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Table(name = "jwt_refresh_tokens")
+@Table(name = "refresh_tokens")
 @Entity
 @Data
 @AllArgsConstructor
