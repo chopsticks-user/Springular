@@ -5,14 +5,12 @@ import jakarta.persistence.Converter;
 
 import java.util.Arrays;
 
-import com.frost.springular.object.request.CalendarEventRequest;
-
 @Converter(autoApply = true)
 public class CalendarEventRepeatUnitConverter
-        implements AttributeConverter<CalendarEventRequest.RepeatEvery.Unit, String> {
+        implements AttributeConverter<CalendarEventRepeatUnit, String> {
     @Override
     public String convertToDatabaseColumn(
-            CalendarEventRequest.RepeatEvery.Unit repeat) {
+            CalendarEventRepeatUnit repeat) {
         if (repeat == null) {
             return null;
         }
@@ -20,13 +18,13 @@ public class CalendarEventRepeatUnitConverter
     }
 
     @Override
-    public CalendarEventRequest.RepeatEvery.Unit convertToEntityAttribute(
+    public CalendarEventRepeatUnit convertToEntityAttribute(
             String code) {
         if (code == null) {
             return null;
         }
 
-        return Arrays.stream(CalendarEventRequest.RepeatEvery.Unit.values())
+        return Arrays.stream(CalendarEventRepeatUnit.values())
                 .filter(c -> c.toString().equals(code))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);

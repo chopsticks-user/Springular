@@ -2,10 +2,9 @@ package com.frost.springular.object.response;
 
 import java.time.Instant;
 
+import com.frost.springular.object.enumerated.CalendarEventRepeat;
 import com.frost.springular.object.model.CalendarEventModel;
-import com.frost.springular.object.request.CalendarEventRequest.Repeat;
-import com.frost.springular.object.request.CalendarEventRequest.RepeatEvery;
-import com.frost.springular.object.request.CalendarEventRequest.RepeatEvery.Unit;
+import com.frost.springular.object.request.CalendarEventRequest;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,8 +22,8 @@ public class CalendarEventReponse {
         private String color;
         private Instant start;
         private int durationMinutes;
-        private Repeat repeat;
-        private RepeatEvery repeatEvery;
+        private CalendarEventRepeat repeat;
+        private CalendarEventRequest.RepeatEvery repeatEvery;
         private UserInfoResponse userInfoResponseDto;
 
         public CalendarEventReponse(CalendarEventModel calendarEventEntity) {
@@ -35,8 +34,8 @@ public class CalendarEventReponse {
                 start = calendarEventEntity.getStart();
                 durationMinutes = calendarEventEntity.getDurationMinutes();
                 repeat = calendarEventEntity.getRepeat();
-                repeatEvery = repeat == Repeat.custom
-                                ? new RepeatEvery(
+                repeatEvery = repeat == CalendarEventRepeat.custom
+                                ? new CalendarEventRequest.RepeatEvery(
                                                 calendarEventEntity.getRepeatEveryValue(),
                                                 calendarEventEntity.getRepeatEveryUnit())
                                 : null;

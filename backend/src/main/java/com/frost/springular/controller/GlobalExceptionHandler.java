@@ -1,30 +1,30 @@
-package com.frost.springular.object.exception;
+package com.frost.springular.controller;
 
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ProblemDetail;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
-
+import com.frost.springular.object.exception.CustomRepeatIntervalException;
+import com.frost.springular.object.exception.DuplicatedEmailException;
+import com.frost.springular.object.exception.RefreshTokenExpiredException;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.security.SignatureException;
-
+import java.time.format.DateTimeParseException;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ProblemDetail;
+import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AccountStatusException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-
-import java.time.format.DateTimeParseException;
-
-import org.springframework.http.converter.HttpMessageConversionException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
-    public ProblemDetail handleSecurityException(Exception exception) {
-        exception.printStackTrace();
+  @ExceptionHandler(Exception.class)
+  public ProblemDetail handleSecurityException(Exception exception) {
+    exception.printStackTrace();
 
-        return switch (exception) {
+    // todo: move non-security exceptions to another handler
+    return switch (exception) {
             case CustomRepeatIntervalException e ->
                 createHttpProblemDetail(400, e, e.getMessage());
             case DateTimeParseException e ->
@@ -32,7 +32,7 @@ public class GlobalExceptionHandler {
             case MethodArgumentNotValidException e ->
                 createHttpProblemDetail(400, e,
                         e.getBindingResult().getFieldError().getDefaultMessage());
-            case JwtRefreshTokenExpiredException e ->
+            case RefreshTokenExpiredException e ->
                 createHttpProblemDetail(401, e, "Refresh token expired");
             case DuplicatedEmailException e ->
                 createHttpProblemDetail(409, e, "Email address already in use");

@@ -1,12 +1,13 @@
 package com.frost.springular.object.request;
 
-import java.time.Instant;
-
+import com.frost.springular.object.enumerated.CalendarEventRepeat;
+import com.frost.springular.object.enumerated.CalendarEventRepeatUnit;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
+import java.time.Instant;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,46 +19,32 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CalendarEventRequest {
-    @ToString
-    public static enum Repeat {
-        daily, weekly, monthly, yearly, custom, none
-    }
+  @Data
+  @AllArgsConstructor
+  @NoArgsConstructor
+  public static class RepeatEvery {
+    private Integer value;
+    private CalendarEventRepeatUnit unit;
+  }
 
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class RepeatEvery {
-        @ToString
-        public static enum Unit {
-            days, weeks, months, years
-        }
+  @NotBlank(message = "Title is required.")
+  @Size(max = 50, message = "Title must be at most 50 characters.")
+  private String title;
 
-        private int value;
-        private Unit unit;
-    }
+  @Size(max = 200, message = "Description must be at most 200 characters.")
+  private String description;
 
-    private String id;
+  @NotBlank(message = "Color is required.")
+  @Pattern(regexp = "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
+           message = "Invalid color hex code.")
+  private String color;
 
-    @NotBlank(message = "Title is required.")
-    @Size(max = 50, message = "Title must be at most 50 characters.")
-    private String title;
+  @NotNull(message = "Start time is required.") private Instant start;
 
-    @Size(max = 200, message = "Description must be at most 200 characters.")
-    private String description;
+  @Positive(message = "Duration is required.") private int durationMinutes;
 
-    @NotBlank(message = "Color is required.")
-    @Pattern(regexp = "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$", message = "Invalid color hex code.")
-    private String color;
+  @Builder.Default()
+  private CalendarEventRepeat repeat = CalendarEventRepeat.none;
 
-    @NotNull(message = "Start time is required.")
-    private Instant start;
-
-    @Positive(message = "Duration is required.")
-    private int durationMinutes;
-
-    @Builder.Default()
-    private Repeat repeat = Repeat.none;
-
-    @Builder.Default()
-    private RepeatEvery repeatEvery = null;
+  @Builder.Default() private RepeatEvery repeatEvery = null;
 }

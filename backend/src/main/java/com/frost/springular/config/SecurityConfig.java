@@ -1,7 +1,6 @@
 package com.frost.springular.config;
 
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,60 +21,62 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    private static final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
+  private static final Logger logger =
+      LoggerFactory.getLogger(SecurityConfig.class);
 
-    private final AuthenticationProvider authenticationProvider;
-    private final JwtAuthFilter jwtAuthFilter;
-    private final CorsFilter corsFilter;
+  private final AuthenticationProvider authenticationProvider;
+  private final AuthenticationFilter jwtAuthFilter;
+  private final CorsFilter corsFilter;
 
-    @Value("${cors.allowed.origins}")
-    private String allowedOrigins;
+  @Value("${cors.allowed.origins}") private String allowedOrigins;
 
-    public SecurityConfig(AuthenticationProvider authenticationProvider,
-            JwtAuthFilter jwtAuthFilter,
-            CorsFilter corsFilter) {
-        this.authenticationProvider = authenticationProvider;
-        this.jwtAuthFilter = jwtAuthFilter;
-        this.corsFilter = corsFilter;
-    }
+  public SecurityConfig(AuthenticationProvider authenticationProvider,
+                        AuthenticationFilter jwtAuthFilter,
+                        CorsFilter corsFilter) {
+    this.authenticationProvider = authenticationProvider;
+    this.jwtAuthFilter = jwtAuthFilter;
+    this.corsFilter = corsFilter;
+  }
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)
-            throws Exception {
-        httpSecurity
-                .csrf((csrf) -> csrf.disable())
-                .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                        .requestMatchers("/api/auth/**")
-                        // .hasRole("USER") // TODO: might need this in the future
-                        .permitAll()
-                        .anyRequest()
-                        .authenticated())
-                .sessionManagement((sessionManagement) -> sessionManagement
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthFilter,
-                        UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(corsFilter,
-                        ChannelProcessingFilter.class);
+  @Bean
+  public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)
+      throws Exception {
+    httpSecurity.csrf((csrf) -> csrf.disable())
+        .authorizeHttpRequests((authorizeHttpRequests)
+                                   -> authorizeHttpRequests
+                                          .requestMatchers("/api/auth/**")
+                                          // .hasRole("USER") // TODO: might
+                                          // need this in the future
+                                          .permitAll()
+                                          .anyRequest()
+                                          .authenticated())
+        .sessionManagement((sessionManagement)
+                               -> sessionManagement.sessionCreationPolicy(
+                                   SessionCreationPolicy.STATELESS))
+        .authenticationProvider(authenticationProvider)
+        .addFilterBefore(jwtAuthFilter,
+                         UsernamePasswordAuthenticationFilter.class)
+        .addFilterBefore(corsFilter, ChannelProcessingFilter.class);
 
-        return httpSecurity.build();
-    }
+    return httpSecurity.build();
+  }
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        var config = new CorsConfiguration();
+  @Bean
+  CorsConfigurationSource corsConfigurationSource() {
+    var config = new CorsConfiguration();
 
-        // TODO: for development only (local Angular server)
-        config.setAllowedOrigins(List.of(allowedOrigins.split(",")));
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
-        config.setAllowCredentials(true);
+    // TODO: for development only (local Angular server)
+    config.setAllowedOrigins(List.of(allowedOrigins.split(",")));
+    config.setAllowedMethods(
+        List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+    config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+    config.setAllowCredentials(true);
 
-        // config.applyPermitDefaultValues();
+    // config.applyPermitDefaultValues();
 
-        var source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/api/**", config);
+    var source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/api/**", config);
 
-        return source;
-    }
+    return source;
+  }
 }
