@@ -3,7 +3,8 @@ import argparse
 import sys
 
 parser = argparse.ArgumentParser()
-parser.add_argument("container_name")
+parser.add_argument("container_name", nargs='?',
+                    default="$(docker ps -a -q)")
 args = parser.parse_args()
 
 execute(
