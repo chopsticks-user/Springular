@@ -10,15 +10,22 @@ import com.frost.springular.object.response.CalendarEventReponse;
 import com.frost.springular.service.CalendarEventService;
 import com.frost.springular.service.UserService;
 import jakarta.validation.Valid;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -31,6 +38,21 @@ public class EventsController {
                           CalendarEventService calendarEventService) {
     this.userService = userService;
     this.calendarEventService = calendarEventService;
+  }
+
+  @GetMapping("")
+  public ResponseEntity<List<CalendarEventReponse>>
+  filterCalendarEvents(@RequestParam String interval,
+                       @RequestParam Instant startTime) {
+    var result = new ArrayList<CalendarEventReponse>();
+
+    calendarEventService
+        .filter(interval, startTime.truncatedTo(ChronoUnit.DAYS))
+        .forEach((CalendarEventModel model) -> {
+          result.add(new CalendarEventReponse(model));
+        });
+
+    return ResponseEntity.ok(result);
   }
 
   @PostMapping("")
@@ -96,7 +118,8 @@ public class EventsController {
         throw new CustomRepeatIntervalException();
       }
     } else {
-      calendarEvent.setRepeatEvery(null);
+      calendarEvent.setRepeatEvery(
+          new CalendarEventRequest.RepeatEvery(null, null));
     }
   }
 }
