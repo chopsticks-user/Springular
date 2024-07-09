@@ -6,15 +6,15 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class CalendarServiceService {
+export class CalendarEventsService {
   private _http = inject(HttpClient);
 
   public getCalendarEvents(
-    from: Date,
-    to: Date
+    interval: string,
+    start: Date
   ): Observable<HttpResponse<CalendarEvent[]>> {
     return this._http.get<CalendarEvent[]>('/events', {
-      params: { from: from.toISOString(), to: to.toISOString() },
+      params: { interval: interval, start: start.toISOString() },
       observe: 'response',
     });
   }

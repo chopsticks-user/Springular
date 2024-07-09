@@ -24,7 +24,7 @@ export class CalendarEventComponent {
     pixelHeight += Math.floor(pixelHeight / this.pixelsPerHour);
 
     let pixelMargin: number =
-      (event.start.getMinutes() / 60) * this.pixelsPerHour;
+      (new Date(event.start).getMinutes() / 60) * this.pixelsPerHour;
 
     return `background-color: ${event.color};
       height: ${pixelHeight}px;

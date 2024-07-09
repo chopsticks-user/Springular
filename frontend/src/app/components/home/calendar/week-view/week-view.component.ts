@@ -29,22 +29,13 @@ export class CalendarWeekViewComponent {
     dayOfMonth: number
   ): Observable<CalendarEvent[]> {
     return this.calendarEvents$.pipe(
-      map((calendarEvents) => {
-        if (!calendarEvents) {
-          return [];
-        }
-
-        return calendarEvents;
-
-        // todo: start must be a string
-        // return calendarEvents
-        //   .filter(
-        //     (event) =>
-        //       event.start.getDate() === dayOfMonth &&
-        //       event.start.getHours() === hour
-        //   )
-        //   .sort((a, b) => a.start.valueOf() - b.start.valueOf());
-      })
+      map((calendarEvents) =>
+        calendarEvents.filter(
+          (event) =>
+            new Date(event.start).getHours() === hour &&
+            new Date(event.start).getDay() === dayOfMonth
+        )
+      )
     );
   }
 

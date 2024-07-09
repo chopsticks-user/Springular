@@ -13,7 +13,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,12 +37,12 @@ public class EventsController {
 
   @GetMapping("")
   public ResponseEntity<List<CalendarEventReponse>> filterCalendarEvents(
-      @RequestParam String interval, @RequestParam Instant startTime) {
+      @RequestParam String interval, @RequestParam Instant start) {
     var result = new ArrayList<CalendarEventReponse>();
 
     calendarEventService
         .filter(userService.getCurrentUser(), interval,
-            startTime.truncatedTo(ChronoUnit.DAYS))
+            start.truncatedTo(ChronoUnit.DAYS))
         .forEach((CalendarEventModel model) -> {
           result.add(new CalendarEventReponse(model));
         });
@@ -52,7 +51,8 @@ public class EventsController {
   }
 
   @PostMapping("")
-  public ResponseEntity<CalendarEventReponse> addCalendarEvent(@Valid @RequestBody CalendarEventRequest calendarEvent) {
+  public ResponseEntity<CalendarEventReponse> addCalendarEvent(
+      @Valid @RequestBody CalendarEventRequest calendarEvent) {
     // todo: define a custom bean validator
     validateRepeat(calendarEvent);
 
@@ -68,20 +68,24 @@ public class EventsController {
         .userEntity(userService.getCurrentUser())
         .build();
 
-    calendarEventService.isEventInsertable(newEvent);
+    if (calendarEventService.isEventInsertable(newEvent)) {
+      throw new RuntimeException("POST /api/events");
+    }
 
     return ResponseEntity.ok(
         new CalendarEventReponse(calendarEventService.update(newEvent)));
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<CalendarEventReponse> editCalendarEvent(@PathVariable String id,
+  public ResponseEntity<CalendarEventReponse> editCalendarEvent(
+      @PathVariable String id,
       @Valid @RequestBody CalendarEventRequest calendarEvent) {
     validateRepeat(calendarEvent);
 
     // todo: implement an exception class
-    CalendarEventModel existedEvent = calendarEventService.findById(id).orElseThrow(
-        () -> new RuntimeException("PUT /events/{id}"));
+    CalendarEventModel existedEvent = calendarEventService
+        .findById(id)
+        .orElseThrow(() -> new RuntimeException("PUT /events/{id}"));
 
     existedEvent.setTitle(calendarEvent.getTitle());
     existedEvent.setDescription(calendarEvent.getDescription());
