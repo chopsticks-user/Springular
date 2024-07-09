@@ -1,10 +1,16 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { CalendarWeekViewComponent } from './week-view/week-view.component';
 import { CalendarHeaderComponent } from './header/header.component';
 import { CalendarSidebarComponent } from './sidebar/sidebar.component';
 import { CalendarEventEditorComponent } from '@shared/calendar-event-editor/calendar-event-editor.component';
 import { DateTime, Info } from 'luxon';
-import { BehaviorSubject, Observable, map, of } from 'rxjs';
+import { BehaviorSubject, Observable, map, shareReplay, switchMap } from 'rxjs';
 import {
   CalendarEvent,
   CalendarWeekDay,
@@ -12,6 +18,7 @@ import {
 } from '@shared/types';
 import { AsyncPipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
+import { CalendarEventsService } from '@services/calendar-events.service';
 
 @Component({
   selector: 'app-home-calendar',
@@ -27,10 +34,11 @@ import { MatIcon } from '@angular/material/icon';
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.css',
 })
-export class CalendarComponent {
+export class CalendarComponent implements OnInit {
   @ViewChild('eventEditorModal', { static: true })
   private _eventEditorModal!: ElementRef<HTMLDialogElement>;
 
+  private _calendarEventsService = inject(CalendarEventsService);
   private $today = new BehaviorSubject<DateTime>(DateTime.local());
   private $currentTime = new BehaviorSubject<DateTime>(DateTime.local());
   private _selectedCalendarEvent: CalendarEvent | null = null;
@@ -38,11 +46,19 @@ export class CalendarComponent {
   private _eventEditorType: EventEditorTypes = 'add';
 
   public currentFirstDayOfWeek$: Observable<DateTime> = this.$currentTime.pipe(
-    map((currentTime) => currentTime.startOf('week').toLocal())
+    map((currentTime) => {
+      // console.log(currentTime.toISOWeekDate());
+      return currentTime.startOf('week').toLocal();
+    })
+    // distinctUntilChanged(
+    //   (prev, curr) => prev.toISOWeekDate() === curr.toISOWeekDate()
+    // )
   );
+
   public currentLastDayOfWeek$: Observable<DateTime> = this.$currentTime.pipe(
     map((currentTime) => currentTime.endOf('week').toLocal())
   );
+
   public currentWeekDays$: Observable<CalendarWeekDay[]> =
     this.currentFirstDayOfWeek$.pipe(
       map((currentFirstDayOfWeek) =>
@@ -52,10 +68,28 @@ export class CalendarComponent {
         }))
       )
     );
-  public calendarEvents$ = of<CalendarEvent[]>(
-    // todo: events should be sorted
-    []
-  );
+
+  public calendarEvents$: Observable<CalendarEvent[]> =
+    this.currentFirstDayOfWeek$.pipe(
+      switchMap((currentFirstDayOfWeek) =>
+        this._calendarEventsService
+          .getCalendarEvents('week', currentFirstDayOfWeek.toJSDate())
+          .pipe(
+            map((response) => {
+              // if (response.body) {
+              //   console.log(response.body[0].start.getMinutes());
+              // }
+              console.log(response.body);
+              return response.body || [];
+            })
+          )
+      ),
+      shareReplay(1)
+    );
+
+  ngOnInit(): void {
+    console.log('init');
+  }
 
   public get eventEditorVisible(): boolean {
     return this._eventEditorVisible;
