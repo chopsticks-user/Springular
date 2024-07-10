@@ -46,31 +46,42 @@ public class CalendarEventService {
   public boolean isEventInsertable(CalendarEventModel calendarEvent) {
     List<CalendarEventModel> allEvents = all(calendarEvent.getUserEntity());
 
-    int index = Collections.binarySearch(
-        allEvents, calendarEvent, sortByStartTime),
-        lowerIndex = index, upperIndex = 0;
-
-    if (index < 0) {
-      int insertionPoint = -index - 1;
-
-      if (insertionPoint > 0 && insertionPoint < allEvents.size()) {
-        lowerIndex = insertionPoint - 1;
-        upperIndex = insertionPoint;
-      }
-
+    if (allEvents.isEmpty()) {
       return true;
     }
 
-    Instant lowerBoundEndTime = allEvents
-        .get(lowerIndex)
-        .getStart()
-        .plus(allEvents.get(lowerIndex).getDurationMinutes(), ChronoUnit.MINUTES);
-    Instant eventEndTime = calendarEvent
-        .getStart()
-        .plus(calendarEvent.getDurationMinutes(), ChronoUnit.MINUTES);
+    int index = Collections.binarySearch(allEvents, calendarEvent, sortByStartTime);
+    int lowerIndex, upperIndex;
 
-    return calendarEvent.getStart().compareTo(lowerBoundEndTime) >= 0
-        && eventEndTime.compareTo(allEvents.get(upperIndex).getStart()) <= 0;
+    if (index >= 0) {
+      return false;
+    } else {
+      int insertionPoint = -index - 1;
+      lowerIndex = insertionPoint - 1;
+      upperIndex = insertionPoint;
+    }
+
+    if (lowerIndex >= 0) {
+      Instant lowerBoundEndTime = allEvents.get(lowerIndex)
+          .getStart()
+          .plus(allEvents.get(lowerIndex).getDurationMinutes(), ChronoUnit.MINUTES);
+      Instant eventStartTime = calendarEvent.getStart();
+      if (eventStartTime.compareTo(lowerBoundEndTime) < 0) {
+        return false;
+      }
+    }
+
+    if (upperIndex < allEvents.size()) {
+      Instant eventEndTime = calendarEvent
+          .getStart()
+          .plus(calendarEvent.getDurationMinutes(), ChronoUnit.MINUTES);
+      Instant upperBoundStartTime = allEvents.get(upperIndex).getStart();
+      if (eventEndTime.compareTo(upperBoundStartTime) > 0) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   public List<CalendarEventModel> filter(UserModel userEntity, String interval,

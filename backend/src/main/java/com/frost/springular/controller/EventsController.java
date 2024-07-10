@@ -68,7 +68,7 @@ public class EventsController {
         .userEntity(userService.getCurrentUser())
         .build();
 
-    if (calendarEventService.isEventInsertable(newEvent)) {
+    if (!calendarEventService.isEventInsertable(newEvent)) {
       throw new RuntimeException("POST /api/events");
     }
 

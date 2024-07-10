@@ -14,8 +14,8 @@
     </header>
     <main class="calendar-main">
       <app-home-calendar-week-view
-        [calendarEvents$]="calendarEvents$"
-        [weekDays$]="currentWeekDays$"
+        [calendarEvents]="(calendarEvents$ | async) || []"
+        [weekDays]="(currentWeekDays$ | async) || []"
         ($eventClicked)="openEventEditor($event)"
       />
       <dialog #eventEditorModal (close)="closeEventEditor()">

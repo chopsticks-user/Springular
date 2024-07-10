@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
   styleUrl: './calendar-event.component.css',
 })
 export class CalendarEventComponent {
-  @Input({ required: true }) public events$!: Observable<CalendarEvent[]>;
+  @Input({ required: true }) public events!: CalendarEvent[];
   @Input({ required: true }) public pixelsPerHour!: number;
   @Input({ required: true }) public borderPixelWidth!: number;
   @Output() public eventClicked = new EventEmitter<CalendarEvent>();
@@ -20,6 +20,7 @@ export class CalendarEventComponent {
     if (!event) {
       return '';
     }
+
     let pixelHeight: number = (event.durationMinutes / 60) * this.pixelsPerHour;
     pixelHeight += Math.floor(pixelHeight / this.pixelsPerHour);
 
