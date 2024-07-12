@@ -8,19 +8,9 @@ import {
 } from '@angular/core';
 import { CalendarWeekViewComponent } from './week-view/week-view.component';
 import { CalendarHeaderComponent } from './header/header.component';
-import { CalendarSidebarComponent } from './sidebar/sidebar.component';
 import { CalendarEventEditorComponent } from '@shared/calendar-event-editor/calendar-event-editor.component';
 import { DateTime, Info } from 'luxon';
-import {
-  BehaviorSubject,
-  Observable,
-  map,
-  of,
-  shareReplay,
-  startWith,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { Observable, map } from 'rxjs';
 import {
   CalendarEvent,
   CalendarWeekDay,
@@ -38,7 +28,6 @@ import { CalendarEventsService } from '@services/calendar-events.service';
     AsyncPipe,
     MatIcon,
     CalendarHeaderComponent,
-    CalendarSidebarComponent,
     CalendarEventEditorComponent,
   ],
   templateUrl: './calendar.component.html',
@@ -136,8 +125,9 @@ export class CalendarComponent implements OnInit {
   }
 
   public deleteCalendarEvent(calendarEvent: CalendarEvent): void {
-    this._calendarEventsService.deleteCalendarEvent(calendarEvent);
-    this.closeEventEditor();
+    this._calendarEventsService
+      .deleteCalendarEvent(calendarEvent)
+      .subscribe(() => this.closeEventEditor());
   }
 
   public submitCalendarEvent(calendarEvent: CalendarEvent): void {

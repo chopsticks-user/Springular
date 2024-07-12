@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, output, Output } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { CalendarWeekViewComponent } from '../week-view/week-view.component';
 import { DateTime } from 'luxon';
@@ -13,13 +13,13 @@ import { Observable } from 'rxjs';
   styleUrl: './header.component.css',
 })
 export class CalendarHeaderComponent {
-  @Input({ required: true }) public today$!: Observable<string>;
-  @Input({ required: true }) public firstWeekday$!: Observable<DateTime>;
-  @Input({ required: true }) public lastWeekday$!: Observable<DateTime>;
+  @Input({ required: true }) public today!: string;
+  @Input({ required: true }) public firstWeekday!: DateTime;
+  @Input({ required: true }) public lastWeekday!: DateTime;
 
-  @Output() public $todayButtonHovered = new EventEmitter<void>();
-  @Output() public $todayButtonClicked = new EventEmitter<void>();
-  @Output() public $nextButtonClicked = new EventEmitter<void>();
-  @Output() public $prevButtonClicked = new EventEmitter<void>();
-  @Output() public $addEventButtonClicked = new EventEmitter<void>();
+  public onTodayButtonHovered = output<void>();
+  public onTodayButtonClicked = output<void>();
+  public onNextButtonClicked = output<void>();
+  public onPrevButtonClicked = output<void>();
+  public onAddEventButtonClicked = output<void>();
 }

@@ -2,14 +2,14 @@
   <div class="calendar-view">
     <header class="calendar-header">
       <app-home-calendar-header
-        [today$]="todayString$"
-        [firstWeekday$]="firstDayOfWeek$"
-        [lastWeekday$]="lastDayOfWeek$"
-        ($todayButtonHovered)="onTodayButtonHovered()"
-        ($todayButtonClicked)="onTodayButtonClicked()"
-        ($nextButtonClicked)="onNextButtonClicked()"
-        ($prevButtonClicked)="onPrevButtonClicked()"
-        ($addEventButtonClicked)="openEventEditor()"
+        [today]="(todayString$ | async)!"
+        [firstWeekday]="(firstDayOfWeek$ | async)!"
+        [lastWeekday]="(lastDayOfWeek$ | async)!"
+        (onTodayButtonHovered)="onTodayButtonHovered()"
+        (onTodayButtonClicked)="onTodayButtonClicked()"
+        (onNextButtonClicked)="onNextButtonClicked()"
+        (onPrevButtonClicked)="onPrevButtonClicked()"
+        (onAddEventButtonClicked)="openEventEditor()"
       />
     </header>
     <main class="calendar-main">
@@ -31,7 +31,4 @@
       </dialog>
     </main>
   </div>
-  <!-- <div class="sidebar-view">
-    <app-home-calendar-sidebar />
-  </div> -->
 </div>

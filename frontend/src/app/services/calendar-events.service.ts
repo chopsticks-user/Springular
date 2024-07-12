@@ -2,14 +2,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { CalendarEvent, CalendarWeekDay } from '@shared/types';
 import { DateTime, Info } from 'luxon';
-import {
-  BehaviorSubject,
-  map,
-  Observable,
-  shareReplay,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -96,8 +89,6 @@ export class CalendarEventsService {
       })
       .pipe(
         tap((newCalendarEvent) => {
-          console.log(newCalendarEvent);
-
           const newEvents = [...this.$calendarEvents.value];
           const insertIndex = newEvents.findIndex(
             (calendarEvent) =>
