@@ -2,9 +2,9 @@
   <div class="calendar-view">
     <header class="calendar-header">
       <app-home-calendar-header
-        [today$]="today"
-        [firstWeekday$]="currentFirstDayOfWeek$"
-        [lastWeekday$]="currentLastDayOfWeek$"
+        [today$]="todayString$"
+        [firstWeekday$]="firstDayOfWeek$"
+        [lastWeekday$]="lastDayOfWeek$"
         ($todayButtonHovered)="onTodayButtonHovered()"
         ($todayButtonClicked)="onTodayButtonClicked()"
         ($nextButtonClicked)="onNextButtonClicked()"
@@ -15,7 +15,7 @@
     <main class="calendar-main">
       <app-home-calendar-week-view
         [calendarEvents]="(calendarEvents$ | async) || []"
-        [weekDays]="(currentWeekDays$ | async) || []"
+        [weekDays]="(weekDays$ | async) || []"
         ($eventClicked)="openEventEditor($event)"
       />
       <dialog #eventEditorModal (close)="closeEventEditor()">

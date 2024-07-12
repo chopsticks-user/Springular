@@ -44,56 +44,44 @@ import { CalendarEventsService } from '@services/calendar-events.service';
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.css',
 })
-export class CalendarComponent {
+export class CalendarComponent implements OnInit {
   @ViewChild('eventEditorModal', { static: true })
   private _eventEditorModal!: ElementRef<HTMLDialogElement>;
 
   private _calendarEventsService = inject(CalendarEventsService);
-  private $calendarEvents = new BehaviorSubject<CalendarEvent[]>([]);
-  private $today = new BehaviorSubject<DateTime>(DateTime.local());
-  private $currentTime = new BehaviorSubject<DateTime>(DateTime.local());
   private _selectedCalendarEvent: CalendarEvent | null = null;
   private _eventEditorVisible: boolean = false;
   private _eventEditorType: EventEditorTypes = 'add';
 
-  public currentFirstDayOfWeek$: Observable<DateTime> = this.$currentTime.pipe(
-    map((currentTime) => {
-      return currentTime.startOf('week').toLocal();
-    })
-  );
+  public calendarEvents$ = this._calendarEventsService.calendarEvents$;
 
-  public currentLastDayOfWeek$: Observable<DateTime> = this.$currentTime.pipe(
-    map((currentTime) => currentTime.endOf('week').toLocal())
-  );
-
-  public currentWeekDays$: Observable<CalendarWeekDay[]> =
-    this.currentFirstDayOfWeek$.pipe(
-      map((currentFirstDayOfWeek) =>
-        Info.weekdays('short').map((weekDayName, index) => ({
-          dayOfWeek: weekDayName,
-          dayOfMonth: currentFirstDayOfWeek.plus({ days: index }).day,
-        }))
-      )
-    );
-
-  constructor() {
-    this.calendarEvents$.subscribe(this.$calendarEvents);
+  ngOnInit(): void {
+    this._calendarEventsService.load('week');
   }
 
-  public calendarEvents$: Observable<CalendarEvent[]> =
-    this.currentFirstDayOfWeek$.pipe(
-      switchMap((currentFirstDayOfWeek) =>
-        this._calendarEventsService
-          .getCalendarEvents('week', currentFirstDayOfWeek.toJSDate())
-          .pipe(
-            map((response) => response.body || []),
-            tap((events) => {
-              console.log('Mapped events:', events);
-            })
-          )
-      ),
-      shareReplay(1)
-    );
+  public get today$(): Observable<DateTime> {
+    return this._calendarEventsService.today$;
+  }
+
+  public get currentTime$(): Observable<DateTime> {
+    return this._calendarEventsService.currentTime$;
+  }
+
+  public get firstDayOfWeek$(): Observable<DateTime> {
+    return this._calendarEventsService.firstDayOfWeek$;
+  }
+
+  public get lastDayOfWeek$(): Observable<DateTime> {
+    return this._calendarEventsService.lastDayOfWeek$;
+  }
+
+  public get weekDays$(): Observable<CalendarWeekDay[]> {
+    return this._calendarEventsService.currentWeekDays$;
+  }
+
+  // public get calendarEvents$(): Observable<CalendarEvent[]> {
+  //   return this._calendarEventsService.calendarEvents$;
+  // }
 
   public get eventEditorVisible(): boolean {
     return this._eventEditorVisible;
@@ -107,26 +95,26 @@ export class CalendarComponent {
     return this._eventEditorType;
   }
 
-  public get today(): Observable<string> {
-    return this.$today.pipe(
+  public get todayString$(): Observable<string> {
+    return this.today$.pipe(
       map((today) => today.toLocaleString(DateTime.DATETIME_MED))
     );
   }
 
   public onTodayButtonHovered() {
-    this.$today.next(DateTime.local());
+    this._calendarEventsService.updateToday();
   }
 
   public onTodayButtonClicked() {
-    this.$currentTime.next(DateTime.local());
+    this._calendarEventsService.resetCurrentTime();
   }
 
   public onNextButtonClicked() {
-    this.$currentTime.next(this.$currentTime.value.plus({ days: 7 }));
+    this._calendarEventsService.currentTimeToNextWeek();
   }
 
   public onPrevButtonClicked() {
-    this.$currentTime.next(this.$currentTime.value.minus({ days: 7 }));
+    this._calendarEventsService.currentTimeToLastWeek();
   }
 
   public openEventEditor(calendarEvent?: CalendarEvent) {
@@ -148,22 +136,26 @@ export class CalendarComponent {
   }
 
   public deleteCalendarEvent(calendarEvent: CalendarEvent): void {
-    console.log('Deleting', calendarEvent);
+    this._calendarEventsService.deleteCalendarEvent(calendarEvent);
     this.closeEventEditor();
   }
 
   public submitCalendarEvent(calendarEvent: CalendarEvent): void {
     switch (this._eventEditorType) {
       case 'add': {
-        break;
+        this._calendarEventsService.addCalendarEvent(calendarEvent).subscribe({
+          next: () => this.closeEventEditor(),
+          error: () => console.log('error'),
+        });
+        return;
       }
       case 'edit': {
-        console.log('Editing', calendarEvent);
-        break;
+        this._calendarEventsService.editCalendarEvent(calendarEvent).subscribe({
+          next: () => this.closeEventEditor(),
+          error: () => console.log('error'),
+        });
+        return;
       }
     }
-
-    // if successful
-    this.closeEventEditor();
   }
 }
