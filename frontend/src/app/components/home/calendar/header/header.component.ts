@@ -1,9 +1,17 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, EventEmitter, Input, output, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  output,
+  Output,
+} from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { CalendarWeekViewComponent } from '../week-view/week-view.component';
 import { DateTime } from 'luxon';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
+import { DateTimeService } from '@services/date-time.service';
 
 @Component({
   selector: 'app-home-calendar-header',
@@ -13,13 +21,28 @@ import { Observable } from 'rxjs';
   styleUrl: './header.component.css',
 })
 export class CalendarHeaderComponent {
-  @Input({ required: true }) public today!: string;
-  @Input({ required: true }) public firstWeekday!: DateTime;
-  @Input({ required: true }) public lastWeekday!: DateTime;
+  private _dateTimeService = inject(DateTimeService);
 
-  public onTodayButtonHovered = output<void>();
-  public onTodayButtonClicked = output<void>();
-  public onNextButtonClicked = output<void>();
-  public onPrevButtonClicked = output<void>();
   public onAddEventButtonClicked = output<void>();
+  public todayString$: Observable<string> = this._dateTimeService.todayString$;
+  public firstWeekday$: Observable<DateTime> =
+    this._dateTimeService.firstDayOfWeek$;
+  public lastWeekday$: Observable<DateTime> =
+    this._dateTimeService.lastDayOfWeek$;
+
+  public onTodayButtonHovered(): void {
+    this._dateTimeService.updateToday();
+  }
+
+  public onTodayButtonClicked() {
+    this._dateTimeService.resetCurrentTime();
+  }
+
+  public onNextButtonClicked() {
+    this._dateTimeService.currentTimeToNextWeek();
+  }
+
+  public onPrevButtonClicked() {
+    this._dateTimeService.currentTimeToLastWeek();
+  }
 }

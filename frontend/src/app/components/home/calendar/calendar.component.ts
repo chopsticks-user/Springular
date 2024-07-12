@@ -1,5 +1,4 @@
 import {
-  ChangeDetectorRef,
   Component,
   ElementRef,
   inject,
@@ -19,6 +18,7 @@ import {
 import { AsyncPipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { CalendarEventsService } from '@services/calendar-events.service';
+import { DateTimeService } from '@services/date-time.service';
 
 @Component({
   selector: 'app-home-calendar',
@@ -38,6 +38,8 @@ export class CalendarComponent implements OnInit {
   private _eventEditorModal!: ElementRef<HTMLDialogElement>;
 
   private _calendarEventsService = inject(CalendarEventsService);
+  private _dateTimeService = inject(DateTimeService);
+
   private _selectedCalendarEvent: CalendarEvent | null = null;
   private _eventEditorVisible: boolean = false;
   private _eventEditorType: EventEditorTypes = 'add';
@@ -45,32 +47,10 @@ export class CalendarComponent implements OnInit {
   public calendarEvents$ = this._calendarEventsService.calendarEvents$;
 
   ngOnInit(): void {
-    this._calendarEventsService.load('week');
+    this._dateTimeService.currentTime$.subscribe((currentTime) =>
+      this._calendarEventsService.load('week', currentTime)
+    );
   }
-
-  public get today$(): Observable<DateTime> {
-    return this._calendarEventsService.today$;
-  }
-
-  public get currentTime$(): Observable<DateTime> {
-    return this._calendarEventsService.currentTime$;
-  }
-
-  public get firstDayOfWeek$(): Observable<DateTime> {
-    return this._calendarEventsService.firstDayOfWeek$;
-  }
-
-  public get lastDayOfWeek$(): Observable<DateTime> {
-    return this._calendarEventsService.lastDayOfWeek$;
-  }
-
-  public get weekDays$(): Observable<CalendarWeekDay[]> {
-    return this._calendarEventsService.currentWeekDays$;
-  }
-
-  // public get calendarEvents$(): Observable<CalendarEvent[]> {
-  //   return this._calendarEventsService.calendarEvents$;
-  // }
 
   public get eventEditorVisible(): boolean {
     return this._eventEditorVisible;
@@ -82,28 +62,6 @@ export class CalendarComponent implements OnInit {
 
   public get eventEditorType(): EventEditorTypes {
     return this._eventEditorType;
-  }
-
-  public get todayString$(): Observable<string> {
-    return this.today$.pipe(
-      map((today) => today.toLocaleString(DateTime.DATETIME_MED))
-    );
-  }
-
-  public onTodayButtonHovered() {
-    this._calendarEventsService.updateToday();
-  }
-
-  public onTodayButtonClicked() {
-    this._calendarEventsService.resetCurrentTime();
-  }
-
-  public onNextButtonClicked() {
-    this._calendarEventsService.currentTimeToNextWeek();
-  }
-
-  public onPrevButtonClicked() {
-    this._calendarEventsService.currentTimeToLastWeek();
   }
 
   public openEventEditor(calendarEvent?: CalendarEvent) {

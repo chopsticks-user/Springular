@@ -1,22 +1,12 @@
 <div class="container">
   <div class="calendar-view">
     <header class="calendar-header">
-      <app-home-calendar-header
-        [today]="(todayString$ | async)!"
-        [firstWeekday]="(firstDayOfWeek$ | async)!"
-        [lastWeekday]="(lastDayOfWeek$ | async)!"
-        (onTodayButtonHovered)="onTodayButtonHovered()"
-        (onTodayButtonClicked)="onTodayButtonClicked()"
-        (onNextButtonClicked)="onNextButtonClicked()"
-        (onPrevButtonClicked)="onPrevButtonClicked()"
-        (onAddEventButtonClicked)="openEventEditor()"
-      />
+      <app-home-calendar-header (onAddEventButtonClicked)="openEventEditor()" />
     </header>
     <main class="calendar-main">
       <app-home-calendar-week-view
         [calendarEvents]="(calendarEvents$ | async) || []"
-        [weekDays]="(weekDays$ | async) || []"
-        ($eventClicked)="openEventEditor($event)"
+        (onEventClicked)="openEventEditor($event)"
       />
       <dialog #eventEditorModal (close)="closeEventEditor()">
         @if(eventEditorVisible){

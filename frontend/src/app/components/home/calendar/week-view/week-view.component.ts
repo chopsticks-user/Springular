@@ -1,8 +1,10 @@
 import {
   Component,
   EventEmitter,
+  inject,
   Input,
   OnInit,
+  output,
   Output,
   SimpleChanges,
 } from '@angular/core';
@@ -11,6 +13,7 @@ import { CalendarEventComponent } from '@shared/calendar-event/calendar-event.co
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
+import { DateTimeService } from '@services/date-time.service';
 
 @Component({
   selector: 'app-home-calendar-week-view',
@@ -20,14 +23,18 @@ import { MatIcon } from '@angular/material/icon';
   styleUrl: './week-view.component.css',
 })
 export class CalendarWeekViewComponent {
-  @Input({ required: true }) public weekDays!: CalendarWeekDay[];
-  @Input({ required: true }) public calendarEvents!: CalendarEvent[];
-  @Output() public $eventClicked = new EventEmitter<CalendarEvent>();
+  private _dateTimeService = inject(DateTimeService);
 
+  @Input({ required: true }) public calendarEvents!: CalendarEvent[];
+  public onEventClicked = output<CalendarEvent>();
   public readonly hours: number[] = [...Array(24).keys()];
   public readonly hourTexts: string[] = this.hours.map((hourNumber) =>
     this.hourTotext(hourNumber)
   );
+
+  public get weekDays$(): Observable<CalendarWeekDay[]> {
+    return this._dateTimeService.currentWeekDays$;
+  }
 
   public scheduledEvents(hour: number, dayOfMonth: number): CalendarEvent[] {
     return this.calendarEvents.filter(
@@ -35,10 +42,6 @@ export class CalendarWeekViewComponent {
         new Date(event.start).getHours() === hour &&
         new Date(event.start).getDate() === dayOfMonth
     );
-  }
-
-  public onEventClicked(calendarEvent: CalendarEvent) {
-    this.$eventClicked.emit(calendarEvent);
   }
 
   public hourTotext(hour: number): string {
