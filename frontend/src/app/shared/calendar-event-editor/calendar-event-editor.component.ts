@@ -114,7 +114,8 @@ export class CalendarEventEditorComponent {
       return;
     }
 
-    const calendarEvent: CalendarEvent = {
+    const submittedCalendarEvent: CalendarEvent = {
+      id: this.calendarEvent?.id,
       title: this.eventFormGroup.get('title')?.value as string,
       description: this.eventFormGroup.get('description')?.value as string,
       color: this.eventFormGroup.get('color')?.value as string,
@@ -127,19 +128,21 @@ export class CalendarEventEditorComponent {
       this.eventFormGroup.contains('repeatEveryValue') &&
       this.eventFormGroup.contains('repeatEveryUnit')
     ) {
-      calendarEvent.repeatEvery = {
+      submittedCalendarEvent.repeatEvery = {
         value: this.eventFormGroup.get('repeatEveryValue')?.value as number,
         unit: this.eventFormGroup.get('repeatEveryUnit')
           ?.value as CalendarEventRepeatEveryUnit,
       };
     }
 
-    this.$submitButtonClicked.emit(calendarEvent);
+    this.$submitButtonClicked.emit(submittedCalendarEvent);
   }
 
   private _formatDate(date?: Date): string {
     if (!date) {
       date = new Date();
+    } else {
+      date = new Date(date);
     }
 
     const padZero = (num: number) => (num < 10 ? `0${num}` : `${num}`);

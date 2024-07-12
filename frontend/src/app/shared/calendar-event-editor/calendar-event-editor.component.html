@@ -1,4 +1,4 @@
-<form [formGroup]="eventFormGroup" (submit)="submitEvent()">
+<form [formGroup]="eventFormGroup">
   <p>
     <mat-form-field appearance="outline" color="primary">
       <mat-label>Title</mat-label>
@@ -99,7 +99,7 @@
   </p>
   }
   <div class="button-container">
-    <button mat-flat-button type="submit">Submit</button>
+    <button mat-flat-button (click)="submitEvent()">Submit</button>
     <button mat-flat-button (click)="$cancelButtonClicked.emit()" type="button">
       Cancel
     </button>
