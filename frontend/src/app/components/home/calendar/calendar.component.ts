@@ -8,13 +8,7 @@ import {
 import { CalendarWeekViewComponent } from './week-view/week-view.component';
 import { CalendarHeaderComponent } from './header/header.component';
 import { CalendarEventEditorComponent } from '@shared/calendar-event-editor/calendar-event-editor.component';
-import { DateTime, Info } from 'luxon';
-import { Observable, map } from 'rxjs';
-import {
-  CalendarEvent,
-  CalendarWeekDay,
-  EventEditorTypes,
-} from '@shared/types';
+import { CalendarEvent, EventEditorTypes } from '@shared/types';
 import { AsyncPipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { CalendarEventsService } from '@services/calendar-events.service';

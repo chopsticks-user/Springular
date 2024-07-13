@@ -14,7 +14,7 @@ export class AuthService {
   private _jwtKeeperService = inject(JwtKeeperService);
 
   get authenticated$(): Observable<boolean> {
-    return this.$authenticated.asObservable();
+    return this.$authenticated;
   }
 
   get authenticated(): boolean {
