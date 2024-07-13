@@ -10,6 +10,7 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '@services/auth.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-welcome',
@@ -29,21 +30,21 @@ import { AuthService } from '@services/auth.service';
 export class WelcomeComponent {
   @ViewChild('authModal', { static: true })
   private _authModal!: ElementRef<HTMLDialogElement>;
-  private _router = inject(Router);
+  private _location = inject(Location);
+  private _authService = inject(AuthService);
 
   showModal: boolean = false;
   showLogin: boolean = false;
 
   constructor() {
-    const verifyResponse$ = inject(AuthService).verify();
+    const verifyResponse$ = this._authService.verify();
 
     if (!verifyResponse$) {
       return;
     }
 
     verifyResponse$.subscribe(() => {
-      // todo: navigate to the prev route if exists
-      void this._router.navigate(['/home']);
+      this._location.historyGo(-1);
     });
   }
 
