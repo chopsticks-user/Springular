@@ -41,8 +41,8 @@ export class CalendarComponent implements OnInit {
   public calendarEvents$ = this._calendarEventsService.calendarEvents$;
 
   ngOnInit(): void {
-    this._dateTimeService.currentTime$.subscribe((currentTime) =>
-      this._calendarEventsService.load('week', currentTime)
+    this._dateTimeService.firstDayOfWeek$.subscribe((firstDayOfWeek) =>
+      this._calendarEventsService.load('week', firstDayOfWeek)
     );
   }
 

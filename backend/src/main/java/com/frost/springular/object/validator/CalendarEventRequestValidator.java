@@ -1,8 +1,15 @@
 package com.frost.springular.object.validator;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.frost.springular.controller.EventsController;
 import com.frost.springular.object.constraint.CalendarEventRequestConstraint;
 import com.frost.springular.object.enumerated.CalendarEventRepeat;
 import com.frost.springular.object.exception.CalendarEventException;
@@ -21,6 +28,7 @@ public class CalendarEventRequestValidator
   @Override
   public boolean isValid(
       CalendarEventRequest request, ConstraintValidatorContext context) {
+
     if (request == null) {
       return true;
     }
@@ -48,7 +56,7 @@ public class CalendarEventRequestValidator
     if (request.getStart() == null) {
       throw new CalendarEventException("Start time cannot be null");
     } else if ((request.getStart().truncatedTo(ChronoUnit.MINUTES) != request.getStart())
-        || (request.getStart().get(ChronoField.MINUTE_OF_HOUR) % 5 != 0)) {
+        || (getMinutesOfHour(request.getStart()) % 5 != 0)) {
       throw new CalendarEventException(
           "Minutes of start time must be a multiple of 5");
     }
@@ -67,11 +75,19 @@ public class CalendarEventRequestValidator
         throw new CalendarEventException(
             "Custom repeating interval must be specified");
       }
-    } else if (repeatEvery != null) {
-      throw new CalendarEventException(
-          "Unexpected specified custom repeating interval");
+    } else {
+      request.setRepeatEvery(
+          new CalendarEventRequest.RepeatEvery(null, null));
+      // throw new CalendarEventException(
+      // "Unexpected specified custom repeating interval");
     }
 
     return true;
+  }
+
+  private static int getMinutesOfHour(Instant instant) {
+    return instant
+        .atZone(ZoneId.systemDefault())
+        .get(ChronoField.MINUTE_OF_HOUR);
   }
 }

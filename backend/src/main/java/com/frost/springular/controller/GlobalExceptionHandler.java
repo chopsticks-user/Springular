@@ -24,11 +24,8 @@ public class GlobalExceptionHandler {
       CalendarEventException exception) {
     exception.printStackTrace();
 
-    return switch (exception) {
-      case CalendarEventException e ->
-        createHttpProblemDetail(
-            exception.getStatusCode(), exception, exception.getMessage());
-    };
+    return createHttpProblemDetail(
+        exception.getStatusCode(), exception, exception.getReason());
   }
 
   @ExceptionHandler({
@@ -82,6 +79,18 @@ public class GlobalExceptionHandler {
         createHttpProblemDetail(HttpStatus.BAD_REQUEST, e,
             "Invalid http request format");
       default -> createUnknownServerErrorDetail(exception);
+    };
+  }
+
+  @ExceptionHandler({ Exception.class })
+  public ProblemDetail handleUnknownException(
+      CalendarEventException exception) {
+    exception.printStackTrace();
+
+    return switch (exception) {
+      case CalendarEventException e ->
+        createHttpProblemDetail(
+            exception.getStatusCode(), exception, exception.getMessage());
     };
   }
 
