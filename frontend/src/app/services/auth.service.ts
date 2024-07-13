@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { LoginInfo, SignupInfo, JwtToken, JwtTokenPack } from '@shared/types';
 import { JwtKeeperService } from './jwt-keeper.service';
 import { BYPASS_AUTH_HEADER } from '@shared/constants';
-import { BehaviorSubject, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -15,10 +15,6 @@ export class AuthService {
 
   get authenticated$(): Observable<boolean> {
     return this.$authenticated;
-  }
-
-  get authenticated(): boolean {
-    return this.$authenticated.value;
   }
 
   get accessToken() {
@@ -57,7 +53,7 @@ export class AuthService {
     }
 
     // todo: an interceptor to refresh access token
-    return inject(HttpClient)
+    return this._http
       .post<void>(
         '/verify',
         { refreshToken: refreshToken.token },
