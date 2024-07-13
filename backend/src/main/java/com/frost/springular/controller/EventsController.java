@@ -1,7 +1,6 @@
 package com.frost.springular.controller;
 
 import com.frost.springular.object.enumerated.CalendarEventRepeat;
-import com.frost.springular.object.exception.CustomRepeatIntervalException;
 import com.frost.springular.object.model.CalendarEventModel;
 import com.frost.springular.object.request.CalendarEventRequest;
 import com.frost.springular.object.response.CalendarEventReponse;
@@ -53,9 +52,6 @@ public class EventsController {
   @PostMapping("")
   public ResponseEntity<CalendarEventReponse> addCalendarEvent(
       @Valid @RequestBody CalendarEventRequest calendarEvent) {
-    // todo: define a custom bean validator
-    validateRepeat(calendarEvent);
-
     CalendarEventModel newEvent = CalendarEventModel.builder()
         .title(calendarEvent.getTitle())
         .description(calendarEvent.getDescription())
@@ -80,8 +76,6 @@ public class EventsController {
   public ResponseEntity<CalendarEventReponse> editCalendarEvent(
       @PathVariable String id,
       @Valid @RequestBody CalendarEventRequest calendarEvent) {
-    validateRepeat(calendarEvent);
-
     // todo: implement an exception class
     CalendarEventModel existedEvent = calendarEventService
         .findById(id)
@@ -106,19 +100,5 @@ public class EventsController {
   @DeleteMapping("/{id}")
   public void deleteCalendarEvent(@PathVariable String id) {
     calendarEventService.deleteById(id);
-  }
-
-  private static void validateRepeat(CalendarEventRequest calendarEvent) {
-    if (calendarEvent.getRepeat() == CalendarEventRepeat.custom) {
-      var repeatEvery = calendarEvent.getRepeatEvery();
-
-      if (repeatEvery == null || repeatEvery.getValue() == null ||
-          repeatEvery.getUnit() == null) {
-        throw new CustomRepeatIntervalException();
-      }
-    } else {
-      calendarEvent.setRepeatEvery(
-          new CalendarEventRequest.RepeatEvery(null, null));
-    }
   }
 }

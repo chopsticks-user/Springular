@@ -1,16 +1,9 @@
 import { AsyncPipe } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  inject,
-  Input,
-  output,
-  Output,
-} from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { CalendarWeekViewComponent } from '../week-view/week-view.component';
 import { DateTime } from 'luxon';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { DateTimeService } from '@services/date-time.service';
 
 @Component({
@@ -34,15 +27,15 @@ export class CalendarHeaderComponent {
     this._dateTimeService.updateToday();
   }
 
-  public onTodayButtonClicked() {
+  public onTodayButtonClicked(): void {
     this._dateTimeService.resetCurrentTime();
   }
 
-  public onNextButtonClicked() {
+  public onNextButtonClicked(): void {
     this._dateTimeService.currentTimeToNextWeek();
   }
 
-  public onPrevButtonClicked() {
+  public onPrevButtonClicked(): void {
     this._dateTimeService.currentTimeToLastWeek();
   }
 }
