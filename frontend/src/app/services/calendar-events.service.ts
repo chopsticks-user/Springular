@@ -68,7 +68,6 @@ export class CalendarEventsService {
             newEvents.splice(insertIndex, 0, newCalendarEvent);
           }
 
-          console.log(newEvents);
           this.$calendarEvents.next(newEvents);
         })
       );

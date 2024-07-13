@@ -5,7 +5,7 @@
     </header>
     <main class="calendar-main">
       <app-home-calendar-week-view
-        [calendarEvents]="(calendarEvents$ | async) || []"
+        [calendarEvents]="(calendarEvents$ | async) ?? []"
         (onEventClicked)="openEventEditor($event)"
       />
       <dialog #eventEditorModal (close)="closeEventEditor()">

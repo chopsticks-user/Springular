@@ -16,11 +16,7 @@ export class CalendarEventComponent {
   @Input({ required: true }) public borderPixelWidth!: number;
   @Output() public eventClicked = new EventEmitter<CalendarEvent>();
 
-  public getStyle(event: CalendarEvent | undefined) {
-    if (!event) {
-      return '';
-    }
-
+  public getStyle(event: CalendarEvent) {
     let pixelHeight: number = (event.durationMinutes / 60) * this.pixelsPerHour;
     pixelHeight += Math.floor(pixelHeight / this.pixelsPerHour);
 

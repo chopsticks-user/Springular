@@ -44,7 +44,7 @@ export class CalendarEventEditorComponent {
 
   public eventFormGroup: FormGroup = new FormGroup({
     title: new FormControl<string>('', [Validators.required]),
-    description: new FormControl<string>('', [Validators.required]),
+    description: new FormControl<string>(''),
     start: new FormControl<string>(
       this._formatDate(DateTime.local().toJSDate()),
       [Validators.required]
@@ -61,8 +61,7 @@ export class CalendarEventEditorComponent {
           Validators.required,
         ]),
         description: new FormControl<string>(
-          this.calendarEvent?.description || '',
-          [Validators.required]
+          this.calendarEvent?.description || ''
         ),
         start: new FormControl<string>(
           this._formatDate(this.calendarEvent?.start) ||

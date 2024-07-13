@@ -1,16 +1,7 @@
-import {
-  Component,
-  EventEmitter,
-  inject,
-  Input,
-  OnInit,
-  output,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, inject, Input, output } from '@angular/core';
 import { CalendarEvent, CalendarWeekDay } from '@shared/types';
 import { CalendarEventComponent } from '@shared/calendar-event/calendar-event.component';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { DateTimeService } from '@services/date-time.service';
@@ -39,6 +30,7 @@ export class CalendarWeekViewComponent {
   public scheduledEvents(hour: number, dayOfMonth: number): CalendarEvent[] {
     return this.calendarEvents.filter(
       (event) =>
+        event != null &&
         new Date(event.start).getHours() === hour &&
         new Date(event.start).getDate() === dayOfMonth
     );
