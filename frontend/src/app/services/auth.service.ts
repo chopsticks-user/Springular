@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { LoginInfo, SignupInfo, JwtToken, JwtTokenPack } from '@shared/types';
 import { JwtKeeperService } from './jwt-keeper.service';
 import { BYPASS_AUTH_HEADER } from '@shared/constants';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, finalize, Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -100,5 +100,19 @@ export class AuthService {
           }
         })
       );
+  }
+
+  logout(): void {
+    this._http
+      .get<void>('/logout', {
+        observe: 'response',
+      })
+      .pipe(
+        finalize(() => {
+          this.$authenticated.next(false);
+          this._jwtKeeperService.clear();
+        })
+      )
+      .subscribe();
   }
 }

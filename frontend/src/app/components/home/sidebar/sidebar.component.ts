@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { UserSectionComponent } from './user-section/user-section.component';
 import { NavigationSectionComponent } from './navigation-section/navigation-section.component';
 import { SidebarSection } from '@shared/types';
-import { Router } from '@angular/router';
+import { AuthService } from '@services/auth.service';
 
 @Component({
   selector: 'app-home-sidebar',
@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
   styleUrl: './sidebar.component.css',
 })
 export class SidebarComponent {
+  private _authService = inject(AuthService);
+
   public readonly sections: SidebarSection[] = [
     {
       items: [
@@ -33,7 +35,7 @@ export class SidebarComponent {
           url: '/home/calendar',
         },
         {
-          name: 'pending tracker',
+          name: 'spending tracker',
           icon: 'account_balance',
           action: 'navigate',
           url: '/home/finance',
@@ -72,6 +74,24 @@ export class SidebarComponent {
           icon: 'quiz',
           action: 'navigate',
           url: '/home/dashboard',
+        },
+      ],
+    },
+    {
+      name: 'account',
+      items: [
+        {
+          name: 'settings',
+          icon: 'settings',
+          action: 'navigate',
+          url: '/home/dashboard',
+        },
+        {
+          name: 'sign out',
+          icon: 'logout',
+          action: 'navigate',
+          url: '/',
+          sideEffects: () => this._authService.logout(),
         },
       ],
     },

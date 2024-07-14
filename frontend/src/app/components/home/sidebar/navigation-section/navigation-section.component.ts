@@ -20,14 +20,18 @@ export class NavigationSectionComponent {
     switch (item.action) {
       case 'navigate': {
         this.navigateTo(item.url!);
-        return;
+        break;
       }
       case 'dropdown': {
-        return;
+        break;
       }
       case 'toggle': {
-        return;
+        break;
       }
+    }
+
+    if (item.sideEffects) {
+      item.sideEffects();
     }
   }
 
