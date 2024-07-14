@@ -1,0 +1,5 @@
+:host {
+  flex-basis: 20%;
+  background-color: var(--background-secondary);
+  margin-right: 20px;
+}
