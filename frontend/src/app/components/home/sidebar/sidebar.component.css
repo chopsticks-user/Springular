@@ -13,3 +13,9 @@ header {
   flex-direction: column;
   padding-top: 3rem; /* heading element */
 }
+
+main {
+  flex: 1;
+  /* display: flex;
+  flex-direction: column; */
+}

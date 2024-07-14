@@ -6,6 +6,8 @@ import { PageNotFoundComponent } from '@components/page-not-found/page-not-found
 import { CalendarComponent } from '@components/home/calendar/calendar.component';
 import { FinanceComponent } from '@components/home/finance/finance.component';
 import { DashboardComponent } from '@components/home/dashboard/dashboard.component';
+import { ContactsComponent } from '@components/home/contacts/contacts.component';
+import { ProfileComponent } from '@components/home/profile/profile.component';
 
 export const routes: Routes = [
   { path: '', component: WelcomeComponent },
@@ -16,6 +18,11 @@ export const routes: Routes = [
     component: HomeComponent,
     canActivate: [authorizedGuard],
     children: [
+      {
+        path: 'profile',
+        component: ProfileComponent,
+        canActivate: [authorizedGuard],
+      },
       {
         path: 'calendar',
         component: CalendarComponent,
@@ -29,6 +36,11 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         component: DashboardComponent,
+        canActivate: [authorizedGuard],
+      },
+      {
+        path: 'contacts',
+        component: ContactsComponent,
         canActivate: [authorizedGuard],
       },
       { path: '', redirectTo: 'dashboard', pathMatch: 'prefix' },

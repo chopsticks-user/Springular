@@ -1,0 +1,48 @@
+:host {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  margin-bottom: 1rem;
+  color: var(--foreground-secondary);
+  text-transform: capitalize;
+  font-weight: 300;
+  margin-left: 35px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px;
+  margin-left: 50px;
+}
+
+.item {
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  height: 25px;
+}
+
+.item-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+  color: var(--foreground-light);
+}
+
+.item-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--foreground-light);
+  text-transform: capitalize;
+}

@@ -1,2 +1,17 @@
-<header></header>
-<main></main>
+@if(name()){
+<header>
+  <p>{{ name() }}</p>
+</header>
+}
+<main>
+  @for(item of items(); track $index){
+  <div class="item" (click)="onItemClicked(item)">
+    <div class="item-icon">
+      <mat-icon matSuffix>{{ item.icon }}</mat-icon>
+    </div>
+    <div class="item-name">
+      <p>{{ item.name }}</p>
+    </div>
+  </div>
+  }
+</main>

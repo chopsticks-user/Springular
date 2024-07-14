@@ -2,8 +2,11 @@
   <app-home-sidebar-user-section />
 </header>
 <main>
-  @for(section of sections; track section.id){
-  <app-home-sidebar-navigation-section />
+  @for(section of sections; track $index){
+  <app-home-sidebar-navigation-section
+    [name]="section.name"
+    [items]="section.items"
+  />
   }
 </main>
 <footer></footer>

@@ -72,3 +72,17 @@ export interface CalendarWeekDay {
 }
 
 export type EventEditorTypes = 'add' | 'edit';
+
+export type SidebarItemActionType = 'navigate' | 'toggle' | 'dropdown';
+
+export interface SidebarItem {
+  name: string;
+  icon: string;
+  action: SidebarItemActionType;
+  url?: string;
+}
+
+export interface SidebarSection {
+  name?: string;
+  items: SidebarItem[];
+}
