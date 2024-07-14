@@ -8,7 +8,7 @@ import { FinanceComponent } from '@components/home/finance/finance.component';
 import { DashboardComponent } from '@components/home/dashboard/dashboard.component';
 
 export const routes: Routes = [
-  { path: '', component: WelcomeComponent, canActivate: [authorizedGuard] },
+  { path: '', component: WelcomeComponent },
   { path: 'login', redirectTo: '' },
   { path: 'signup', redirectTo: '' },
   {

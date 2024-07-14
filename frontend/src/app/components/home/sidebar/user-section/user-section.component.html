@@ -1,2 +1,6 @@
+@let userInfo = (userInfo$ | async)!;
+
 <div class="avatar"></div>
-<div class="name"></div>
+<div class="name">
+  <h2>{{ userInfo.firstName + " " + userInfo.lastName }}</h2>
+</div>

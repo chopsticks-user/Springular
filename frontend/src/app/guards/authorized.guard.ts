@@ -1,7 +1,7 @@
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '@services/auth.service';
 import { inject } from '@angular/core';
-import { map, of, switchMap } from 'rxjs';
+import { catchError, map, of, switchMap } from 'rxjs';
 
 export const authorizedGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
@@ -19,11 +19,17 @@ export const authorizedGuard: CanActivateFn = (route, state) => {
 
       const verifyResponse$ = authService.verify();
       if (!verifyResponse$) {
-        router.navigateByUrl('');
+        router.navigateByUrl('/');
         return of(false);
       }
 
-      return verifyResponse$.pipe(map(() => true));
+      return verifyResponse$.pipe(
+        map(() => true),
+        catchError(() => {
+          router.navigateByUrl('/');
+          return of(false);
+        })
+      );
     })
   );
 };
