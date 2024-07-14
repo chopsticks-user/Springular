@@ -80,6 +80,8 @@ export interface SidebarItem {
   icon: string;
   action: SidebarItemActionType;
   url?: string;
+  sideEffects?: () => void;
+  externalRedirect?: boolean;
 }
 
 export interface SidebarSection {

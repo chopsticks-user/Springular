@@ -4,8 +4,12 @@
 </header>
 }
 <main>
-  @for(item of items(); track $index){
-  <div class="item" (click)="onItemClicked(item)">
+  @for(item of items(); track $index){ @let isSelected = isSelectedItem(item);
+  <div
+    class="item"
+    (click)="onItemClicked(item)"
+    [ngStyle]="{ color: isSelected ? '#6cb4ee' : 'var(--foreground-light)' }"
+  >
     <div class="item-icon">
       <mat-icon matSuffix>{{ item.icon }}</mat-icon>
     </div>

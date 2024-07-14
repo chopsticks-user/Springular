@@ -1,3 +1,4 @@
+import { NgStyle } from '@angular/common';
 import { Component, inject, input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
@@ -6,7 +7,7 @@ import { SidebarItem } from '@shared/types';
 @Component({
   selector: 'app-home-sidebar-navigation-section',
   standalone: true,
-  imports: [MatIconModule],
+  imports: [MatIconModule, NgStyle],
   templateUrl: './navigation-section.component.html',
   styleUrl: './navigation-section.component.css',
 })
@@ -19,19 +20,30 @@ export class NavigationSectionComponent {
   public onItemClicked(item: SidebarItem): void {
     switch (item.action) {
       case 'navigate': {
-        this.navigateTo(item.url!);
-        return;
+        if (item.externalRedirect) {
+          window.open(item.url, '_blank');
+          break;
+        }
+
+        this._router.navigateByUrl(item.url!);
+        break;
       }
       case 'dropdown': {
-        return;
+        break;
       }
       case 'toggle': {
-        return;
+        break;
       }
     }
+
+    item.sideEffects && item.sideEffects();
   }
 
-  private navigateTo(url: string): void {
-    void this._router.navigateByUrl(url);
+  public isSelectedItem(item: SidebarItem): boolean {
+    if (item.action !== 'navigate') {
+      return false;
+    }
+
+    return item.url! === this._router.url;
   }
 }

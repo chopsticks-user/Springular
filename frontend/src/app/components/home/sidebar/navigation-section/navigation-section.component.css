@@ -36,13 +36,11 @@ main {
   justify-content: center;
   align-items: center;
   margin-right: 20px;
-  color: var(--foreground-light);
 }
 
 .item-name {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--foreground-light);
   text-transform: capitalize;
 }
