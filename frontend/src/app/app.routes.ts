@@ -8,6 +8,8 @@ import { FinanceComponent } from '@components/home/finance/finance.component';
 import { DashboardComponent } from '@components/home/dashboard/dashboard.component';
 import { ContactsComponent } from '@components/home/contacts/contacts.component';
 import { ProfileComponent } from '@components/home/profile/profile.component';
+import { SettingsComponent } from '@components/home/settings/settings.component';
+import { FaqComponent } from '@components/home/faq/faq.component';
 
 export const routes: Routes = [
   { path: '', component: WelcomeComponent },
@@ -18,6 +20,12 @@ export const routes: Routes = [
     component: HomeComponent,
     canActivate: [authorizedGuard],
     children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'prefix' },
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
+        canActivate: [authorizedGuard],
+      },
       {
         path: 'profile',
         component: ProfileComponent,
@@ -34,16 +42,20 @@ export const routes: Routes = [
         canActivate: [authorizedGuard],
       },
       {
-        path: 'dashboard',
-        component: DashboardComponent,
-        canActivate: [authorizedGuard],
-      },
-      {
         path: 'contacts',
         component: ContactsComponent,
         canActivate: [authorizedGuard],
       },
-      { path: '', redirectTo: 'dashboard', pathMatch: 'prefix' },
+      {
+        path: 'settings',
+        component: SettingsComponent,
+        canActivate: [authorizedGuard],
+      },
+      {
+        path: 'faq',
+        component: FaqComponent,
+        canActivate: [authorizedGuard],
+      },
     ],
   },
   { path: '**', component: PageNotFoundComponent },
