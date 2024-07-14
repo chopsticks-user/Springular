@@ -1,1 +1,8 @@
-<div class="container"></div>
+<header></header>
+<main>
+  <app-home-sidebar-user-section />
+  @for(section of sections; track section.id){
+  <app-home-sidebar-navigation-section />
+  }
+</main>
+<footer></footer>
