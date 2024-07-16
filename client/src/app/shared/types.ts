@@ -88,3 +88,21 @@ export interface SidebarSection {
   name?: string;
   items: SidebarItem[];
 }
+
+export interface Transaction {
+  id?: string;
+  time: Date;
+  note: string;
+  revenues: number;
+  expenses: number;
+  group: TransactionGroup;
+}
+
+export interface TransactionGroup {
+  id?: string;
+  name: string;
+  color: string;
+  revenues: number;
+  expenses: number;
+  user: UserInfo;
+}

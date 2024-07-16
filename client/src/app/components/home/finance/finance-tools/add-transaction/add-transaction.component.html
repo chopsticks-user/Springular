@@ -1,0 +1,65 @@
+<form [formGroup]="formGroup">
+  <p>
+    <mat-form-field appearance="outline" color="primary">
+      <mat-label>Revenues</mat-label>
+      <input
+        style="color: var(--foreground-light)"
+        formControlName="revenues"
+        matInput
+      />
+      <mat-icon matSuffix>savings</mat-icon>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="outline" color="primary">
+      <mat-label>Expenses</mat-label>
+      <input
+        style="color: var(--foreground-light)"
+        formControlName="expenses"
+        matInput
+      />
+      <mat-icon matSuffix>payments</mat-icon>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="outline" color="primary">
+      <mat-label>Time</mat-label>
+      <input
+        style="color: var(--foreground-light)"
+        formControlName="time"
+        matInput
+        type="datetime-local"
+      />
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="outline" color="primary">
+      <mat-label>Note</mat-label>
+      <input
+        style="color: var(--foreground-light)"
+        formControlName="note"
+        matInput
+      />
+      <mat-icon matSuffix>edit_note</mat-icon>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="outline" color="primary">
+      <mat-label>Group name</mat-label>
+      <select
+        style="color: var(--foreground-light)"
+        formControlName="groupName"
+        matNativeControl
+      >
+        @for(group of availableGroups(); track group.name){
+        <option>{{ group.name }}</option>
+        }
+      </select>
+      <mat-icon matSuffix>tab_group</mat-icon>
+    </mat-form-field>
+  </p>
+  <section>
+    <button mat-flat-button>Submit</button>
+    <button mat-flat-button>Cancel</button>
+  </section>
+</form>
