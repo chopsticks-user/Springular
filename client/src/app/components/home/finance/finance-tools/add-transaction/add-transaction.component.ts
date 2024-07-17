@@ -9,7 +9,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
 import { Transaction, TransactionGroup } from '@shared/types';
 
 @Component({
@@ -20,7 +19,6 @@ import { Transaction, TransactionGroup } from '@shared/types';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    MatSelectModule,
     MatButtonModule,
   ],
   templateUrl: './add-transaction.component.html',
@@ -35,7 +33,7 @@ export class AddTransactionComponent {
     expenses: new FormControl<number>(0.0, [Validators.required]),
     time: new FormControl<string>('', [Validators.required]),
     note: new FormControl<string>('', [Validators.required]),
-    groupName: new FormGroup<string>('', [Validators.required]),
+    groupName: new FormControl<string>('', [Validators.required]),
   });
 
   public submit(): void {
@@ -49,7 +47,7 @@ export class AddTransactionComponent {
       time: new Date(this.formGroup.get('time')?.value as string),
       note: this.formGroup.get('note')?.value as string,
       group: this.availableGroups().find(
-        (group) => group.name === this.formGroup.get('group')?.value
+        (group) => group.name === this.formGroup.get('groupName')?.value
       )!,
     };
 

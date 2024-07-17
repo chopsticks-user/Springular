@@ -1,1 +1,40 @@
-<p>add-transaction-group works!</p>
+<form [formGroup]="formGroup">
+  <p>
+    <mat-form-field appearance="outline" color="primary">
+      <mat-label>Name</mat-label>
+      <input
+        style="color: var(--foreground-light)"
+        formControlName="name"
+        matInput
+      />
+      <mat-icon matSuffix>receipt_long</mat-icon>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="outline" color="primary">
+      <mat-label>Description</mat-label>
+      <input
+        style="color: var(--foreground-light)"
+        formControlName="description"
+        matInput
+      />
+      <mat-icon matSuffix>description</mat-icon>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="outline" color="primary">
+      <mat-label>Color</mat-label>
+      <input
+        style="color: var(--foreground-light)"
+        formControlName="color"
+        matInput
+        type="color"
+      />
+      <mat-icon matSuffix>palette</mat-icon>
+    </mat-form-field>
+  </p>
+  <section>
+    <button mat-flat-button>Submit</button>
+    <button mat-flat-button (click)="onCloseModal.emit()">Cancel</button>
+  </section>
+</form>
