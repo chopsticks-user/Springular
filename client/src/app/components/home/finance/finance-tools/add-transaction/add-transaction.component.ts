@@ -31,11 +31,11 @@ export class AddTransactionComponent {
   public onCloseModal = output<void>();
 
   public formGroup = new FormGroup({
-    revenues: new FormControl<number>(0.0, [Validators.required]),
-    expenses: new FormControl<number>(0.0, [Validators.required]),
+    revenues: new FormControl<number>(0, [Validators.required]),
+    expenses: new FormControl<number>(0, [Validators.required]),
     time: new FormControl<string>('', [Validators.required]),
     note: new FormControl<string>('', [Validators.required]),
-    groupName: new FormControl<string>('', [Validators.required]),
+    group: new FormControl<string>('', [Validators.required]),
   });
 
   public submit(): void {
@@ -48,9 +48,9 @@ export class AddTransactionComponent {
       expenses: this.formGroup.get('expenses')?.value as number,
       time: new Date(this.formGroup.get('time')?.value as string),
       note: this.formGroup.get('note')?.value as string,
-      group: this.availableGroups().find(
+      groupId: this.availableGroups().find(
         (group) => group.name === this.formGroup.get('groupName')?.value
-      )!,
+      )!.id!,
     };
 
     console.log(transaction);

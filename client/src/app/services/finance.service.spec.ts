@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { EventEditorService } from './event-editor.service';
+import { FinanceService } from './finance.service';
 
-describe('EventEditorService', () => {
-  let service: EventEditorService;
+describe('FinanceService', () => {
+  let service: FinanceService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(EventEditorService);
+    service = TestBed.inject(FinanceService);
   });
 
   it('should be created', () => {

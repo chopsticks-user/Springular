@@ -10,7 +10,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { UserService } from '@services/user.service';
 import { FormFieldComponent } from '@shared/form-field/form-field.component';
 import { TransactionGroup } from '@shared/types';
 
@@ -30,8 +29,6 @@ import { TransactionGroup } from '@shared/types';
   styleUrl: './add-transaction-group.component.css',
 })
 export class AddTransactionGroupComponent {
-  private _user = inject(UserService);
-
   public availableGroups = input<TransactionGroup[]>([]);
   public onCloseModal = output<void>();
 
@@ -39,6 +36,7 @@ export class AddTransactionGroupComponent {
     name: new FormControl<string>('', [Validators.required]),
     description: new FormControl<string>('', []),
     color: new FormControl<string>('#7cfc00', [Validators.required]),
+    parent: new FormControl<string | null>(null, []),
   });
 
   public submit(): void {
@@ -46,17 +44,18 @@ export class AddTransactionGroupComponent {
       return;
     }
 
-    this._user.userInfo.subscribe((user) => {
-      const transactionGroup: TransactionGroup = {
-        revenues: 0.0,
-        expenses: 0.0,
-        name: this.formGroup.get('name')?.value as string,
-        description: this.formGroup.get('description')?.value as string,
-        color: this.formGroup.get('color')?.value as string,
-        user: user,
-      };
+    const transactionGroup: TransactionGroup = {
+      revenues: 0.0,
+      expenses: 0.0,
+      name: this.formGroup.get('name')?.value as string,
+      description: this.formGroup.get('description')?.value as string,
+      color: this.formGroup.get('color')?.value as string,
+      parentId:
+        this.availableGroups().find(
+          (group) => group.name === this.formGroup.get('parent')?.value
+        )?.id || null,
+    };
 
-      console.log(transactionGroup);
-    });
+    console.log(transactionGroup);
   }
 }
