@@ -60,6 +60,6 @@
   </p>
   <section>
     <button mat-flat-button>Submit</button>
-    <button mat-flat-button>Cancel</button>
+    <button mat-flat-button (click)="onCloseModal.emit()">Cancel</button>
   </section>
 </form>

@@ -101,6 +101,7 @@ export interface Transaction {
 export interface TransactionGroup {
   id?: string;
   name: string;
+  description: string;
   color: string;
   revenues: number;
   expenses: number;
