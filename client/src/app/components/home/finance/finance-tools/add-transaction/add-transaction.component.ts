@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { FormFieldComponent } from '@shared/form-field/form-field.component';
 import { Transaction, TransactionGroup } from '@shared/types';
 
 @Component({
@@ -20,6 +21,7 @@ import { Transaction, TransactionGroup } from '@shared/types';
     MatInputModule,
     MatIconModule,
     MatButtonModule,
+    FormFieldComponent,
   ],
   templateUrl: './add-transaction.component.html',
   styleUrl: './add-transaction.component.css',
