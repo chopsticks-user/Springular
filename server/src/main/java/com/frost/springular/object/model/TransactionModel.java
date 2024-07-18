@@ -42,4 +42,8 @@ public class TransactionModel {
   @ManyToOne
   @JoinColumn(name = "finance_transaction_groups", referencedColumnName = "id", nullable = false)
   private TransactionGroupModel transactionGroupModel;
+
+  @ManyToOne
+  @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+  private UserModel userModel;
 }
