@@ -1,6 +1,5 @@
 package com.frost.springular.controller;
 
-import com.frost.springular.object.enumerated.CalendarEventRepeat;
 import com.frost.springular.object.exception.CalendarEventException;
 import com.frost.springular.object.model.CalendarEventModel;
 import com.frost.springular.object.request.CalendarEventRequest;
@@ -13,8 +12,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

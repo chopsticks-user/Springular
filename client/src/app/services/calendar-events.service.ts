@@ -8,8 +8,8 @@ import { BehaviorSubject, map, Observable, tap } from 'rxjs';
   providedIn: 'root',
 })
 export class CalendarEventsService {
-  private $calendarEvents = new BehaviorSubject<CalendarEvent[]>([]);
   private _http = inject(HttpClient);
+  private $calendarEvents = new BehaviorSubject<CalendarEvent[]>([]);
 
   public get calendarEvents$(): Observable<CalendarEvent[]> {
     return this.$calendarEvents;

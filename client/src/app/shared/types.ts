@@ -12,6 +12,7 @@ export interface SignupInfo {
 }
 
 export interface UserInfo {
+  id: string;
   firstName: string;
   lastName: string;
   dateOfBirth: string;
@@ -95,7 +96,7 @@ export interface Transaction {
   note: string;
   revenues: number;
   expenses: number;
-  group: TransactionGroup;
+  groupId: string;
 }
 
 export interface TransactionGroup {
@@ -105,5 +106,5 @@ export interface TransactionGroup {
   color: string;
   revenues: number;
   expenses: number;
-  user: UserInfo;
+  parentId: string | null;
 }

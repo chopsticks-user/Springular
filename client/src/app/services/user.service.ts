@@ -9,6 +9,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class UserService {
   private _http = inject(HttpClient);
   private $userInfo = new BehaviorSubject<UserInfo>({
+    id: 'unknown',
     firstName: 'John',
     lastName: 'Doe',
     dateOfBirth: '07-11-1988',
