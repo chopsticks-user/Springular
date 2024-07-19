@@ -80,7 +80,8 @@ public class EventsController {
     // todo: implement an exception class
     CalendarEventModel existedEvent = calendarEventService
         .findById(id)
-        .orElseThrow(() -> new RuntimeException("PUT /events/{id}"));
+        .orElseThrow(() -> new CalendarEventException(
+            "Could not find calendar event"));
 
     existedEvent.setTitle(calendarEvent.getTitle());
     existedEvent.setDescription(calendarEvent.getDescription());

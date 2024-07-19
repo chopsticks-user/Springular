@@ -29,7 +29,7 @@ public class TransactionGroupModel {
   @Column(nullable = false)
   private String name;
 
-  @Column(nullable = false)
+  @Column
   private String description;
 
   @Column(nullable = false)
@@ -45,6 +45,6 @@ public class TransactionGroupModel {
   @Column
   private String parentId;
 
-  @Column(nullable = false)
+  @Column(nullable = false, unique = true)
   private String path;
 }

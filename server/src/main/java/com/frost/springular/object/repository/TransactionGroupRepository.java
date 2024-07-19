@@ -1,6 +1,7 @@
 package com.frost.springular.object.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -14,4 +15,6 @@ public interface TransactionGroupRepository
   List<TransactionGroupModel> findByUser(UserModel userModel);
 
   List<TransactionGroupModel> findByParentId(String parentId);
+
+  Optional<TransactionGroupModel> findByPath(String path);
 }
