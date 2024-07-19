@@ -1,17 +1,17 @@
 package com.frost.springular.controller;
 
 import com.frost.springular.config.SecurityConfig;
-import com.frost.springular.object.exception.DuplicatedEmailException;
-import com.frost.springular.object.exception.RefreshTokenExpiredException;
-import com.frost.springular.object.model.RefreshTokenModel;
-import com.frost.springular.object.model.UserModel;
-import com.frost.springular.object.request.LoginRequest;
-import com.frost.springular.object.request.RefreshTokenRequest;
-import com.frost.springular.object.request.SignupRequest;
-import com.frost.springular.object.response.AccessTokenResponse;
-import com.frost.springular.object.response.RefreshTokenResponse;
-import com.frost.springular.object.response.TokenResponse;
-import com.frost.springular.object.response.UserInfoResponse;
+import com.frost.springular.exception.DuplicatedEmailException;
+import com.frost.springular.exception.RefreshTokenExpiredException;
+import com.frost.springular.model.RefreshTokenModel;
+import com.frost.springular.model.UserModel;
+import com.frost.springular.request.LoginRequest;
+import com.frost.springular.request.RefreshTokenRequest;
+import com.frost.springular.request.SignupRequest;
+import com.frost.springular.response.AccessTokenResponse;
+import com.frost.springular.response.RefreshTokenResponse;
+import com.frost.springular.response.TokenResponse;
+import com.frost.springular.response.UserInfoResponse;
 import com.frost.springular.service.AccessTokenService;
 import com.frost.springular.service.AuthService;
 import com.frost.springular.service.RefreshTokenService;
@@ -31,23 +31,21 @@ public class AuthController {
   private final AuthService authService;
 
   public AuthController(AccessTokenService jwtService,
-                        RefreshTokenService jwtRefreshTokenService,
-                        AuthService authService) {
+      RefreshTokenService jwtRefreshTokenService,
+      AuthService authService) {
     this.jwtAccessTokenService = jwtService;
     this.jwtRefreshTokenService = jwtRefreshTokenService;
     this.authService = authService;
   }
 
   @PostMapping("/login")
-  public ResponseEntity<TokenResponse>
-  authenticate(@Valid @RequestBody LoginRequest loginInfo) {
+  public ResponseEntity<TokenResponse> authenticate(@Valid @RequestBody LoginRequest loginInfo) {
     UserModel authenticatedUser = authService.authenticate(loginInfo);
-    var refreshToken =
-        jwtRefreshTokenService.generateToken(authenticatedUser.getUsername());
+    var refreshToken = jwtRefreshTokenService.generateToken(authenticatedUser.getUsername());
     var response = new TokenResponse(
         jwtAccessTokenService.generateToken(authenticatedUser),
         new RefreshTokenResponse(refreshToken.getToken(),
-                                 refreshToken.getExpirationDate()));
+            refreshToken.getExpirationDate()));
     return ResponseEntity.ok(response);
   }
 
@@ -60,12 +58,10 @@ public class AuthController {
   }
 
   @PostMapping("/refresh")
-  public ResponseEntity<TokenResponse>
-  refreshAccessToken(@Valid @RequestBody RefreshTokenRequest request)
+  public ResponseEntity<TokenResponse> refreshAccessToken(@Valid @RequestBody RefreshTokenRequest request)
       throws RefreshTokenExpiredException {
-    RefreshTokenModel refreshToken =
-        jwtRefreshTokenService.findByToken(request.getRefreshToken())
-            .orElse(null);
+    RefreshTokenModel refreshToken = jwtRefreshTokenService.findByToken(request.getRefreshToken())
+        .orElse(null);
 
     if (refreshToken == null) {
       throw new RefreshTokenExpiredException();
@@ -78,6 +74,6 @@ public class AuthController {
     return ResponseEntity.ok(new TokenResponse(
         jwtAccessTokenService.generateToken(refreshToken.getUserEntity()),
         new RefreshTokenResponse(refreshToken.getToken(),
-                                 refreshToken.getExpirationDate())));
+            refreshToken.getExpirationDate())));
   }
 }

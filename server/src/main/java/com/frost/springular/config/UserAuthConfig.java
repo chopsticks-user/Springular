@@ -10,37 +10,37 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.frost.springular.object.repository.UserRepository;
+import com.frost.springular.repository.UserRepository;
 
 @Configuration
 public class UserAuthConfig {
-    private final UserRepository userRepository;
+  private final UserRepository userRepository;
 
-    public UserAuthConfig(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+  public UserAuthConfig(UserRepository userRepository) {
+    this.userRepository = userRepository;
+  }
 
-    @Bean
-    UserDetailsService userDetailsService() {
-        return username -> userRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-    }
+  @Bean
+  UserDetailsService userDetailsService() {
+    return username -> userRepository.findByEmail(username)
+        .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+  }
 
-    @Bean
-    BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+  @Bean
+  BCryptPasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
-        return authConfig.getAuthenticationManager();
-    }
+  @Bean
+  public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+    return authConfig.getAuthenticationManager();
+  }
 
-    @Bean
-    AuthenticationProvider authenticationProvider() {
-        var authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService());
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
-    }
+  @Bean
+  AuthenticationProvider authenticationProvider() {
+    var authProvider = new DaoAuthenticationProvider();
+    authProvider.setUserDetailsService(userDetailsService());
+    authProvider.setPasswordEncoder(passwordEncoder());
+    return authProvider;
+  }
 }

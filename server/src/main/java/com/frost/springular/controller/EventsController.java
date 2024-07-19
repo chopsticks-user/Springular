@@ -1,9 +1,9 @@
 package com.frost.springular.controller;
 
-import com.frost.springular.object.exception.CalendarEventException;
-import com.frost.springular.object.model.CalendarEventModel;
-import com.frost.springular.object.request.CalendarEventRequest;
-import com.frost.springular.object.response.CalendarEventReponse;
+import com.frost.springular.exception.CalendarEventException;
+import com.frost.springular.model.CalendarEventModel;
+import com.frost.springular.request.CalendarEventRequest;
+import com.frost.springular.response.CalendarEventReponse;
 import com.frost.springular.service.CalendarEventService;
 import com.frost.springular.service.UserService;
 import jakarta.validation.Valid;

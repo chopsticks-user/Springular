@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.frost.springular.object.model.UserModel;
+import com.frost.springular.model.UserModel;
 import com.frost.springular.service.AccessTokenService;
 import com.frost.springular.service.RefreshTokenService;
 
@@ -16,24 +16,24 @@ import com.frost.springular.service.RefreshTokenService;
 @RestController
 @RequestMapping("/api/logout")
 public class LogoutController {
-    private final AccessTokenService jwtAccessTokenService;
-    private final RefreshTokenService jwtRefreshTokenService;
+  private final AccessTokenService jwtAccessTokenService;
+  private final RefreshTokenService jwtRefreshTokenService;
 
-    public LogoutController(
-            AccessTokenService jwtAccessTokenService,
-            RefreshTokenService jwtRefreshTokenService) {
-        this.jwtAccessTokenService = jwtAccessTokenService;
-        this.jwtRefreshTokenService = jwtRefreshTokenService;
-    }
+  public LogoutController(
+      AccessTokenService jwtAccessTokenService,
+      RefreshTokenService jwtRefreshTokenService) {
+    this.jwtAccessTokenService = jwtAccessTokenService;
+    this.jwtRefreshTokenService = jwtRefreshTokenService;
+  }
 
-    @GetMapping({ "", "/" })
-    public void logout() {
-        var currentUser = (UserModel) SecurityContextHolder
-                .getContext()
-                .getAuthentication()
-                .getPrincipal();
-        jwtRefreshTokenService.revokeToken(currentUser);
+  @GetMapping({ "", "/" })
+  public void logout() {
+    var currentUser = (UserModel) SecurityContextHolder
+        .getContext()
+        .getAuthentication()
+        .getPrincipal();
+    jwtRefreshTokenService.revokeToken(currentUser);
 
-        // Todo: revoke access token
-    }
+    // Todo: revoke access token
+  }
 }

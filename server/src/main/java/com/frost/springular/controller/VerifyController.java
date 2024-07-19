@@ -1,9 +1,9 @@
 package com.frost.springular.controller;
 
-import com.frost.springular.object.exception.RefreshTokenExpiredException;
-import com.frost.springular.object.model.RefreshTokenModel;
-import com.frost.springular.object.model.UserModel;
-import com.frost.springular.object.request.RefreshTokenRequest;
+import com.frost.springular.exception.RefreshTokenExpiredException;
+import com.frost.springular.model.RefreshTokenModel;
+import com.frost.springular.model.UserModel;
+import com.frost.springular.request.RefreshTokenRequest;
 import com.frost.springular.service.RefreshTokenService;
 import jakarta.validation.Valid;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,19 +22,18 @@ public class VerifyController {
     this.jwtRefreshTokenService = jwtRefreshTokenService;
   }
 
-  @PostMapping({"", "/"})
+  @PostMapping({ "", "/" })
   public void verify(@Valid @RequestBody RefreshTokenRequest request)
       throws RefreshTokenExpiredException {
     // todo: extract user from header
-    var currentUser = (UserModel)SecurityContextHolder.getContext()
-                          .getAuthentication()
-                          .getPrincipal();
+    var currentUser = (UserModel) SecurityContextHolder.getContext()
+        .getAuthentication()
+        .getPrincipal();
 
-    RefreshTokenModel currentUserRefreshToken =
-        jwtRefreshTokenService
-            .findByToken(request.getRefreshToken())
-            // user already logged out
-            .orElseThrow(() -> new RefreshTokenExpiredException());
+    RefreshTokenModel currentUserRefreshToken = jwtRefreshTokenService
+        .findByToken(request.getRefreshToken())
+        // user already logged out
+        .orElseThrow(() -> new RefreshTokenExpiredException());
 
     // refresh token expired
     jwtRefreshTokenService.verifyExpiration(currentUserRefreshToken);
