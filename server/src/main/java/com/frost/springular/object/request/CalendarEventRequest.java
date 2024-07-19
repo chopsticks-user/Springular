@@ -1,8 +1,8 @@
 package com.frost.springular.object.request;
 
-import com.frost.springular.object.constraint.CalendarEventRequestConstraint;
 import com.frost.springular.object.enumerated.CalendarEventRepeat;
 import com.frost.springular.object.enumerated.CalendarEventRepeatUnit;
+import com.frost.springular.object.validator.CalendarEventRequestConstraint;
 
 import java.time.Instant;
 import lombok.AllArgsConstructor;

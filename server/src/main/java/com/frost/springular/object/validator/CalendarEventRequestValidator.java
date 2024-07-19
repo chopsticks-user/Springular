@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.frost.springular.controller.EventsController;
-import com.frost.springular.object.constraint.CalendarEventRequestConstraint;
 import com.frost.springular.object.enumerated.CalendarEventRepeat;
 import com.frost.springular.object.exception.CalendarEventException;
 import com.frost.springular.object.request.CalendarEventRequest;
