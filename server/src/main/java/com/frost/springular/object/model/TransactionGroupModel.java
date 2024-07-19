@@ -44,4 +44,7 @@ public class TransactionGroupModel {
 
   @Column
   private String parentId;
+
+  @Column(nullable = false)
+  private String path;
 }

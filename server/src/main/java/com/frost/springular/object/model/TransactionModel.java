@@ -40,7 +40,7 @@ public class TransactionModel {
   private double expenses;
 
   @ManyToOne
-  @JoinColumn(name = "finance_transaction_groups", referencedColumnName = "id", nullable = false)
+  @JoinColumn(name = "group_id", referencedColumnName = "id")
   private TransactionGroupModel transactionGroupModel;
 
   @ManyToOne

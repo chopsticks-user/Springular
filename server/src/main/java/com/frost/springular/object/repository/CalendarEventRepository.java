@@ -30,7 +30,7 @@ public interface CalendarEventRepository
 
   @Query(value = """
       SELECT e FROM CalendarEventModel e
-      WHERE e.userEntity = :user
+        WHERE e.userEntity = :user
         AND e.repeat = :repeat
       """)
   List<CalendarEventModel> filterEventsByRepeatType(
