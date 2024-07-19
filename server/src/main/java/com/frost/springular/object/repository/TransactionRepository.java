@@ -16,9 +16,10 @@ import java.util.List;
 @Repository
 public interface TransactionRepository
     extends CrudRepository<TransactionModel, String> {
-  List<TransactionModel> findByUserModel(UserModel userModel);
+  List<TransactionModel> findByTransactionGroup(
+      TransactionGroupModel transactionGroupModel);
 
-  List<TransactionModel> findByParentId(String parentId);
+  List<TransactionModel> findByUser(UserModel userModel);
 
   @Query(value = """
       SELECT t FROM TransactionModel t
