@@ -2,6 +2,8 @@ package com.frost.springular.object.request;
 
 import java.time.Instant;
 
+import com.frost.springular.object.validator.TransactionRequestConstraint;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@TransactionRequestConstraint
 public class TransactionRequest {
   private Instant time;
   private String note;
