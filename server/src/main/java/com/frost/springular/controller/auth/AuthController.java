@@ -1,6 +1,5 @@
-package com.frost.springular.controller;
+package com.frost.springular.controller.auth;
 
-import com.frost.springular.config.SecurityConfig;
 import com.frost.springular.exception.DuplicatedEmailException;
 import com.frost.springular.exception.RefreshTokenExpiredException;
 import com.frost.springular.model.RefreshTokenModel;
@@ -8,16 +7,16 @@ import com.frost.springular.model.UserModel;
 import com.frost.springular.request.LoginRequest;
 import com.frost.springular.request.RefreshTokenRequest;
 import com.frost.springular.request.SignupRequest;
-import com.frost.springular.response.AccessTokenResponse;
 import com.frost.springular.response.RefreshTokenResponse;
 import com.frost.springular.response.TokenResponse;
-import com.frost.springular.response.UserInfoResponse;
+import com.frost.springular.response.UserResponse;
 import com.frost.springular.service.AccessTokenService;
 import com.frost.springular.service.AuthService;
 import com.frost.springular.service.RefreshTokenService;
 import jakarta.validation.Valid;
+
+import org.springframework.core.convert.ConversionService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,13 +28,17 @@ public class AuthController {
   private final AccessTokenService jwtAccessTokenService;
   private final RefreshTokenService jwtRefreshTokenService;
   private final AuthService authService;
+  private final ConversionService conversionService;
 
-  public AuthController(AccessTokenService jwtService,
+  public AuthController(
+      AccessTokenService jwtService,
       RefreshTokenService jwtRefreshTokenService,
-      AuthService authService) {
+      AuthService authService,
+      ConversionService conversionService) {
     this.jwtAccessTokenService = jwtService;
     this.jwtRefreshTokenService = jwtRefreshTokenService;
     this.authService = authService;
+    this.conversionService = conversionService;
   }
 
   @PostMapping("/login")
@@ -50,11 +53,11 @@ public class AuthController {
   }
 
   @PostMapping("/signup")
-  public ResponseEntity<UserInfoResponse> register(
+  public ResponseEntity<UserResponse> register(
       @Valid @RequestBody SignupRequest signupInfo)
       throws DuplicatedEmailException {
-    return ResponseEntity.ok(
-        new UserInfoResponse(authService.register(signupInfo)));
+    return ResponseEntity.ok(conversionService.convert(
+        authService.register(signupInfo), UserResponse.class));
   }
 
   @PostMapping("/refresh")

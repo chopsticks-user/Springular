@@ -1,4 +1,4 @@
-package com.frost.springular.controller;
+package com.frost.springular.controller.finance;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;

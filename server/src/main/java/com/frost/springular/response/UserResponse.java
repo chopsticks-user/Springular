@@ -15,20 +15,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserInfoResponse {
+public class UserResponse {
   private String id;
   private String firstName;
   private String lastName;
   private LocalDate dateOfBirth;
   private String email;
   private Date createdAt;
-
-  public UserInfoResponse(UserModel userEntity) {
-    id = userEntity.getId();
-    firstName = userEntity.getFirstName();
-    lastName = userEntity.getLastName();
-    dateOfBirth = userEntity.getDateOfBirth();
-    email = userEntity.getEmail();
-    createdAt = userEntity.getCreatedAt();
-  }
 }

@@ -1,9 +1,9 @@
-package com.frost.springular.controller;
+package com.frost.springular.controller.events;
 
 import com.frost.springular.exception.CalendarEventException;
 import com.frost.springular.model.CalendarEventModel;
 import com.frost.springular.request.CalendarEventRequest;
-import com.frost.springular.response.CalendarEventReponse;
+import com.frost.springular.response.CalendarEventResponse;
 import com.frost.springular.service.CalendarEventService;
 import com.frost.springular.service.UserService;
 import jakarta.validation.Valid;
@@ -12,6 +12,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.core.convert.ConversionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,30 +29,34 @@ import org.springframework.web.bind.annotation.RestController;
 public class EventsController {
   private final UserService userService;
   private final CalendarEventService calendarEventService;
+  private final ConversionService conversionService;
 
   public EventsController(UserService userService,
-      CalendarEventService calendarEventService) {
+      CalendarEventService calendarEventService,
+      ConversionService conversionService) {
     this.userService = userService;
     this.calendarEventService = calendarEventService;
+    this.conversionService = conversionService;
   }
 
   @GetMapping("")
-  public ResponseEntity<List<CalendarEventReponse>> filterCalendarEvents(
+  public ResponseEntity<List<CalendarEventResponse>> filterCalendarEvents(
       @RequestParam String interval, @RequestParam Instant start) {
-    var result = new ArrayList<CalendarEventReponse>();
+    var result = new ArrayList<CalendarEventResponse>();
 
     calendarEventService
         .filter(userService.getCurrentUser(), interval,
             start.truncatedTo(ChronoUnit.DAYS))
         .forEach((CalendarEventModel model) -> {
-          result.add(new CalendarEventReponse(model));
+          result.add(conversionService.convert(
+              model, CalendarEventResponse.class));
         });
 
     return ResponseEntity.ok(result);
   }
 
   @PostMapping("")
-  public ResponseEntity<CalendarEventReponse> addCalendarEvent(
+  public ResponseEntity<CalendarEventResponse> addCalendarEvent(
       @Valid @RequestBody CalendarEventRequest calendarEvent) {
     CalendarEventModel newEvent = CalendarEventModel.builder()
         .title(calendarEvent.getTitle())
@@ -69,12 +74,12 @@ public class EventsController {
       throw new CalendarEventException("Time conflicted");
     }
 
-    return ResponseEntity.ok(
-        new CalendarEventReponse(calendarEventService.update(newEvent)));
+    return ResponseEntity.ok(conversionService.convert(
+        calendarEventService.update(newEvent), CalendarEventResponse.class));
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<CalendarEventReponse> editCalendarEvent(
+  public ResponseEntity<CalendarEventResponse> editCalendarEvent(
       @PathVariable String id,
       @Valid @RequestBody CalendarEventRequest calendarEvent) {
     // todo: implement an exception class
@@ -95,8 +100,9 @@ public class EventsController {
     // todo: CalendarEventRequest should also contain userEntity
     calendarEventService.isEventInsertable(existedEvent);
 
-    return ResponseEntity.ok(
-        new CalendarEventReponse(calendarEventService.update(existedEvent)));
+    return ResponseEntity.ok(conversionService.convert(
+        calendarEventService.update(existedEvent),
+        CalendarEventResponse.class));
   }
 
   @DeleteMapping("/{id}")

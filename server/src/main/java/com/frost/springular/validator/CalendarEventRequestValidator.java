@@ -2,14 +2,9 @@ package com.frost.springular.validator;
 
 import java.time.Instant;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.frost.springular.controller.EventsController;
 import com.frost.springular.enumerated.CalendarEventRepeat;
 import com.frost.springular.exception.CalendarEventException;
 import com.frost.springular.request.CalendarEventRequest;

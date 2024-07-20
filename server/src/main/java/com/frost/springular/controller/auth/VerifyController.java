@@ -1,4 +1,4 @@
-package com.frost.springular.controller;
+package com.frost.springular.controller.auth;
 
 import com.frost.springular.exception.RefreshTokenExpiredException;
 import com.frost.springular.model.RefreshTokenModel;
