@@ -2,6 +2,7 @@ package com.frost.springular.model;
 
 import java.time.Instant;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -41,11 +42,11 @@ public class TransactionModel {
   private double expenses;
 
   // todo: @ManyToOne(fetch = FetchType.LAZY)
-  @ManyToOne()
+  @ManyToOne(cascade = CascadeType.REMOVE)
   @JoinColumn(name = "group_id", referencedColumnName = "id")
   private TransactionGroupModel group;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.REMOVE)
   @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
   private UserModel user;
 }

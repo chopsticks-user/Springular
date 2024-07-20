@@ -1,9 +1,6 @@
 package com.frost.springular.response;
 
 import java.time.LocalDate;
-
-import com.frost.springular.model.UserModel;
-
 import java.sql.Date;
 
 import lombok.AllArgsConstructor;

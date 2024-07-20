@@ -2,9 +2,13 @@ package com.frost.springular.service;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
 import com.frost.springular.exception.FinanceException;
@@ -12,34 +16,54 @@ import com.frost.springular.model.TransactionGroupModel;
 import com.frost.springular.repository.TransactionGroupRepository;
 import com.frost.springular.model.TransactionModel;
 import com.frost.springular.repository.TransactionRepository;
+import com.frost.springular.request.TransactionGroupRequest;
+import com.frost.springular.request.TransactionRequest;
+import com.frost.springular.util.Pair;
+import com.frost.springular.util.Triplet;
 import com.frost.springular.model.UserModel;
 
 @Service
 public class FinanceService {
   private final TransactionRepository transactionRepository;
   private final TransactionGroupRepository transactionGroupRepository;
+  private final UserService userService;
+  private final ConversionService conversionService;
 
-  public FinanceService(TransactionRepository transactionRepository,
-      TransactionGroupRepository transactionGroupRepository) {
+  public FinanceService(
+      TransactionRepository transactionRepository,
+      TransactionGroupRepository transactionGroupRepository,
+      UserService userService,
+      ConversionService conversionService) {
     this.transactionRepository = transactionRepository;
     this.transactionGroupRepository = transactionGroupRepository;
+    this.userService = userService;
+    this.conversionService = conversionService;
   }
 
   public Optional<TransactionModel> findTransactionById(String id) {
     return transactionRepository.findById(id);
   }
 
-  public Optional<TransactionGroupModel> findTransactionGroupById(String id) {
+  public Optional<TransactionGroupModel> findGroupById(String id) {
     return transactionGroupRepository.findById(id);
   }
 
-  public List<TransactionGroupModel> getAllTransactionGroups(
-      UserModel userModel) {
-    return transactionGroupRepository.findByUser(userModel);
+  public List<TransactionGroupModel> findGroupByParentId(String parentId) {
+    return transactionGroupRepository.findByParentId(parentId);
+  }
+
+  public Optional<TransactionGroupModel> findGroupByPath(
+      String parentId, String name) {
+    return transactionGroupRepository.findByParentIdAndName(parentId, name);
+  }
+
+  public List<TransactionGroupModel> getAllGroups() {
+    return transactionGroupRepository.findByUser(userService.getCurrentUser());
   }
 
   public List<TransactionModel> filterTransactionsByInterval(
-      String interval, Instant startOfInterval, UserModel userModel) {
+      String interval, Instant startOfInterval) {
+    final UserModel userModel = userService.getCurrentUser();
     return switch (interval) {
       case "month" -> transactionRepository.filterBetween(
           userModel, startOfInterval,
@@ -53,45 +77,86 @@ public class FinanceService {
     };
   }
 
-  public TransactionModel save(
-      TransactionModel transactionModel, UserModel userModel) {
-    return transactionRepository.save(transactionModel);
+  public TransactionModel create(TransactionRequest transactionRequest) {
+    return transactionRepository.save(conversionService.convert(
+        Triplet.of(transactionRequest, null, userService.getCurrentUser()),
+        TransactionModel.class));
   }
 
-  public TransactionGroupModel save(
-      TransactionGroupModel transactionGroupModel, UserModel userModel) {
-    transactionGroupModel.setUser(userModel);
-    return save(transactionGroupModel);
+  public TransactionGroupModel create(TransactionGroupRequest groupRequest) {
+    validateGroupPath(groupRequest.getParentId(), groupRequest.getName());
+
+    return transactionGroupRepository.save(conversionService.convert(
+        Pair.of(groupRequest, userService.getCurrentUser()),
+        TransactionGroupModel.class));
   }
 
-  public TransactionGroupModel save(TransactionGroupModel transactionGroupModel) {
-    setAndValidateGroupPath(transactionGroupModel);
-    return transactionGroupRepository.save(transactionGroupModel);
-  }
+  public TransactionGroupModel update(
+      String id, TransactionGroupRequest groupRequest) {
+    TransactionGroupModel groupModel = findGroupById(id)
+        .orElseThrow(() -> new FinanceException(
+            "Could not find transaction group"));
 
-  private void setAndValidateGroupPath(
-      TransactionGroupModel transactionGroupModel) {
-    if (transactionGroupModel.getParentId() == null) {
-      transactionGroupModel.setPath("/");
-    } else {
-      TransactionGroupModel parentModel = transactionGroupRepository
-          .findById(transactionGroupModel.getParentId())
-          .orElseThrow(() -> new FinanceException("Parent group not found"));
-
-      String parentPath = parentModel.getPath();
-      if (parentPath.endsWith("/")) {
-        transactionGroupModel.setPath(
-            parentPath + transactionGroupModel.getName());
-      } else {
-        transactionGroupModel.setPath(
-            parentPath + "/" + transactionGroupModel.getName());
-      }
+    if (!groupModel.getName().equals(groupRequest.getName())
+        || !groupModel.getParentId().equals(groupRequest.getParentId())) {
+      validateGroupPath(groupRequest.getParentId(), groupRequest.getName());
     }
 
-    transactionGroupRepository
-        .findByPath(transactionGroupModel.getPath())
-        .ifPresent((model) -> {
-          throw new FinanceException("Duplicated group path");
-        });
+    groupModel.setName(groupRequest.getName());
+    groupModel.setDescription(groupRequest.getDescription());
+    groupModel.setRevenues(groupRequest.getRevenues());
+    groupModel.setExpenses(groupRequest.getExpenses());
+    groupModel.setParentId(groupRequest.getParentId());
+
+    return transactionGroupRepository.save(groupModel);
+  }
+
+  public String getGroupPath(TransactionGroupModel groupModel) {
+    if (groupModel == null || groupModel.getParentId() == null) {
+      return "/";
+    }
+
+    var segments = new ArrayList<String>();
+    Optional<TransactionGroupModel> currentGroup = Optional.of(groupModel);
+    String currentSegment = currentGroup.get().getName();
+
+    while (currentGroup.isPresent()) {
+      segments.add(currentGroup.get().getName());
+      currentGroup = findGroupById(currentSegment);
+    }
+
+    return String.join("/", segments.reversed());
+  }
+
+  // todo:
+  public Map<String, String> getGroupPaths(List<TransactionGroupModel> groups) {
+    Map<String, TransactionGroupModel> groupMap = groups.stream()
+        .collect(Collectors.toMap(
+            TransactionGroupModel::getId,
+            (group) -> group));
+
+    return groups.stream().collect(
+        Collectors.toMap(TransactionGroupModel::getId,
+            (group) -> {
+              if (group.getParentId() == null) {
+                return "/";
+              }
+
+              var segments = new ArrayList<String>();
+              var currentGroup = group;
+
+              while (currentGroup.getParentId() != null) {
+                segments.add(group.getName());
+                currentGroup = groupMap.get(group.getParentId());
+              }
+
+              return String.join("/", segments.reversed());
+            }));
+  }
+
+  private void validateGroupPath(String parentId, String name) {
+    findGroupByPath(parentId, name).ifPresent((group) -> {
+      throw new FinanceException("Duplicated paths are not allowed");
+    });
   }
 }

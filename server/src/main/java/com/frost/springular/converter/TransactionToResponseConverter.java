@@ -8,7 +8,7 @@ import com.frost.springular.request.TransactionRequest;
 import com.frost.springular.response.TransactionResponse;
 
 @Component
-public class TransactionModelToResponseConverter
+public class TransactionToResponseConverter
     implements Converter<TransactionModel, TransactionResponse> {
   @Override
   public TransactionResponse convert(TransactionModel model) {

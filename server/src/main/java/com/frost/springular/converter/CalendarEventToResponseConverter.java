@@ -9,7 +9,7 @@ import com.frost.springular.response.CalendarEventResponse;
 import com.frost.springular.enumerated.CalendarEventRepeat;
 
 @Component
-public class CalendarEventsModelToResponseConverter
+public class CalendarEventToResponseConverter
     implements Converter<CalendarEventModel, CalendarEventResponse> {
   @Override
   public CalendarEventResponse convert(CalendarEventModel model) {

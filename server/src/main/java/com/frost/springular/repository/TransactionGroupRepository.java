@@ -16,5 +16,6 @@ public interface TransactionGroupRepository
 
   List<TransactionGroupModel> findByParentId(String parentId);
 
-  Optional<TransactionGroupModel> findByPath(String path);
+  Optional<TransactionGroupModel> findByParentIdAndName(
+      String parentId, String name);
 }

@@ -1,5 +1,6 @@
 package com.frost.springular.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -38,13 +39,13 @@ public class TransactionGroupModel {
   @Column(nullable = false)
   private double expenses;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.REMOVE)
   @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
   private UserModel user;
 
   @Column
   private String parentId;
 
-  @Column(nullable = false, unique = true)
-  private String path;
+  // @Column(nullable = false, unique = true)
+  // private String path;
 }

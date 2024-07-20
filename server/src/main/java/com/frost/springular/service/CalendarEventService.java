@@ -1,8 +1,11 @@
 package com.frost.springular.service;
 
+import com.frost.springular.exception.CalendarEventException;
 import com.frost.springular.model.CalendarEventModel;
 import com.frost.springular.model.UserModel;
 import com.frost.springular.repository.CalendarEventRepository;
+import com.frost.springular.request.CalendarEventRequest;
+import com.frost.springular.util.Pair;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -13,6 +16,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
+
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
 // * This implementation only works with non-repeated events
@@ -25,27 +30,79 @@ public class CalendarEventService {
     }
   }
 
-  private final CalendarEventRepository calendarEventRepository;
   private final SortByStartTime sortByStartTime = new SortByStartTime();
+  private final CalendarEventRepository calendarEventRepository;
+  private final UserService userService;
+  private final ConversionService conversionService;
 
-  public CalendarEventService(CalendarEventRepository calendarEventRepository) {
+  public CalendarEventService(
+      CalendarEventRepository calendarEventRepository,
+      UserService userService,
+      ConversionService conversionService) {
     this.calendarEventRepository = calendarEventRepository;
+    this.userService = userService;
+    this.conversionService = conversionService;
   }
 
   public Optional<CalendarEventModel> findById(String id) {
     return calendarEventRepository.findById(id);
   }
 
-  public void deleteById(String id) {
+  public List<CalendarEventModel> getAllEvents(UserModel userEntity) {
+    return calendarEventRepository
+        .findByUserEntity(userEntity)
+        .stream()
+        .sorted(sortByStartTime)
+        .toList();
+  }
+
+  public List<CalendarEventModel> filterEventsByInterval(
+      String interval, Instant startTime) {
+    return switch (interval) {
+      case "week" -> filterEventsOfWeek(startTime);
+      default -> new ArrayList<CalendarEventModel>();
+    };
+  }
+
+  public CalendarEventModel create(CalendarEventRequest eventRequest) {
+    CalendarEventModel newEvent = conversionService.convert(
+        Pair.of(eventRequest, userService.getCurrentUser()),
+        CalendarEventModel.class);
+
+    if (!isEventInsertable(newEvent)) {
+      throw new CalendarEventException("Time conflicted");
+    }
+
+    return calendarEventRepository.save(newEvent);
+  }
+
+  public CalendarEventModel update(String id, CalendarEventRequest eventRequest) {
+    CalendarEventModel eventModel = findById(id)
+        .orElseThrow(() -> new CalendarEventException(
+            "Could not find calendar event"));
+
+    eventModel.setTitle(eventRequest.getTitle());
+    eventModel.setDescription(eventRequest.getDescription());
+    eventModel.setColor(eventRequest.getColor());
+    eventModel.setStart(eventRequest.getStart());
+    eventModel.setDurationMinutes(eventRequest.getDurationMinutes());
+    eventModel.setRepeat(eventRequest.getRepeat());
+    eventModel.setRepeatEveryValue(eventRequest.getRepeatEvery().getValue());
+    eventModel.setRepeatEveryUnit(eventRequest.getRepeatEvery().getUnit());
+
+    // todo: CalendarEventRequest should also contain userEntity
+    isEventInsertable(eventModel);
+
+    return calendarEventRepository.save(eventModel);
+  }
+
+  public void delete(String id) {
     calendarEventRepository.deleteById(id);
   }
 
-  public CalendarEventModel update(CalendarEventModel calendarEvent) {
-    return calendarEventRepository.save(calendarEvent);
-  }
-
-  public boolean isEventInsertable(CalendarEventModel calendarEvent) {
-    List<CalendarEventModel> allEvents = all(calendarEvent.getUserEntity());
+  private boolean isEventInsertable(CalendarEventModel calendarEvent) {
+    List<CalendarEventModel> allEvents = getAllEvents(
+        calendarEvent.getUserEntity());
 
     if (allEvents.isEmpty()) {
       return true;
@@ -85,30 +142,12 @@ public class CalendarEventService {
     return true;
   }
 
-  public List<CalendarEventModel> filter(UserModel userEntity, String interval,
-      Instant startTime) {
-    return switch (interval) {
-      case "week" -> filterEventsOfWeek(userEntity, startTime);
-      default -> new ArrayList<CalendarEventModel>();
-    };
-  }
-
-  public List<CalendarEventModel> all(UserModel userEntity) {
-    return calendarEventRepository
-        .findByUserEntity(userEntity)
-        .stream()
-        .sorted(sortByStartTime)
-        .toList();
-  }
-
-  private List<CalendarEventModel> filterEventsOfWeek(UserModel userEntity,
-      Instant startTime) {
-    var oneTimeEvents = calendarEventRepository.filterOneTimeEventsBetween(
-        userEntity, startTime, startTime.plus(7, ChronoUnit.DAYS));
-
+  private List<CalendarEventModel> filterEventsOfWeek(Instant startTime) {
     // todo: parallel streams
     return Stream
-        .concat(oneTimeEvents.stream(),
+        .concat(calendarEventRepository.filterOneTimeEventsBetween(
+            userService.getCurrentUser(), startTime,
+            startTime.plus(7, ChronoUnit.DAYS)).stream(),
             new ArrayList<CalendarEventModel>().stream())
         .sorted(sortByStartTime)
         .toList();

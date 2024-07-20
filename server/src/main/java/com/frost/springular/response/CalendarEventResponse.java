@@ -1,7 +1,6 @@
 package com.frost.springular.response;
 
 import com.frost.springular.enumerated.CalendarEventRepeat;
-import com.frost.springular.model.CalendarEventModel;
 import com.frost.springular.request.CalendarEventRequest;
 
 import java.time.Instant;
