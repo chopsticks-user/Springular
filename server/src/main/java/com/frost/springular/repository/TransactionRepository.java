@@ -8,7 +8,6 @@ import com.frost.springular.model.UserModel;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
 
 import java.time.Instant;
 import java.util.List;

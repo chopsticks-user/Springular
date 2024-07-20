@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.frost.springular.response.TransactionResponse;
 import com.frost.springular.service.FinanceService;
-import com.frost.springular.service.UserService;
 
 @RestController
 @RequestMapping("/api/finance/transactions")

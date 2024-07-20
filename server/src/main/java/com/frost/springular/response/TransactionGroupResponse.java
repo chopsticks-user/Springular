@@ -1,7 +1,5 @@
 package com.frost.springular.response;
 
-import com.frost.springular.model.TransactionGroupModel;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

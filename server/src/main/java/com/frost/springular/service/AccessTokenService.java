@@ -3,9 +3,7 @@ package com.frost.springular.service;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Function;
-import java.util.logging.Logger;
 
 import javax.crypto.SecretKey;
 

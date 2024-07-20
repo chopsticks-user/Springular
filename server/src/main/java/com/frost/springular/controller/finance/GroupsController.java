@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.core.convert.ConversionService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.frost.springular.exception.FinanceException;
 import com.frost.springular.model.TransactionGroupModel;
 import com.frost.springular.request.TransactionGroupRequest;
 import com.frost.springular.response.TransactionGroupResponse;
@@ -56,6 +58,17 @@ public class GroupsController {
         TransactionGroupResponse.class));
   }
 
+  @GetMapping("/{id}")
+  public ResponseEntity<TransactionGroupResponse> getTransactionGroup(
+      @PathVariable String id) {
+    return ResponseEntity.ok(
+        conversionService.convert(
+            financeService.findGroupById(id).orElseThrow(
+                () -> new FinanceException(
+                    "Could not find transaction group")),
+            TransactionGroupResponse.class));
+  }
+
   @PatchMapping("/{id}")
   public ResponseEntity<TransactionGroupResponse> updateTransactionGroup(
       @PathVariable String id,
@@ -63,5 +76,10 @@ public class GroupsController {
     return ResponseEntity.ok(conversionService.convert(
         financeService.update(id, request),
         TransactionGroupResponse.class));
+  }
+
+  @DeleteMapping("/{id}")
+  public void deleteTransactionGroup(@PathVariable String id) {
+    financeService.delete(id);
   }
 }

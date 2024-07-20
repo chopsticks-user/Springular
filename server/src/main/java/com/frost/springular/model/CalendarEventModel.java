@@ -2,8 +2,6 @@ package com.frost.springular.model;
 
 import java.time.Instant;
 
-import org.hibernate.annotations.OnDeleteAction;
-
 import com.frost.springular.enumerated.CalendarEventRepeat;
 import com.frost.springular.enumerated.CalendarEventRepeatUnit;
 

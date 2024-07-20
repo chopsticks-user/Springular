@@ -111,6 +111,10 @@ public class FinanceService {
     return transactionGroupRepository.save(groupModel);
   }
 
+  public void delete(String id) {
+    transactionGroupRepository.deleteById(id);
+  }
+
   public String getGroupPath(TransactionGroupModel groupModel) {
     if (groupModel == null || groupModel.getParentId() == null) {
       return "/";

@@ -7,7 +7,6 @@ import com.frost.springular.model.TransactionGroupModel;
 import com.frost.springular.model.TransactionModel;
 import com.frost.springular.model.UserModel;
 import com.frost.springular.request.TransactionRequest;
-import com.frost.springular.util.Pair;
 import com.frost.springular.util.Triplet;
 
 @Component

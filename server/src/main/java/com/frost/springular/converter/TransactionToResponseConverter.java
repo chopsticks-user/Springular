@@ -4,7 +4,6 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import com.frost.springular.model.TransactionModel;
-import com.frost.springular.request.TransactionRequest;
 import com.frost.springular.response.TransactionResponse;
 
 @Component

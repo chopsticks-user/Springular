@@ -1,9 +1,6 @@
 package com.frost.springular.controller.auth;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.frost.springular.model.UserModel;
 import com.frost.springular.service.AccessTokenService;
 import com.frost.springular.service.RefreshTokenService;
+import com.frost.springular.service.UserService;
 
 // Todo: /logout
 @RestController
@@ -18,21 +16,20 @@ import com.frost.springular.service.RefreshTokenService;
 public class LogoutController {
   private final AccessTokenService jwtAccessTokenService;
   private final RefreshTokenService jwtRefreshTokenService;
+  private final UserService userService;
 
   public LogoutController(
       AccessTokenService jwtAccessTokenService,
-      RefreshTokenService jwtRefreshTokenService) {
+      RefreshTokenService jwtRefreshTokenService,
+      UserService userService) {
     this.jwtAccessTokenService = jwtAccessTokenService;
     this.jwtRefreshTokenService = jwtRefreshTokenService;
+    this.userService = userService;
   }
 
-  @GetMapping({ "", "/" })
+  @GetMapping("")
   public void logout() {
-    var currentUser = (UserModel) SecurityContextHolder
-        .getContext()
-        .getAuthentication()
-        .getPrincipal();
-    jwtRefreshTokenService.revokeToken(currentUser);
+    jwtRefreshTokenService.revokeToken(userService.getCurrentUser());
 
     // Todo: revoke access token
   }
