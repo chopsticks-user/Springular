@@ -60,6 +60,17 @@ public class FinanceService {
 
   public TransactionGroupModel save(
       TransactionGroupModel transactionGroupModel, UserModel userModel) {
+    transactionGroupModel.setUser(userModel);
+    return save(transactionGroupModel);
+  }
+
+  public TransactionGroupModel save(TransactionGroupModel transactionGroupModel) {
+    setAndValidateGroupPath(transactionGroupModel);
+    return transactionGroupRepository.save(transactionGroupModel);
+  }
+
+  private void setAndValidateGroupPath(
+      TransactionGroupModel transactionGroupModel) {
     if (transactionGroupModel.getParentId() == null) {
       transactionGroupModel.setPath("/");
     } else {
@@ -82,7 +93,5 @@ public class FinanceService {
         .ifPresent((model) -> {
           throw new FinanceException("Duplicated group path");
         });
-
-    return transactionGroupRepository.save(transactionGroupModel);
   }
 }

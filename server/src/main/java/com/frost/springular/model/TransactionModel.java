@@ -4,6 +4,7 @@ import java.time.Instant;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -39,11 +40,12 @@ public class TransactionModel {
   @Column(nullable = false)
   private double expenses;
 
-  @ManyToOne
+  // todo: @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne()
   @JoinColumn(name = "group_id", referencedColumnName = "id")
-  private TransactionGroupModel transactionGroupModel;
+  private TransactionGroupModel group;
 
   @ManyToOne
   @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-  private UserModel userModel;
+  private UserModel user;
 }

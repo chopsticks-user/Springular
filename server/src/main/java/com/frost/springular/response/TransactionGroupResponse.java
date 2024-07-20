@@ -20,15 +20,4 @@ public class TransactionGroupResponse {
   private String userId;
   private String parentId;
   private String path;
-
-  public TransactionGroupResponse(TransactionGroupModel model) {
-    this.id = model.getId();
-    this.name = model.getName();
-    this.description = model.getDescription();
-    this.revenues = model.getRevenues();
-    this.expenses = model.getExpenses();
-    this.userId = model.getUserModel().getId();
-    this.parentId = model.getParentId();
-    this.path = model.getPath();
-  }
 }

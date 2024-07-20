@@ -3,9 +3,8 @@ package com.frost.springular.controller;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.ArrayList;
-import java.util.stream.Stream;
 
+import org.springframework.core.convert.ConversionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -31,10 +30,15 @@ import jakarta.validation.Valid;
 public class FinanceController {
   private final UserService userService;
   private final FinanceService financeService;
+  private final ConversionService conversionService;
 
-  public FinanceController(UserService userService, FinanceService financeService) {
+  public FinanceController(
+      final UserService userService,
+      final FinanceService financeService,
+      final ConversionService conversionService) {
     this.userService = userService;
     this.financeService = financeService;
+    this.conversionService = conversionService;
   }
 
   @GetMapping("/groups")
@@ -43,31 +47,32 @@ public class FinanceController {
         financeService.getAllTransactionGroups(
             userService.getCurrentUser())
             .stream()
-            .map((groupModel) -> new TransactionGroupResponse(groupModel))
+            .map((groupModel) -> conversionService.convert(
+                groupModel, TransactionGroupResponse.class))
             .toList());
   }
 
   @PostMapping("/groups")
   public ResponseEntity<TransactionGroupResponse> createTransactionGroup(
       @Valid @RequestBody TransactionGroupRequest request) {
-    return ResponseEntity.ok(
-        new TransactionGroupResponse(
-            financeService.save(
-                TransactionGroupModel.builder()
-                    .name(request.getName())
-                    .description(request.getDescription())
-                    .revenues(request.getRevenues())
-                    .expenses(request.getExpenses())
-                    .parentId(request.getParentId())
-                    .build(),
-                userService.getCurrentUser())));
+    return ResponseEntity.ok(conversionService.convert(
+        financeService.save(
+            TransactionGroupModel.builder()
+                .name(request.getName())
+                .description(request.getDescription())
+                .revenues(request.getRevenues())
+                .expenses(request.getExpenses())
+                .parentId(request.getParentId())
+                .build(),
+            userService.getCurrentUser()),
+        TransactionGroupResponse.class));
   }
 
   @PatchMapping("/groups/{id}")
   public ResponseEntity<TransactionGroupResponse> updateTransactionGroup(
       @PathVariable String id,
       @Valid @RequestBody TransactionGroupRequest request) {
-
+    // todo: implement an update method in FinanceService
     TransactionGroupModel model = financeService.findTransactionGroupById(id)
         .orElseThrow(() -> new FinanceException(
             "Could not find transaction group"));
@@ -78,9 +83,8 @@ public class FinanceController {
     model.setExpenses(request.getExpenses());
     model.setParentId(request.getParentId());
 
-    return ResponseEntity.ok(new TransactionGroupResponse(
-        financeService.save(
-            model, userService.getCurrentUser())));
+    return ResponseEntity.ok(conversionService.convert(financeService.save(model),
+        TransactionGroupResponse.class));
   }
 
   @GetMapping("/transactions")
@@ -91,7 +95,8 @@ public class FinanceController {
             interval, start.truncatedTo(ChronoUnit.MONTHS),
             userService.getCurrentUser())
             .stream()
-            .map((transactionModel) -> new TransactionResponse(transactionModel))
+            .map((transactionModel) -> conversionService.convert(
+                transactionModel, TransactionResponse.class))
             .toList());
   }
 }

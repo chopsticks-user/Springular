@@ -29,9 +29,9 @@ public class TransactionRequestValidator
           "Both revenues and expenses must be positive");
     }
 
-    if (request.getUserId().isEmpty() || request.getUserId().isBlank()) {
-      throw new FinanceException("user id cannot be empty or blank");
-    }
+    // if (request.getUserId().isEmpty() || request.getUserId().isBlank()) {
+    // throw new FinanceException("user id cannot be empty or blank");
+    // }
 
     return true;
   }

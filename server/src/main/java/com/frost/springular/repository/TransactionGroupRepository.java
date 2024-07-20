@@ -12,7 +12,7 @@ import com.frost.springular.model.UserModel;
 @Repository
 public interface TransactionGroupRepository
     extends CrudRepository<TransactionGroupModel, String> {
-  List<TransactionGroupModel> findByUser(UserModel userModel);
+  List<TransactionGroupModel> findByUser(UserModel user);
 
   List<TransactionGroupModel> findByParentId(String parentId);
 

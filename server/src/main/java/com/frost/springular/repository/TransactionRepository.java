@@ -16,17 +16,17 @@ import java.util.List;
 @Repository
 public interface TransactionRepository
     extends CrudRepository<TransactionModel, String> {
-  List<TransactionModel> findByTransactionGroup(
-      TransactionGroupModel transactionGroupModel);
+  List<TransactionModel> findByGroup(TransactionGroupModel group);
 
-  List<TransactionModel> findByUser(UserModel userModel);
+  List<TransactionModel> findByUser(UserModel user);
 
   @Query(value = """
       SELECT t FROM TransactionModel t
-        WHERE t.userModel = :user
+        WHERE t.user = :user
         AND t.time >= :start
         AND t.time < :end
       """)
-  List<TransactionModel> filterBetween(UserModel user, Instant start, Instant end);
+  List<TransactionModel> filterBetween(
+      UserModel user, Instant start, Instant end);
 
 }

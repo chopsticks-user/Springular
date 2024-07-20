@@ -40,7 +40,7 @@ public class TransactionGroupModel {
 
   @ManyToOne
   @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-  private UserModel userModel;
+  private UserModel user;
 
   @Column
   private String parentId;
