@@ -19,7 +19,7 @@ public class TransactionGroupModelToResponseConverter
         .expenses(model.getExpenses())
         .parentId(model.getParentId())
         .userId(model.getUser().getId())
-        .path(model.getPath())
+        // .path(model.getPath())
         .build();
   }
 }
