@@ -18,15 +18,12 @@ import com.frost.springular.service.UserService;
 @RestController
 @RequestMapping("/api/finance/transactions")
 public class TransactionsController {
-  private final UserService userService;
   private final FinanceService financeService;
   private final ConversionService conversionService;
 
   public TransactionsController(
-      final UserService userService,
       final FinanceService financeService,
       final ConversionService conversionService) {
-    this.userService = userService;
     this.financeService = financeService;
     this.conversionService = conversionService;
   }

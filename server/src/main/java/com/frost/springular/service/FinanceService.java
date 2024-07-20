@@ -2,14 +2,10 @@ package com.frost.springular.service;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.springframework.core.convert.ConversionService;
@@ -21,6 +17,9 @@ import com.frost.springular.repository.TransactionGroupRepository;
 import com.frost.springular.model.TransactionModel;
 import com.frost.springular.repository.TransactionRepository;
 import com.frost.springular.request.TransactionGroupRequest;
+import com.frost.springular.request.TransactionRequest;
+import com.frost.springular.util.Pair;
+import com.frost.springular.util.Triplet;
 import com.frost.springular.model.UserModel;
 
 @Service
@@ -28,14 +27,17 @@ public class FinanceService {
   private final TransactionRepository transactionRepository;
   private final TransactionGroupRepository transactionGroupRepository;
   private final UserService userService;
+  private final ConversionService conversionService;
 
   public FinanceService(
       TransactionRepository transactionRepository,
       TransactionGroupRepository transactionGroupRepository,
-      UserService userService) {
+      UserService userService,
+      ConversionService conversionService) {
     this.transactionRepository = transactionRepository;
     this.transactionGroupRepository = transactionGroupRepository;
     this.userService = userService;
+    this.conversionService = conversionService;
   }
 
   public Optional<TransactionModel> findTransactionById(String id) {
@@ -75,22 +77,18 @@ public class FinanceService {
     };
   }
 
-  public TransactionModel save(TransactionModel transactionModel) {
-    return transactionRepository.save(transactionModel);
+  public TransactionModel create(TransactionRequest transactionRequest) {
+    return transactionRepository.save(conversionService.convert(
+        Triplet.of(transactionRequest, null, userService.getCurrentUser()),
+        TransactionModel.class));
   }
 
   public TransactionGroupModel create(TransactionGroupRequest groupRequest) {
     validateGroupPath(groupRequest.getParentId(), groupRequest.getName());
 
-    return transactionGroupRepository.save(
-        TransactionGroupModel.builder()
-            .name(groupRequest.getName())
-            .description(groupRequest.getDescription())
-            .revenues(groupRequest.getRevenues())
-            .expenses(groupRequest.getExpenses())
-            .parentId(groupRequest.getParentId())
-            .user(userService.getCurrentUser())
-            .build());
+    return transactionGroupRepository.save(conversionService.convert(
+        Pair.of(groupRequest, userService.getCurrentUser()),
+        TransactionGroupModel.class));
   }
 
   public TransactionGroupModel update(

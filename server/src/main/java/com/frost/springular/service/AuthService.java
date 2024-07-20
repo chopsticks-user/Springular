@@ -1,5 +1,6 @@
 package com.frost.springular.service;
 
+import org.springframework.core.convert.ConversionService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,42 +11,43 @@ import com.frost.springular.model.UserModel;
 import com.frost.springular.repository.UserRepository;
 import com.frost.springular.request.LoginRequest;
 import com.frost.springular.request.SignupRequest;
+import com.frost.springular.util.Pair;
 
 @Service
 public class AuthService {
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
   private final AuthenticationManager authenticationManager;
+  private final ConversionService conversionService;
 
   public AuthService(
-      UserRepository userRepository, PasswordEncoder passwordEncoder,
-      AuthenticationManager authenticationManager) {
+      UserRepository userRepository,
+      PasswordEncoder passwordEncoder,
+      AuthenticationManager authenticationManager,
+      ConversionService conversionService) {
     this.userRepository = userRepository;
     this.passwordEncoder = passwordEncoder;
     this.authenticationManager = authenticationManager;
+    this.conversionService = conversionService;
   }
 
-  public UserModel register(SignupRequest signupDTO)
+  public UserModel register(SignupRequest signupRequest)
       throws DuplicatedEmailException {
-    if (userRepository.findByEmail(signupDTO.getEmail()).isPresent()) {
+    if (userRepository.findByEmail(signupRequest.getEmail()).isPresent()) {
       throw new DuplicatedEmailException();
     }
 
     return userRepository.save(
-        UserModel.builder()
-            .firstName(signupDTO.getFirstName())
-            .lastName(signupDTO.getLastName())
-            .dateOfBirth(signupDTO.getDateOfBirth())
-            .email(signupDTO.getEmail())
-            .password(passwordEncoder.encode(signupDTO.getPassword()))
-            .build());
+        conversionService.convert(
+            Pair.of(signupRequest,
+                passwordEncoder.encode(signupRequest.getPassword())),
+            UserModel.class));
   }
 
-  public UserModel authenticate(LoginRequest loginDto) {
-    // TODO: implement business logic for dto objects
+  public UserModel authenticate(LoginRequest loginRequest) {
     authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(
-            loginDto.getEmail(), loginDto.getPassword()));
-    return userRepository.findByEmail(loginDto.getEmail()).orElseThrow();
+            loginRequest.getEmail(), loginRequest.getPassword()));
+    return userRepository.findByEmail(loginRequest.getEmail()).orElseThrow();
   }
 }

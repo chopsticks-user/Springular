@@ -7,7 +7,7 @@ import com.frost.springular.model.TransactionGroupModel;
 import com.frost.springular.response.TransactionGroupResponse;
 
 @Component
-public class TransactionGroupModelToResponseConverter
+public class TransactionGroupToResponseConverter
     implements Converter<TransactionGroupModel, TransactionGroupResponse> {
   @Override
   public TransactionGroupResponse convert(TransactionGroupModel model) {

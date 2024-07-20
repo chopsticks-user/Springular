@@ -7,7 +7,7 @@ import com.frost.springular.model.UserModel;
 import com.frost.springular.response.UserResponse;
 
 @Component
-public class UserModelToResponseConverter
+public class UserToResponseConverter
     implements Converter<UserModel, UserResponse> {
   @Override
   public UserResponse convert(UserModel model) {
