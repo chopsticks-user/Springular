@@ -7,12 +7,12 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.frost.springular.object.exception.FinanceException;
-import com.frost.springular.object.model.TransactionGroupModel;
-import com.frost.springular.object.model.TransactionModel;
-import com.frost.springular.object.model.UserModel;
-import com.frost.springular.object.repository.TransactionGroupRepository;
-import com.frost.springular.object.repository.TransactionRepository;
+import com.frost.springular.exception.FinanceException;
+import com.frost.springular.model.TransactionGroupModel;
+import com.frost.springular.repository.TransactionGroupRepository;
+import com.frost.springular.model.TransactionModel;
+import com.frost.springular.repository.TransactionRepository;
+import com.frost.springular.model.UserModel;
 
 @Service
 public class FinanceService {
@@ -60,6 +60,17 @@ public class FinanceService {
 
   public TransactionGroupModel save(
       TransactionGroupModel transactionGroupModel, UserModel userModel) {
+    transactionGroupModel.setUser(userModel);
+    return save(transactionGroupModel);
+  }
+
+  public TransactionGroupModel save(TransactionGroupModel transactionGroupModel) {
+    setAndValidateGroupPath(transactionGroupModel);
+    return transactionGroupRepository.save(transactionGroupModel);
+  }
+
+  private void setAndValidateGroupPath(
+      TransactionGroupModel transactionGroupModel) {
     if (transactionGroupModel.getParentId() == null) {
       transactionGroupModel.setPath("/");
     } else {
@@ -82,7 +93,5 @@ public class FinanceService {
         .ifPresent((model) -> {
           throw new FinanceException("Duplicated group path");
         });
-
-    return transactionGroupRepository.save(transactionGroupModel);
   }
 }

@@ -1,10 +1,11 @@
 package com.frost.springular.service;
 
-import com.frost.springular.object.exception.RefreshTokenExpiredException;
-import com.frost.springular.object.model.RefreshTokenModel;
-import com.frost.springular.object.model.UserModel;
-import com.frost.springular.object.repository.RefreshTokenRepository;
-import com.frost.springular.object.repository.UserRepository;
+import com.frost.springular.exception.RefreshTokenExpiredException;
+import com.frost.springular.model.RefreshTokenModel;
+import com.frost.springular.repository.RefreshTokenRepository;
+import com.frost.springular.model.UserModel;
+import com.frost.springular.repository.UserRepository;
+
 import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
@@ -15,11 +16,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class RefreshTokenService {
 
-  @Autowired private RefreshTokenRepository jwtRefreshTokenRepository;
+  @Autowired
+  private RefreshTokenRepository jwtRefreshTokenRepository;
 
-  @Autowired private UserRepository userRepository;
+  @Autowired
+  private UserRepository userRepository;
 
-  @Value("${security.jwt.refresh.expiration-time}") private long expirationTime;
+  @Value("${security.jwt.refresh.expiration-time}")
+  private long expirationTime;
 
   public RefreshTokenModel generateToken(String userEmail) {
     Instant expiresAt = Instant.now().plusMillis(expirationTime);
@@ -38,7 +42,9 @@ public class RefreshTokenService {
             .build());
   }
 
-  public long getExpirationTime() { return expirationTime; }
+  public long getExpirationTime() {
+    return expirationTime;
+  }
 
   public Optional<RefreshTokenModel> findByToken(String token) {
     return jwtRefreshTokenRepository.findByToken(token);
@@ -73,8 +79,7 @@ public class RefreshTokenService {
   }
 
   public void revokeToken(UserModel userEntity) {
-    RefreshTokenModel tokenEntity =
-        jwtRefreshTokenRepository.findByUserEntity(userEntity).orElse(null);
+    RefreshTokenModel tokenEntity = jwtRefreshTokenRepository.findByUserEntity(userEntity).orElse(null);
     if (tokenEntity == null) {
       return;
     }

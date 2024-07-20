@@ -1,8 +1,9 @@
 package com.frost.springular.service;
 
-import com.frost.springular.object.model.CalendarEventModel;
-import com.frost.springular.object.model.UserModel;
-import com.frost.springular.object.repository.CalendarEventRepository;
+import com.frost.springular.model.CalendarEventModel;
+import com.frost.springular.model.UserModel;
+import com.frost.springular.repository.CalendarEventRepository;
+
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
