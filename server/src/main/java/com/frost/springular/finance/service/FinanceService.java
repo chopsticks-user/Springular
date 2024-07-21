@@ -2,11 +2,8 @@ package com.frost.springular.finance.service;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
@@ -69,9 +66,7 @@ public class FinanceService {
       case "year" -> transactionRepository.findByUserAndTimeGreaterThanEqualAndTimeLessThan(
           userModel, startOfInterval,
           startOfInterval.plus(1, ChronoUnit.YEARS));
-      default -> transactionRepository.findByUserAndTimeGreaterThanEqualAndTimeLessThan(
-          userModel, startOfInterval,
-          startOfInterval.plus(1, ChronoUnit.MONTHS));
+      default -> filterTransactionsByInterval("month", startOfInterval);
     };
   }
 
@@ -108,12 +103,16 @@ public class FinanceService {
   public void delete(String id, Class<?> clazz) {
     if (clazz == TransactionModel.class) {
       transactionRepository.deleteById(id);
+
     } else if (clazz == TransactionGroupModel.class) {
       findGroupById(id).ifPresent((groupModel) -> {
         if (groupModel.getLevel() == 0) {
+          transactionRepository.deleteAllByUser(userService.getCurrentUser());
           transactionGroupRepository.deleteAllByUser(
               userService.getCurrentUser());
         } else {
+          transactionRepository.deleteAllByUserAndGroupPathStartingWith(
+              userService.getCurrentUser(), groupModel.getPath());
           transactionGroupRepository.deleteAllByPathStartingWith(
               groupModel.getPath());
         }

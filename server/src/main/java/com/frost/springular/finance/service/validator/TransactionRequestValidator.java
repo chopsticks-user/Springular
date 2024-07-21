@@ -20,6 +20,12 @@ public class TransactionRequestValidator
       return true;
     }
 
+    if (request.getGroupPath().isEmpty() || request.getGroupPath().isBlank() ||
+        request.getGroupPath().matches(
+            "^(/[a-zA-Z][a-zA-Z_-]*[a-zA-Z])*$|^/$")) {
+      throw new FinanceException("Invalid path");
+    }
+
     if (request.getTime() == null) {
       throw new FinanceException("Transaction time cannot be null");
     }
@@ -28,10 +34,6 @@ public class TransactionRequestValidator
       throw new FinanceException(
           "Both revenues and expenses must be positive");
     }
-
-    // if (request.getUserId().isEmpty() || request.getUserId().isBlank()) {
-    // throw new FinanceException("user id cannot be empty or blank");
-    // }
 
     return true;
   }

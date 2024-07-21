@@ -17,7 +17,7 @@ public class TransactionToResponseConverter
         .note(model.getNote())
         .revenues(model.getRevenues())
         .expenses(model.getExpenses())
-        .groupId(model.getGroup().getId())
+        .groupPath(model.getGroup().getPath())
         .userId(model.getUser().getId())
         .build();
   }
