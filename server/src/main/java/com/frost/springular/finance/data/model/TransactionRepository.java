@@ -17,13 +17,7 @@ public interface TransactionRepository
 
   List<TransactionModel> findByUser(UserModel user);
 
-  @Query(value = """
-      SELECT t FROM TransactionModel t
-        WHERE t.user = :user
-        AND t.time >= :start
-        AND t.time < :end
-      """)
-  List<TransactionModel> filterBetween(
+  List<TransactionModel> findByUserAndTimeGreaterThanEqualAndTimeLessThan(
       UserModel user, Instant start, Instant end);
 
 }

@@ -49,16 +49,13 @@ public class FinanceService {
     return transactionGroupRepository.findById(id);
   }
 
-  public List<TransactionGroupModel> findGroupByParentId(String parentId) {
-    return transactionGroupRepository.findByParentId(parentId);
-  }
-
-  public Optional<TransactionGroupModel> findGroupByPath(
-      String parentId, String name) {
-    return transactionGroupRepository.findByParentIdAndName(parentId, name);
+  public Optional<TransactionGroupModel> findGroupByPath(String path) {
+    return transactionGroupRepository
+        .findByUserAndPath(userService.getCurrentUser(), path);
   }
 
   public List<TransactionGroupModel> getAllGroups() {
+    createRootGroup();
     return transactionGroupRepository.findByUser(userService.getCurrentUser());
   }
 
@@ -66,27 +63,29 @@ public class FinanceService {
       String interval, Instant startOfInterval) {
     final UserModel userModel = userService.getCurrentUser();
     return switch (interval) {
-      case "month" -> transactionRepository.filterBetween(
+      case "month" -> transactionRepository.findByUserAndTimeGreaterThanEqualAndTimeLessThan(
           userModel, startOfInterval,
           startOfInterval.plus(1, ChronoUnit.MONTHS));
-      case "year" -> transactionRepository.filterBetween(
+      case "year" -> transactionRepository.findByUserAndTimeGreaterThanEqualAndTimeLessThan(
           userModel, startOfInterval,
           startOfInterval.plus(1, ChronoUnit.YEARS));
-      default -> transactionRepository.filterBetween(
+      default -> transactionRepository.findByUserAndTimeGreaterThanEqualAndTimeLessThan(
           userModel, startOfInterval,
           startOfInterval.plus(1, ChronoUnit.MONTHS));
     };
   }
 
   public TransactionModel create(TransactionRequest transactionRequest) {
-    return transactionRepository.save(conversionService.convert(
+    createRootGroup();
+
+    TransactionModel transaction = transactionRepository.save(conversionService.convert(
         Triplet.of(transactionRequest, null, userService.getCurrentUser()),
         TransactionModel.class));
+
+    return transaction;
   }
 
   public TransactionGroupModel create(TransactionGroupRequest groupRequest) {
-    validateGroupPath(groupRequest.getParentId(), groupRequest.getName());
-
     return transactionGroupRepository.save(conversionService.convert(
         Pair.of(groupRequest, userService.getCurrentUser()),
         TransactionGroupModel.class));
@@ -94,75 +93,47 @@ public class FinanceService {
 
   public TransactionGroupModel update(
       String id, TransactionGroupRequest groupRequest) {
+    createRootGroup();
+
     TransactionGroupModel groupModel = findGroupById(id)
         .orElseThrow(() -> new FinanceException(
             "Could not find transaction group"));
 
-    if (!groupModel.getName().equals(groupRequest.getName())
-        || !groupModel.getParentId().equals(groupRequest.getParentId())) {
-      validateGroupPath(groupRequest.getParentId(), groupRequest.getName());
-    }
-
-    groupModel.setName(groupRequest.getName());
+    groupModel.setPath(groupRequest.getPath());
     groupModel.setDescription(groupRequest.getDescription());
-    groupModel.setRevenues(groupRequest.getRevenues());
-    groupModel.setExpenses(groupRequest.getExpenses());
-    groupModel.setParentId(groupRequest.getParentId());
 
     return transactionGroupRepository.save(groupModel);
   }
 
-  public void deleteTransactionGroup(String id) {
-    // todo: children groups
-    transactionGroupRepository.deleteById(id);
+  public void delete(String id, Class<?> clazz) {
+    if (clazz == TransactionModel.class) {
+      transactionRepository.deleteById(id);
+    } else if (clazz == TransactionGroupModel.class) {
+      findGroupById(id).ifPresent((groupModel) -> {
+        if (groupModel.getLevel() == 0) {
+          transactionGroupRepository.deleteAllByUser(
+              userService.getCurrentUser());
+        } else {
+          transactionGroupRepository.deleteAllByPathStartingWith(
+              groupModel.getPath());
+        }
+      });
+    }
   }
 
-  public String getGroupPath(TransactionGroupModel groupModel) {
-    if (groupModel == null || groupModel.getParentId() == null) {
-      return "/";
+  private void createRootGroup() {
+    if (transactionGroupRepository
+        .findByUserAndLevel(userService.getCurrentUser(), 0).size() != 0) {
+      return;
     }
 
-    var segments = new ArrayList<String>();
-    Optional<TransactionGroupModel> currentGroup = Optional.of(groupModel);
-    String currentSegment = currentGroup.get().getName();
-
-    while (currentGroup.isPresent()) {
-      segments.add(currentGroup.get().getName());
-      currentGroup = findGroupById(currentSegment);
-    }
-
-    return String.join("/", segments.reversed());
-  }
-
-  // todo:
-  public Map<String, String> getGroupPaths(List<TransactionGroupModel> groups) {
-    Map<String, TransactionGroupModel> groupMap = groups.stream()
-        .collect(Collectors.toMap(
-            TransactionGroupModel::getId,
-            (group) -> group));
-
-    return groups.stream().collect(
-        Collectors.toMap(TransactionGroupModel::getId,
-            (group) -> {
-              if (group.getParentId() == null) {
-                return "/";
-              }
-
-              var segments = new ArrayList<String>();
-              var currentGroup = group;
-
-              while (currentGroup.getParentId() != null) {
-                segments.add(group.getName());
-                currentGroup = groupMap.get(group.getParentId());
-              }
-
-              return String.join("/", segments.reversed());
-            }));
-  }
-
-  private void validateGroupPath(String parentId, String name) {
-    findGroupByPath(parentId, name).ifPresent((group) -> {
-      throw new FinanceException("Duplicated paths are not allowed");
-    });
+    transactionGroupRepository.save(
+        TransactionGroupModel.builder()
+            .path("/")
+            .revenues(0)
+            .expenses(0)
+            .level(0)
+            .user(userService.getCurrentUser())
+            .build());
   }
 }

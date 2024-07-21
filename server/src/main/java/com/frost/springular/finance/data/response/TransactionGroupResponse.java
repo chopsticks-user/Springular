@@ -11,11 +11,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TransactionGroupResponse {
   private String id;
-  private String name;
+  private String path;
+  private int level;
   private String description;
   private double revenues;
   private double expenses;
   private String userId;
-  private String parentId;
-  private String path;
 }

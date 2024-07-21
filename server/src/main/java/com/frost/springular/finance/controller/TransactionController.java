@@ -27,7 +27,7 @@ class TransactionController {
     this.conversionService = conversionService;
   }
 
-  @GetMapping("")
+  @GetMapping
   public ResponseEntity<List<TransactionResponse>> getTransactionsBetween(
       @RequestParam String interval, @RequestParam Instant start) {
     return ResponseEntity.ok(financeService.filterTransactionsByInterval(

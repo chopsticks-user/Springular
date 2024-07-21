@@ -13,10 +13,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @TransactionGroupRequestConstraint
 public class TransactionGroupRequest {
-  private String name;
+  private String path;
   private String description;
-  private double revenues;
-  private double expenses;
-  private String parentId;
-  private String userId;
 }

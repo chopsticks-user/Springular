@@ -13,26 +13,13 @@ import com.frost.springular.user.data.model.UserModel;
 @Repository
 public interface EventRepository
     extends CrudRepository<EventModel, String> {
-  List<EventModel> findByUserEntity(UserModel userEntity);
+  List<EventModel> findByUserOrderByStart(UserModel user);
 
-  @Query(value = """
-      SELECT e FROM EventModel e
-        WHERE e.userEntity = :user
-        AND e.repeat = none
-        AND e.start >= :startOfWeek
-        AND e.start < :endOfWeek
-      """)
-  List<EventModel> filterOneTimeEventsBetween(
-      @Param("user") UserModel userEntity,
-      @Param("startOfWeek") Instant startOfWeek,
-      @Param("endOfWeek") Instant endOfWeek);
+  List<EventModel> findByUserAndRepeatAndStartGreaterThanEqualAndStartLessThan(
+      UserModel user,
+      EventRepeat repeat,
+      Instant startOfWeek,
+      Instant endOfWeek);
 
-  @Query(value = """
-      SELECT e FROM EventModel e
-        WHERE e.userEntity = :user
-        AND e.repeat = :repeat
-      """)
-  List<EventModel> filterEventsByRepeatType(
-      @Param("user") UserModel userEntity,
-      @Param("repeat") EventRepeat repeat);
+  List<EventModel> findByUserAndRepeat(UserModel user, EventRepeat repeat);
 }

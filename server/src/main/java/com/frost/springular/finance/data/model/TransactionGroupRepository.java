@@ -3,6 +3,7 @@ package com.frost.springular.finance.data.model;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,10 +14,16 @@ public interface TransactionGroupRepository
     extends CrudRepository<TransactionGroupModel, String> {
   List<TransactionGroupModel> findByUser(UserModel user);
 
-  List<TransactionGroupModel> findByParentId(String parentId);
+  Optional<TransactionGroupModel> findByUserAndPath(
+      UserModel user, String path);
 
-  Optional<TransactionGroupModel> findByParentIdAndName(
-      String parentId, String name);
+  List<TransactionGroupModel> findByUserAndLevel(
+      UserModel user, int level);
 
-  void deleteAllByParentId(String parentId);
+  List<TransactionGroupModel> findByUserAndPathStartingWith(
+      UserModel user, String path);
+
+  void deleteAllByUser(UserModel user);
+
+  void deleteAllByPathStartingWith(String path);
 }

@@ -22,7 +22,7 @@ public class EventToModelConverter implements
         .repeat(pair.getFirst().getRepeat())
         .repeatEveryValue(pair.getFirst().getRepeatEvery().getValue())
         .repeatEveryUnit(pair.getFirst().getRepeatEvery().getUnit())
-        .userEntity(pair.getSecond())
+        .user(pair.getSecond())
         .build();
   }
 }

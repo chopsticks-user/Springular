@@ -1,5 +1,6 @@
 package com.frost.springular.event.service;
 
+import com.frost.springular.event.data.EventRepeat;
 import com.frost.springular.event.data.model.EventModel;
 import com.frost.springular.event.data.model.EventRepository;
 import com.frost.springular.event.data.request.EventRequest;
@@ -50,10 +51,10 @@ public class EventService {
 
   public List<EventModel> getAllEvents(UserModel userEntity) {
     return calendarEventRepository
-        .findByUserEntity(userEntity)
-        .stream()
-        .sorted(sortByStartTime)
-        .toList();
+        .findByUserOrderByStart(userEntity);
+    // .stream()
+    // .sorted(sortByStartTime)
+    // .toList();
   }
 
   public List<EventModel> filterEventsByInterval(
@@ -102,7 +103,7 @@ public class EventService {
 
   private boolean isEventInsertable(EventModel calendarEvent) {
     List<EventModel> allEvents = getAllEvents(
-        calendarEvent.getUserEntity());
+        calendarEvent.getUser());
 
     if (allEvents.isEmpty()) {
       return true;
@@ -145,9 +146,11 @@ public class EventService {
   private List<EventModel> filterEventsOfWeek(Instant startTime) {
     // todo: parallel streams
     return Stream
-        .concat(calendarEventRepository.filterOneTimeEventsBetween(
-            userService.getCurrentUser(), startTime,
-            startTime.plus(7, ChronoUnit.DAYS)).stream(),
+        .concat(calendarEventRepository
+            .findByUserAndRepeatAndStartGreaterThanEqualAndStartLessThan(
+                userService.getCurrentUser(), EventRepeat.none, startTime,
+                startTime.plus(7, ChronoUnit.DAYS))
+            .stream(),
             new ArrayList<EventModel>().stream())
         .sorted(sortByStartTime)
         .toList();
