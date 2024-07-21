@@ -73,36 +73,113 @@ public class FinanceService {
   public TransactionModel create(TransactionRequest transactionRequest) {
     createRootGroup();
 
+    TransactionGroupModel group = transactionGroupRepository
+        .findByUserAndPath(userService.getCurrentUser(), transactionRequest.getGroupPath())
+        .orElseThrow(() -> new FinanceException("Group not found"));
+
     TransactionModel transaction = transactionRepository.save(conversionService.convert(
-        Triplet.of(transactionRequest, null, userService.getCurrentUser()),
+        Triplet.of(transactionRequest, group, userService.getCurrentUser()),
         TransactionModel.class));
+
+    transactionGroupRepository.updateRevenuesAndExpensesById(
+        group.getRevenues() + transaction.getRevenues(),
+        group.getExpenses() + transaction.getExpenses(),
+        group.getId());
 
     return transaction;
   }
 
   public TransactionGroupModel create(TransactionGroupRequest groupRequest) {
-    return transactionGroupRepository.save(conversionService.convert(
+    TransactionGroupModel groupModel = conversionService.convert(
         Pair.of(groupRequest, userService.getCurrentUser()),
-        TransactionGroupModel.class));
+        TransactionGroupModel.class);
+
+    if (groupModel.getLevel() < 1) {
+      throw new FinanceException("Invalid group path");
+    }
+
+    return transactionGroupRepository.save(groupModel);
   }
 
-  public TransactionGroupModel update(
-      String id, TransactionGroupRequest groupRequest) {
+  public TransactionGroupModel update(String id, TransactionGroupRequest groupRequest) {
     createRootGroup();
 
     TransactionGroupModel groupModel = findGroupById(id)
         .orElseThrow(() -> new FinanceException(
             "Could not find transaction group"));
 
-    groupModel.setPath(groupRequest.getPath());
-    groupModel.setDescription(groupRequest.getDescription());
+    if (groupModel.getLevel() == 0) {
+      throw new FinanceException("Invalid group path");
+    }
 
-    return transactionGroupRepository.save(groupModel);
+    String oldPath = groupModel.getPath();
+
+    groupModel.setPath(groupRequest.getPath());
+    if (groupModel.getLevel() == 0) {
+      throw new FinanceException("Invalid group path");
+    }
+
+    groupModel.setDescription(groupRequest.getDescription());
+    groupModel = transactionGroupRepository.save(groupModel);
+
+    String newPath = groupModel.getPath();
+
+    if (!oldPath.equals(groupModel.getPath())) {
+      transactionGroupRepository.findByUserAndPathStartingWith(
+          groupModel.getUser(), oldPath).forEach(childGroupModel -> {
+            childGroupModel.setPath(
+                childGroupModel.getPath().replaceFirst(oldPath, newPath));
+          });
+    }
+
+    return groupModel;
+  }
+
+  public TransactionModel update(String id, TransactionRequest transactionRequest) {
+    createRootGroup();
+
+    TransactionGroupModel groupModel = transactionGroupRepository
+        .findByUserAndPath(userService.getCurrentUser(), transactionRequest.getGroupPath())
+        .orElseThrow(() -> new FinanceException("Group not found"));
+
+    TransactionModel transactionModel = transactionRepository.findById(id)
+        .orElseThrow(() -> new FinanceException("Transaction not found"));
+
+    boolean groupChanged = !transactionRequest.getGroupPath().equals(
+        transactionModel.getGroup().getPath());
+    String oldGroupId = transactionModel.getGroup().getId();
+    double oldRevenues = transactionModel.getRevenues();
+    double oldExpenses = transactionModel.getExpenses();
+
+    transactionModel.setGroup(groupModel);
+    transactionModel.setNote(transactionRequest.getNote());
+    transactionModel.setRevenues(transactionRequest.getRevenues());
+    transactionModel.setExpenses(transactionRequest.getExpenses());
+    transactionModel = transactionRepository.save(transactionModel);
+
+    groupModel.setRevenues(groupModel.getRevenues() + transactionModel.getRevenues());
+    groupModel.setExpenses(groupModel.getExpenses() + transactionModel.getExpenses());
+    transactionGroupRepository.save(groupModel);
+
+    if (groupChanged) {
+      transactionGroupRepository.updateRevenuesAndExpensesById(
+          -oldRevenues, -oldExpenses, oldGroupId);
+    }
+
+    return transactionModel;
   }
 
   public void delete(String id, Class<?> clazz) {
     if (clazz == TransactionModel.class) {
-      transactionRepository.deleteById(id);
+      transactionRepository.findById(id).ifPresent((transactionModel) -> {
+        String groupId = transactionModel.getGroup().getId();
+        double oldRevenues = transactionModel.getRevenues();
+        double oldExpenses = transactionModel.getExpenses();
+
+        transactionRepository.deleteById(id);
+        transactionGroupRepository.updateRevenuesAndExpensesById(
+            -oldRevenues, -oldExpenses, groupId);
+      });
 
     } else if (clazz == TransactionGroupModel.class) {
       findGroupById(id).ifPresent((groupModel) -> {
