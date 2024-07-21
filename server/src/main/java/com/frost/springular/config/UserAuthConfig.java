@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.frost.springular.repository.UserRepository;
+import com.frost.springular.user.data.model.UserRepository;
 
 @Configuration
 public class UserAuthConfig {
