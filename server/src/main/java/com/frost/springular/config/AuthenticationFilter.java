@@ -1,6 +1,5 @@
 package com.frost.springular.config;
 
-import com.frost.springular.service.AccessTokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,6 +15,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
+import com.frost.springular.user.service.AccessTokenService;
+
 @Component
 public class AuthenticationFilter extends OncePerRequestFilter {
   private final HandlerExceptionResolver handlerExceptionResolver;
@@ -23,8 +24,8 @@ public class AuthenticationFilter extends OncePerRequestFilter {
   private final UserDetailsService userDetailsService;
 
   public AuthenticationFilter(HandlerExceptionResolver handlerExceptionResolver,
-                              AccessTokenService jwtService,
-                              UserDetailsService userDetailsService) {
+      AccessTokenService jwtService,
+      UserDetailsService userDetailsService) {
     this.handlerExceptionResolver = handlerExceptionResolver;
     this.jwtAccessTokenService = jwtService;
     this.userDetailsService = userDetailsService;
@@ -32,8 +33,8 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
   @Override
   protected void doFilterInternal(@NonNull HttpServletRequest request,
-                                  @NonNull HttpServletResponse response,
-                                  @NonNull FilterChain filterChain)
+      @NonNull HttpServletResponse response,
+      @NonNull FilterChain filterChain)
       throws ServletException, IOException {
     final String authHeader = request.getHeader("Authorization");
 
@@ -48,8 +49,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
       if (username != null &&
           SecurityContextHolder.getContext().getAuthentication() == null) {
-        UserDetails userDetails =
-            userDetailsService.loadUserByUsername(username);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
         if (jwtAccessTokenService.isTokenValid(jwt, userDetails)) {
           var authToken = new UsernamePasswordAuthenticationToken(
