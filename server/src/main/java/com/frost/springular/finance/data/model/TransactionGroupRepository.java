@@ -15,6 +15,8 @@ public interface TransactionGroupRepository
     extends CrudRepository<TransactionGroupModel, String> {
   List<TransactionGroupModel> findByUser(UserModel user);
 
+  List<TransactionGroupModel> findByUserOrderByLevel(UserModel user);
+
   Optional<TransactionGroupModel> findByUserAndPath(
       UserModel user, String path);
 

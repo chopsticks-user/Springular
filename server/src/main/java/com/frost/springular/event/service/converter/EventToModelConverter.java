@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.frost.springular.event.data.model.EventModel;
 import com.frost.springular.event.data.request.EventRequest;
-import com.frost.springular.shared.tuple.Pair;
+import com.frost.springular.shared.util.tuple.Pair;
 import com.frost.springular.user.data.model.UserModel;
 
 @Component

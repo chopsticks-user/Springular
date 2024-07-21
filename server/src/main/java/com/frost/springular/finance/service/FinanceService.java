@@ -2,8 +2,12 @@ package com.frost.springular.finance.service;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
@@ -15,13 +19,21 @@ import com.frost.springular.finance.data.model.TransactionRepository;
 import com.frost.springular.finance.data.request.TransactionGroupRequest;
 import com.frost.springular.finance.data.request.TransactionRequest;
 import com.frost.springular.finance.exception.FinanceException;
-import com.frost.springular.shared.tuple.Pair;
-import com.frost.springular.shared.tuple.Triplet;
+import com.frost.springular.shared.util.tuple.Pair;
+import com.frost.springular.shared.util.tuple.Triplet;
 import com.frost.springular.user.data.model.UserModel;
 import com.frost.springular.user.service.UserService;
 
 @Service
 public class FinanceService {
+  private static final Comparator<TransactionGroupModel> groupComparator = //
+      new Comparator<TransactionGroupModel>() {
+        @Override
+        public int compare(TransactionGroupModel a, TransactionGroupModel b) {
+          return a.getLevel() - b.getLevel();
+        }
+      };
+
   private final TransactionRepository transactionRepository;
   private final TransactionGroupRepository transactionGroupRepository;
   private final UserService userService;
@@ -46,6 +58,11 @@ public class FinanceService {
     return transactionGroupRepository.findById(id);
   }
 
+  public TransactionGroupModel findGroupByIdThrowIfNot(String id) {
+    return transactionGroupRepository.findById(id).orElseThrow(
+        () -> new FinanceException("Group not found"));
+  }
+
   public Optional<TransactionGroupModel> findGroupByPath(String path) {
     return transactionGroupRepository
         .findByUserAndPath(userService.getCurrentUser(), path);
@@ -53,7 +70,79 @@ public class FinanceService {
 
   public List<TransactionGroupModel> getAllGroups() {
     createRootGroup();
-    return transactionGroupRepository.findByUser(userService.getCurrentUser());
+    return transactionGroupRepository.findByUserOrderByLevel(
+        userService.getCurrentUser());
+  }
+
+  public Pair<Double, Double> getActualRevenuesAndExpenses(
+      TransactionGroupModel groupModel) {
+    Pair<Double, Double> pair = Pair.of(0.0, 0.0);
+
+    transactionGroupRepository.findByUserAndPathStartingWith(
+        groupModel.getUser(), groupModel.getPath()).forEach(childGroupModel -> {
+          pair.setFirst(pair.getFirst() + childGroupModel.getRevenues());
+          pair.setSecond(pair.getFirst() + childGroupModel.getExpenses());
+        });
+
+    return pair;
+  }
+
+  public Pair<Double, Double> getActualRevenuesAndExpenses(String id) {
+    return getActualRevenuesAndExpenses(findGroupByIdThrowIfNot(id));
+  }
+
+  public List<Pair<Double, Double>> getActualRevenuesAndExpenses(
+      List<TransactionGroupModel> ascSortedGroupModels) {
+    if (ascSortedGroupModels.size() == 0) {
+      return List.of();
+    }
+
+    // for (int i = 1; i < ascSortedGroupModels.size(); ++i) {
+    // if (ascSortedGroupModels
+    // .get(i - 1).getLevel() > ascSortedGroupModels
+    // .get(i).getLevel()) {
+    // Collections.sort(ascSortedGroupModels, groupComparator);
+    // break;
+    // }
+    // }
+
+    // for (int i = ascSortedGroupModels.size() - 1; i > -1; --i) {
+    // }
+
+    var groupList = ascSortedGroupModels;
+    if (!IntStream.range(0, ascSortedGroupModels.size() - 1)
+        .allMatch(i -> groupList
+            .get(i).getLevel() <= groupList
+                .get(i + 1).getLevel())) {
+      ascSortedGroupModels = groupList.stream()
+          .sorted(groupComparator).toList();
+    }
+
+    var valueMap = new HashMap<String, Pair<Double, Double>>();
+    int highestLevel = ascSortedGroupModels.getLast().getLevel();
+    return ascSortedGroupModels.reversed().stream().sequential()
+        .map(groupModel -> {
+          String path = groupModel.getPath();
+          String parentPath = groupModel.getPath().substring(
+              0,
+              groupModel.getPath().lastIndexOf('/', path.length() - 1));
+
+          var parentEntry = valueMap.get(parentPath);
+          if (parentEntry == null) {
+            parentEntry = valueMap.put(
+                parentPath, Pair.of(0.0, 0.0));
+          }
+
+          parentEntry.setFirst(
+              parentEntry.getFirst() + groupModel.getRevenues());
+          parentEntry.setSecond(
+              parentEntry.getSecond() + groupModel.getExpenses());
+
+          if (groupModel.getLevel() == highestLevel) {
+            return Pair.of(groupModel.getRevenues(), groupModel.getExpenses());
+          }
+          return valueMap.get(path);
+        }).toList().reversed();
   }
 
   public List<TransactionModel> filterTransactionsByInterval(

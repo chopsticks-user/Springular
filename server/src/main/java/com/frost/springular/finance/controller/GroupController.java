@@ -1,7 +1,6 @@
 package com.frost.springular.finance.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.core.convert.ConversionService;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +18,8 @@ import com.frost.springular.finance.data.request.TransactionGroupRequest;
 import com.frost.springular.finance.data.response.TransactionGroupResponse;
 import com.frost.springular.finance.exception.FinanceException;
 import com.frost.springular.finance.service.FinanceService;
+import com.frost.springular.shared.util.stream.StreamHelper;
+import com.frost.springular.shared.util.tuple.Pair;
 
 import jakarta.validation.Valid;
 
@@ -37,38 +38,72 @@ class GroupController {
 
   @GetMapping
   public ResponseEntity<List<TransactionGroupResponse>> getAllTransactionGroups() {
-    return ResponseEntity.ok(financeService.getAllGroups().stream()
-        .map((groupModel) -> conversionService
-            .convert(groupModel, TransactionGroupResponse.class))
+    List<TransactionGroupModel> ascSortedGroups = financeService.getAllGroups();
+
+    return ResponseEntity.ok(StreamHelper.zip(
+        financeService.getAllGroups().stream(),
+        financeService.getActualRevenuesAndExpenses(ascSortedGroups).stream())
+        .map((pair) -> {
+          TransactionGroupResponse response = conversionService
+              .convert(pair.getFirst(), TransactionGroupResponse.class);
+
+          pair.getSecond().apply((revenues, expenses) -> {
+            response.setRevenues(revenues);
+            response.setExpenses(expenses);
+          });
+
+          return response;
+        })
         .toList());
   }
 
   @PostMapping
   public ResponseEntity<TransactionGroupResponse> createTransactionGroup(
       @Valid @RequestBody TransactionGroupRequest request) {
-    return ResponseEntity.ok(conversionService.convert(
+    TransactionGroupResponse groupResponse = conversionService.convert(
         financeService.create(request),
-        TransactionGroupResponse.class));
+        TransactionGroupResponse.class);
+
+    financeService.getActualRevenuesAndExpenses(groupResponse.getId())
+        .apply((revenues, expenses) -> {
+          groupResponse.setRevenues(revenues);
+          groupResponse.setExpenses(expenses);
+        });
+
+    return ResponseEntity.ok(groupResponse);
   }
 
   @GetMapping("/{id}")
   public ResponseEntity<TransactionGroupResponse> getTransactionGroup(
       @PathVariable String id) {
-    return ResponseEntity.ok(
-        conversionService.convert(
-            financeService.findGroupById(id).orElseThrow(
-                () -> new FinanceException(
-                    "Could not find transaction group")),
-            TransactionGroupResponse.class));
+    TransactionGroupResponse groupResponse = conversionService.convert(
+        financeService.findGroupByIdThrowIfNot(id),
+        TransactionGroupResponse.class);
+
+    financeService.getActualRevenuesAndExpenses(id).apply(
+        (revenues, expenses) -> {
+          groupResponse.setRevenues(revenues);
+          groupResponse.setExpenses(expenses);
+        });
+
+    return ResponseEntity.ok(groupResponse);
   }
 
   @PatchMapping("/{id}")
   public ResponseEntity<TransactionGroupResponse> updateTransactionGroup(
       @PathVariable String id,
       @Valid @RequestBody TransactionGroupRequest request) {
-    return ResponseEntity.ok(conversionService.convert(
+    TransactionGroupResponse groupResponse = conversionService.convert(
         financeService.update(id, request),
-        TransactionGroupResponse.class));
+        TransactionGroupResponse.class);
+
+    financeService.getActualRevenuesAndExpenses(id).apply(
+        (revenues, expenses) -> {
+          groupResponse.setRevenues(revenues);
+          groupResponse.setExpenses(expenses);
+        });
+
+    return ResponseEntity.ok(groupResponse);
   }
 
   @DeleteMapping("/{id}")
