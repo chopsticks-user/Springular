@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import com.frost.springular.finance.data.model.TransactionGroupModel;
 import com.frost.springular.finance.data.model.TransactionModel;
 import com.frost.springular.finance.data.request.TransactionRequest;
-import com.frost.springular.shared.tuple.Triplet;
+import com.frost.springular.shared.util.tuple.Triplet;
 import com.frost.springular.user.data.model.UserModel;
 
 @Component

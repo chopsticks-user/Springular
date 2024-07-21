@@ -1,4 +1,6 @@
-package com.frost.springular.shared.tuple;
+package com.frost.springular.shared.util.tuple;
+
+import java.util.function.BiConsumer;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,5 +17,9 @@ public class Pair<T1, T2> {
 
   public static <T1, T2> Pair<T1, T2> of(T1 first, T2 second) {
     return new Pair<>(first, second);
+  }
+
+  public void apply(BiConsumer<T1, T2> consumer) {
+    consumer.accept(first, second);
   }
 }

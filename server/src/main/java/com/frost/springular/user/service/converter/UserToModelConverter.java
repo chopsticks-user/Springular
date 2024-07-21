@@ -3,7 +3,7 @@ package com.frost.springular.user.service.converter;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import com.frost.springular.shared.tuple.Pair;
+import com.frost.springular.shared.util.tuple.Pair;
 import com.frost.springular.user.data.model.UserModel;
 import com.frost.springular.user.data.request.SignupRequest;
 

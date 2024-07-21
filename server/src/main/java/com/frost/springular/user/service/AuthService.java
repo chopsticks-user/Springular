@@ -6,7 +6,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.frost.springular.shared.tuple.Pair;
+import com.frost.springular.shared.util.tuple.Pair;
 import com.frost.springular.user.data.model.UserModel;
 import com.frost.springular.user.data.model.UserRepository;
 import com.frost.springular.user.data.request.LoginRequest;

@@ -5,7 +5,7 @@ import com.frost.springular.event.data.model.EventModel;
 import com.frost.springular.event.data.model.EventRepository;
 import com.frost.springular.event.data.request.EventRequest;
 import com.frost.springular.event.exception.CalendarEventException;
-import com.frost.springular.shared.tuple.Pair;
+import com.frost.springular.shared.util.tuple.Pair;
 import com.frost.springular.user.data.model.UserModel;
 import com.frost.springular.user.service.UserService;
 
