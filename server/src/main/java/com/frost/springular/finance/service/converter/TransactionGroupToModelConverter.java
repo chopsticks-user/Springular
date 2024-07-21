@@ -14,12 +14,16 @@ public class TransactionGroupToModelConverter implements
   @Override
   public TransactionGroupModel convert(
       Pair<TransactionGroupRequest, UserModel> pair) {
+    String path = pair.getFirst().getPath();
+    int level = (int) (path.equals("/") ? 0
+        : path.chars()
+            .filter(c -> c == '/')
+            .count() - 1);
+
     return TransactionGroupModel.builder()
-        .name(pair.getFirst().getName())
+        .path(path)
+        .level(level)
         .description(pair.getFirst().getDescription())
-        .revenues(pair.getFirst().getRevenues())
-        .expenses(pair.getFirst().getExpenses())
-        .parentId(pair.getFirst().getParentId())
         .user(pair.getSecond())
         .build();
   }

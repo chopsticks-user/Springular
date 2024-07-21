@@ -13,13 +13,12 @@ public class TransactionGroupToResponseConverter
   public TransactionGroupResponse convert(TransactionGroupModel model) {
     return TransactionGroupResponse.builder()
         .id(model.getId())
-        .name(model.getName())
+        .path(model.getPath())
+        .level(model.getLevel())
         .description(model.getDescription())
         .revenues(model.getRevenues())
         .expenses(model.getExpenses())
-        .parentId(model.getParentId())
         .userId(model.getUser().getId())
-        // .path(model.getPath())
         .build();
   }
 }

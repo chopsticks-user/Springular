@@ -35,22 +35,15 @@ class GroupController {
     this.conversionService = conversionService;
   }
 
-  @GetMapping("")
+  @GetMapping
   public ResponseEntity<List<TransactionGroupResponse>> getAllTransactionGroups() {
-    List<TransactionGroupModel> groupModels = financeService.getAllGroups();
-    Map<String, String> groupPaths = financeService.getGroupPaths(groupModels);
-
-    return ResponseEntity.ok(groupModels.stream()
-        .map((groupModel) -> {
-          var response = conversionService
-              .convert(groupModel, TransactionGroupResponse.class);
-          response.setPath(groupPaths.get(groupModel.getId()));
-          return response;
-        })
+    return ResponseEntity.ok(financeService.getAllGroups().stream()
+        .map((groupModel) -> conversionService
+            .convert(groupModel, TransactionGroupResponse.class))
         .toList());
   }
 
-  @PostMapping("")
+  @PostMapping
   public ResponseEntity<TransactionGroupResponse> createTransactionGroup(
       @Valid @RequestBody TransactionGroupRequest request) {
     return ResponseEntity.ok(conversionService.convert(
@@ -80,6 +73,6 @@ class GroupController {
 
   @DeleteMapping("/{id}")
   public void deleteTransactionGroup(@PathVariable String id) {
-    financeService.deleteTransactionGroup(id);
+    financeService.delete(id, TransactionGroupModel.class);
   }
 }

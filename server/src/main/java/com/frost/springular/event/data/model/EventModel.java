@@ -62,5 +62,5 @@ public class EventModel {
 
   @ManyToOne(cascade = CascadeType.REMOVE)
   @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-  private UserModel userEntity;
+  private UserModel user;
 }

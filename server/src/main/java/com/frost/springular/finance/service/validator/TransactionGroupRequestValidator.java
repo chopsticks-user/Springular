@@ -20,17 +20,10 @@ public class TransactionGroupRequestValidator
       return true;
     }
 
-    if (request.getName().isEmpty() || request.getName().isBlank()) {
-      throw new FinanceException("Name cannot be empty or blank");
-    }
-
-    if (request.getRevenues() < 0.0 || request.getExpenses() < 0.0) {
-      throw new FinanceException(
-          "Both revenues and expenses must be positive");
-    }
-
-    if (request.getUserId().isEmpty() || request.getUserId().isBlank()) {
-      throw new FinanceException("user id cannot be empty or blank");
+    if (request.getPath().isEmpty() || request.getPath().isBlank() ||
+        request.getPath().matches(
+            "^(/[a-zA-Z][a-zA-Z_-]*[a-zA-Z])*$|^/$")) {
+      throw new FinanceException("Invalid path");
     }
 
     return true;

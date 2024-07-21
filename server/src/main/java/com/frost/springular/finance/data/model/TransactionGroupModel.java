@@ -17,7 +17,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Table(name = "finance_transaction_groups", uniqueConstraints = @UniqueConstraint(columnNames = { "name", "user_id" }))
+@Table(name = "finance_transaction_groups", uniqueConstraints = @UniqueConstraint(columnNames = { "path", "user_id" }))
 @Entity
 @Data
 @AllArgsConstructor
@@ -30,7 +30,10 @@ public class TransactionGroupModel {
   private String id;
 
   @Column(nullable = false)
-  private String name;
+  private String path;
+
+  @Column(nullable = false)
+  private int level;
 
   @Column
   private String description;
@@ -44,10 +47,4 @@ public class TransactionGroupModel {
   @ManyToOne(cascade = CascadeType.REMOVE)
   @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
   private UserModel user;
-
-  @Column
-  private String parentId;
-
-  // @Column(nullable = false, unique = true)
-  // private String path;
 }

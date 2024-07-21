@@ -17,6 +17,6 @@ public class TransactionResponse {
   private String note;
   private double revenues;
   private double expenses;
-  private String groupId;
+  private String groupPath;
   private String userId;
 }
