@@ -13,13 +13,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Table(name = "finance_transactions", uniqueConstraints = @UniqueConstraint(columnNames = { "user_id", "group_path" }))
+@Table(name = "finance_transactions")
 @Entity
 @Data
 @AllArgsConstructor
@@ -45,7 +44,7 @@ public class TransactionModel {
 
   // todo: @ManyToOne(fetch = FetchType.LAZY)
   @ManyToOne(cascade = CascadeType.REMOVE)
-  @JoinColumn(name = "group_path", referencedColumnName = "path")
+  @JoinColumn(name = "group_id", referencedColumnName = "id")
   private TransactionGroupModel group;
 
   @ManyToOne(cascade = CascadeType.REMOVE)
