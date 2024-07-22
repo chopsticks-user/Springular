@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 public class CorsFilter implements Filter {
-  @Value("${cors.allowed.origins}")
+  @Value("${spring.security.cors.allowed-origins}")
   private String allowedOrigins;
 
   public CorsFilter() {

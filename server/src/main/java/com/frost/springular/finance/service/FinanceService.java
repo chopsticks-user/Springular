@@ -74,7 +74,8 @@ public class FinanceService {
 
   public Pair<Double, Double> getActualRevenuesAndExpenses(
       TransactionGroupModel groupModel) {
-    Pair<Double, Double> pair = Pair.of(0.0, 0.0);
+    Pair<Double, Double> pair = Pair.of(
+        groupModel.getRevenues(), groupModel.getExpenses());
 
     transactionGroupRepository.findByUserAndPathStartingWith(
         groupModel.getUser(), groupModel.getPath()).forEach(childGroupModel -> {
