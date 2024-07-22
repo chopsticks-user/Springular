@@ -74,16 +74,15 @@ public class FinanceService {
 
   public Pair<Double, Double> getActualRevenuesAndExpenses(
       TransactionGroupModel groupModel) {
-    Pair<Double, Double> pair = Pair.of(
-        groupModel.getRevenues(), groupModel.getExpenses());
-
-    transactionGroupRepository.findByUserAndPathStartingWith(
-        groupModel.getUser(), groupModel.getPath()).forEach(childGroupModel -> {
-          pair.setFirst(pair.getFirst() + childGroupModel.getRevenues());
-          pair.setSecond(pair.getFirst() + childGroupModel.getExpenses());
-        });
-
-    return pair;
+    return transactionGroupRepository.findByUserAndPathStartingWith(
+        groupModel.getUser(), groupModel.getPath()).stream()
+        .map(group -> Pair.of(group.getRevenues(), group.getExpenses()))
+        .reduce(Pair.of(groupModel.getRevenues(), groupModel.getExpenses()),
+            (acc, val) -> {
+              acc.setFirst(acc.getFirst() + val.getFirst());
+              acc.setSecond(acc.getSecond() + val.getSecond());
+              return acc;
+            });
   }
 
   public Pair<Double, Double> getActualRevenuesAndExpenses(String id) {
@@ -147,12 +146,14 @@ public class FinanceService {
       String interval, Instant startOfInterval) {
     final UserModel userModel = userService.getCurrentUser();
     return switch (interval) {
-      case "month" -> transactionRepository.findByUserAndTimeGreaterThanEqualAndTimeLessThan(
-          userModel, startOfInterval,
-          startOfInterval.plus(1, ChronoUnit.MONTHS));
-      case "year" -> transactionRepository.findByUserAndTimeGreaterThanEqualAndTimeLessThan(
-          userModel, startOfInterval,
-          startOfInterval.plus(1, ChronoUnit.YEARS));
+      case "month" -> transactionRepository
+          .findByUserAndTimeGreaterThanEqualAndTimeLessThan(
+              userModel, startOfInterval,
+              startOfInterval.plus(1, ChronoUnit.MONTHS));
+      case "year" -> transactionRepository
+          .findByUserAndTimeGreaterThanEqualAndTimeLessThan(
+              userModel, startOfInterval,
+              startOfInterval.plus(1, ChronoUnit.YEARS));
       default -> filterTransactionsByInterval("month", startOfInterval);
     };
   }
@@ -177,12 +178,22 @@ public class FinanceService {
   }
 
   public TransactionGroupModel create(TransactionGroupRequest groupRequest) {
+    createRootGroup();
+
     TransactionGroupModel groupModel = conversionService.convert(
         Pair.of(groupRequest, userService.getCurrentUser()),
         TransactionGroupModel.class);
 
     if (groupModel.getLevel() < 1) {
       throw new FinanceException("Invalid group path");
+    }
+
+    if (groupModel.getLevel() > 1) {
+      String path = groupModel.getPath();
+      transactionGroupRepository.findByUserAndPath(
+          userService.getCurrentUser(),
+          path.substring(0, path.lastIndexOf('/')))
+          .orElseThrow(() -> new FinanceException("Invalid group path"));
     }
 
     return transactionGroupRepository.save(groupModel);
