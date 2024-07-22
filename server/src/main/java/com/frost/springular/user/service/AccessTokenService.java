@@ -20,7 +20,7 @@ import io.jsonwebtoken.security.Keys;
 
 @Service
 public class AccessTokenService {
-  @Value("${spring.security.jwt.secret-key}")
+  @Value("${spring.security.jwt.secret}")
   private String secretKey;
 
   @Value("${spring.security.jwt.expiration.access}")

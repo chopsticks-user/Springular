@@ -1,30 +1,32 @@
 services:
-  db:
+  database:
     image: "postgres"
+    container_name: dev-spring-database
     ports:
       - "5432:5432"
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - database-shared:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
+
   server:
     build: .
     image: frostdocker273/springular-server
+    container_name: dev-spring-server
     ports:
       - "8080:8080"
     depends_on:
-      - db
+      - database
     environment:
-      - SPRING_PROFILES_ACTIVE=prod
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/postgres
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=password
       - SPRING_SECURITY_JWT_SECRET=ff197a90a6248fedd9d73e10d316fc31ef6ba3393dbef69682561ac7ce4c9016
       - SPRING_SECURITY_JWT_EXPIRATION_ACCESS=1800000
       - SPRING_SECURITY_JWT_EXPIRATION_REFRESH=604800000
-      - SPRING_SECURITY_CORS_ALLOWED_ORIGINS="http://localhost:4200"
+      - SPRING_SECURITY_CORS_ALLOWED_ORIGINS=*
 
 volumes:
-  db-data:
-    name: "springular-db-volume"
+  database-shared:
+    name: "springular-postgres-volume"
