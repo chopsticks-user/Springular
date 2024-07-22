@@ -20,10 +20,10 @@ import io.jsonwebtoken.security.Keys;
 
 @Service
 public class AccessTokenService {
-  @Value("${security.jwt.secret-key}")
+  @Value("${spring.security.jwt.secret-key}")
   private String secretKey;
 
-  @Value("${security.jwt.expiration-time}")
+  @Value("${spring.security.jwt.expiration.access}")
   private long jwtExpiration;
 
   public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {

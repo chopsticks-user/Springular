@@ -22,7 +22,7 @@ public class SecurityConfig {
   private final AuthenticationFilter jwtAuthFilter;
   private final CorsFilter corsFilter;
 
-  @Value("${cors.allowed.origins}")
+  @Value("${spring.security.cors.allowed-origins}")
   private String allowedOrigins;
 
   public SecurityConfig(AuthenticationProvider authenticationProvider,

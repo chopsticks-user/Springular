@@ -22,7 +22,7 @@ public class RefreshTokenService {
   @Autowired
   private UserRepository userRepository;
 
-  @Value("${security.jwt.refresh.expiration-time}")
+  @Value("${spring.security.jwt.expiration.refresh}")
   private long expirationTime;
 
   public RefreshTokenModel generateToken(String userEmail) {
