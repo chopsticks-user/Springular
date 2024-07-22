@@ -1,5 +1,26 @@
 spring:
   application:
     name: springular
-  profiles:
-    active: ${SPRING_PROFILES_ACTIVE}
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+  sql:
+    init:
+      mode: always
+      # schema-locations: classpath:/schema.sql
+  security:
+    jwt:
+      secret: ${SPRING_SECURITY_JWT_SECRET}
+      expiration:
+        access: ${SPRING_SECURITY_JWT_EXPIRATION_ACCESS}
+        refresh: ${SPRING_SECURITY_JWT_EXPIRATION_REFRESH}
+    cors:
+      allowed-origins: ${SPRING_SECURITY_CORS_ALLOWED_ORIGINS}
