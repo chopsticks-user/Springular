@@ -4,8 +4,6 @@ import org.springframework.stereotype.Repository;
 
 import com.frost.springular.user.data.model.UserModel;
 
-import jakarta.transaction.Transactional;
-
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -27,6 +25,10 @@ public interface TransactionRepository
 
   @Modifying
   // @Transactional
-  @Query("DELETE FROM TransactionModel t WHERE t.user = :user AND t.group.path LIKE :path%")
+  @Query("""
+      DELETE FROM TransactionModel t
+        WHERE t.user = :user
+        AND t.group.path LIKE :path%
+      """)
   void deleteAllByUserAndGroupPathStartingWith(UserModel user, String path);
 }

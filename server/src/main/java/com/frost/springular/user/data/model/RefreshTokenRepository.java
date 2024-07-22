@@ -3,10 +3,6 @@ package com.frost.springular.user.data.model;
 import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
-
-import com.frost.springular.user.data.model.RefreshTokenModel;
-import com.frost.springular.user.data.model.UserModel;
-
 import org.springframework.data.repository.CrudRepository;
 
 @Repository

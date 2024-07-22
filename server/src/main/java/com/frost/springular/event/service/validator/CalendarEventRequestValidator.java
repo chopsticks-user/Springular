@@ -7,7 +7,6 @@ import java.time.temporal.ChronoUnit;
 
 import com.frost.springular.event.data.EventRepeat;
 import com.frost.springular.event.data.request.EventRequest;
-import com.frost.springular.event.data.request.EventRequest.RepeatEvery;
 import com.frost.springular.event.exception.CalendarEventException;
 
 import jakarta.validation.ConstraintValidator;

@@ -16,10 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.frost.springular.finance.data.model.TransactionGroupModel;
 import com.frost.springular.finance.data.request.TransactionGroupRequest;
 import com.frost.springular.finance.data.response.TransactionGroupResponse;
-import com.frost.springular.finance.exception.FinanceException;
 import com.frost.springular.finance.service.FinanceService;
 import com.frost.springular.shared.util.stream.StreamHelper;
-import com.frost.springular.shared.util.tuple.Pair;
 
 import jakarta.validation.Valid;
 

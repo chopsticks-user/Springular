@@ -2,8 +2,6 @@ package com.frost.springular.finance.service;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -26,13 +24,13 @@ import com.frost.springular.user.service.UserService;
 
 @Service
 public class FinanceService {
-  private static final Comparator<TransactionGroupModel> groupComparator = //
-      new Comparator<TransactionGroupModel>() {
-        @Override
-        public int compare(TransactionGroupModel a, TransactionGroupModel b) {
-          return a.getLevel() - b.getLevel();
-        }
-      };
+  // private static final Comparator<TransactionGroupModel> groupComparator = //
+  // new Comparator<TransactionGroupModel>() {
+  // @Override
+  // public int compare(TransactionGroupModel a, TransactionGroupModel b) {
+  // return a.getLevel() - b.getLevel();
+  // }
+  // };
 
   private final TransactionRepository transactionRepository;
   private final TransactionGroupRepository transactionGroupRepository;
@@ -114,8 +112,7 @@ public class FinanceService {
         .allMatch(i -> groupList
             .get(i).getLevel() <= groupList
                 .get(i + 1).getLevel())) {
-      ascSortedGroupModels = groupList.stream()
-          .sorted(groupComparator).toList();
+      throw new RuntimeException("");
     }
 
     var valueMap = new HashMap<String, Pair<Double, Double>>();
