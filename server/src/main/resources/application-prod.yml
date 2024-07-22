@@ -1,0 +1,25 @@
+spring:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+  sql:
+    init:
+      mode: always
+      # schema-locations: classpath:/schema.sql
+security:
+  jwt:
+    secret-key: ${SECURITY_JWT_SECRET}
+    expiration-time: ${SECURITY_JWT_EXPIRATION_ACCESS}
+    refresh:
+      expiration-time: ${SECURITY_JWT_EXPIRATION_REFRESH}
+cors:
+  allowed:
+    origins: http://localhost:4200

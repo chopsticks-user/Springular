@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import com.frost.springular.event.data.EventRepeat;
 import com.frost.springular.event.data.model.EventModel;
 import com.frost.springular.event.data.request.EventRequest;
-import com.frost.springular.event.data.request.EventRequest.RepeatEvery;
 import com.frost.springular.event.data.response.EventResponse;
 
 @Component

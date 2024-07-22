@@ -1,0 +1,25 @@
+spring:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: password
+  sql:
+    init:
+      mode: always
+      # schema-locations: classpath:/schema.sql
+security:
+  jwt:
+    secret-key: ff197a90a6248fedd9d73e10d316fc31ef6ba3393dbef69682561ac7ce4c9016
+    expiration-time: 1800000
+    refresh:
+      expiration-time: 604800000
+cors:
+  allowed:
+    origins: http://localhost:4200
