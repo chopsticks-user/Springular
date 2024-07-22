@@ -8,8 +8,8 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
-  server:
-    build: .
+  spring-server:
+    build: ./server
     image: frostdocker273/springular-server
     ports:
       - "8080:8080"
@@ -24,6 +24,13 @@ services:
       - SECURITY_JWT_EXPIRATION_ACCESS=1800000
       - SECURITY_JWT_EXPIRATION_REFRESH=604800000
       - CORS_ALLOWED_ORIGINS=http://localhost:4200
+  angular-client:
+    build: ./client
+    image: frostdocker273/springular-client
+    ports:
+      - "4200:4200"
+    depends_on:
+      - spring-server
 
 volumes:
   db-data:
