@@ -43,3 +43,6 @@ Thumbs.db
 
 # Scripts
 __pycache__
+
+# Environments
+.env

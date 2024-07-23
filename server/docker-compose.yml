@@ -1,32 +1,34 @@
 services:
   database:
-    image: "postgres"
-    container_name: dev-spring-database
+    hostname: ${DOCKER_SERVICES_DATABASE_HOSTNAME}
+    image: ${DOCKER_SERVICES_DATABASE_IMAGE}
+    container_name: ${DOCKER_SERVICES_DATABASE_CONTAINER_NAME}
+    env_file: .env
     ports:
-      - "5432:5432"
+      - ${DOCKER_SERVICES_DATABASE_PORTS}
     volumes:
-      - database-shared:/var/lib/postgresql/data
+      - database-shared:${DOCKER_SERVICES_DATABASE_VOLUMES_PATH}
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
 
   server:
     build: .
-    image: frostdocker273/springular-server
-    container_name: dev-spring-server
+    image: ${DOCKER_SERVICES_SERVER_IMAGE}
+    container_name: ${DOCKER_SERVICES_SERVER_CONTAINER_NAME}
     ports:
-      - "8080:8080"
+      - ${DOCKER_SERVICES_SERVER_PORTS}
     depends_on:
       - database
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/postgres
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=password
-      - SPRING_SECURITY_JWT_SECRET=ff197a90a6248fedd9d73e10d316fc31ef6ba3393dbef69682561ac7ce4c9016
-      - SPRING_SECURITY_JWT_EXPIRATION_ACCESS=1800000
-      - SPRING_SECURITY_JWT_EXPIRATION_REFRESH=604800000
-      - SPRING_SECURITY_CORS_ALLOWED_ORIGINS=*
+      - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
+      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+      - SPRING_SECURITY_JWT_SECRET=${SPRING_SECURITY_JWT_SECRET}
+      - SPRING_SECURITY_JWT_EXPIRATION_ACCESS=${SPRING_SECURITY_JWT_EXPIRATION_ACCESS}
+      - SPRING_SECURITY_JWT_EXPIRATION_REFRESH=${SPRING_SECURITY_JWT_EXPIRATION_REFRESH}
+      - SPRING_SECURITY_CORS_ALLOWED_ORIGINS=${SPRING_SECURITY_CORS_ALLOWED_ORIGINS}
 
 volumes:
   database-shared:
-    name: "springular-postgres-volume"
+    name: ${DOCKER_VOLUMES_DATABASE_SHARED_NAME}
