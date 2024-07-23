@@ -1,0 +1,43 @@
+name: Angular Client Continuous Integration
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions: read-all
+
+jobs:
+  build-and-test:
+    name: Build and Test Angular client
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./client
+
+    strategy:
+      matrix:
+        node_version: [18.x]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{matrix.node_version}}
+          cache: "npm"
+          cache-dependency-path: ./client/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ./client
+        run: npm ci
+
+      - name: Test
+        working-directory: ./client
+        run: npm run test -- --watch=false --browsers=ChromeHeadless
+
+      - name: Build
+        working-directory: ./client
+        run: npm run build
