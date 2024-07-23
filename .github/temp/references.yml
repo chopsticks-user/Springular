@@ -1,0 +1,22 @@
+    # environment: CI
+    # env:
+    #   SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
+    #   SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
+    #   SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+    #   SPRING_SECURITY_JWT_SECRET: ${{ secrets.SPRING_SECURITY_JWT_SECRET }}
+    #   SPRING_SECURITY_JWT_EXPIRATION_ACCESS: ${{ secrets.SPRING_SECURITY_JWT_EXPIRATION_ACCESS }}
+    #   SPRING_SECURITY_JWT_EXPIRATION_REFRESH: ${{ secrets.SPRING_SECURITY_JWT_EXPIRATION_REFRESH }}
+    #   SPRING_SECURITY_CORS_ALLOWED_ORIGINS: ${{ secrets.SPRING_SECURITY_CORS_ALLOWED_ORIGINS }}
+    # defaults:
+    #   run:
+    #     working-directory: server
+
+    # services:
+    #   postgres-db:
+    #     image: postgres
+    #     env:
+    #       POSTGRES_USER: postgres
+    #       POSTGRES_PASSWORD: password
+    #     ports:
+    #       - 5432:5432
+    #     options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5

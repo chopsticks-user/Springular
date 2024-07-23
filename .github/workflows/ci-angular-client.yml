@@ -11,9 +11,7 @@ jobs:
   build-and-test:
     name: Build and Test Angular client
     runs-on: ubuntu-latest
-    # defaults:
-    #   run:
-    #     working-directory: client
+    environment: CI
 
     strategy:
       matrix:
@@ -29,6 +27,13 @@ jobs:
           node-version: ${{matrix.node_version}}
           cache: "npm"
           cache-dependency-path: client/package-lock.json
+
+      - name: Set up environments
+        run: node scripts/generate-env.js
+        working-directory: client
+        env:
+          ANGULAR_PROD_SERVER_ADDRESS: ${{ secrets.ANGULAR_PROD_SERVER_ADDRESS }}
+          ANGULAR_PROD_API_ROOT_ADDRESS: ${{ secrets.ANGULAR_PROD_API_ROOT_ADDRESS }}
 
       - name: Install dependencies
         working-directory: client

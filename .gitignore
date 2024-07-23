@@ -1,5 +1,6 @@
 ### Environments ###
-.env
+*.env
+*.secrets
 /.env
 
 # Visual Studio Code
