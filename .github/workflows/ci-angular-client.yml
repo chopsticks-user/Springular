@@ -17,7 +17,7 @@ jobs:
 
     strategy:
       matrix:
-        node_version: [18.x]
+        node_version: [20]
 
     steps:
       - name: Checkout
@@ -36,7 +36,7 @@ jobs:
 
       - name: Test
         working-directory: ./client
-        run: npm run test -- --watch=false --browsers=ChromeHeadless
+        run: npm run test:ci
 
       - name: Build
         working-directory: ./client
