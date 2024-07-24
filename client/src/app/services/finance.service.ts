@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Transaction, TransactionGroup } from '@shared/types';
 import { DateTime } from 'luxon';
-import { BehaviorSubject, Observable, zip } from 'rxjs';
+import { BehaviorSubject, filter, map, Observable, zip } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -28,5 +28,11 @@ export class FinanceService {
       this.$transactions.next(transactions);
       this.$groups.next(groups);
     });
+  }
+
+  public getGroupById(id: string): Observable<TransactionGroup | undefined> {
+    return this.$groups.pipe(
+      map((groups) => groups.find((group) => group.id === id))
+    );
   }
 }

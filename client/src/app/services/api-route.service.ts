@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import appEnv from '@environments';
+import environment from '@environments';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiRouteService {
-  private _rootAddr: string = this._dropSuffixSlashes(appEnv.apiRootAddr);
+  private _rootAddr: string = this._dropSuffixSlashes(environment.apiRootAddr);
 
   route(path: string): string {
     // todo:
