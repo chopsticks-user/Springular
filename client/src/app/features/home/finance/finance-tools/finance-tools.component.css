@@ -1,0 +1,68 @@
+:host {
+  height: 40px;
+  background-color: var(--background-secondary);
+  margin-bottom: 20px;
+  /*border-bottom: 1px solid var(--border-primary);*/
+  display: flex;
+  align-items: center;
+}
+
+.info {
+  flex: 1;
+  border-right: 1px solid var(--border-primary);
+}
+
+.group {
+  height: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 5px;
+  /*border-right: 1px solid var(--border-primary);*/
+}
+
+mat-icon {
+  color: var(--typography-primary);
+  transform: scale(1);
+}
+
+button {
+  all: unset;
+  cursor: pointer;
+  height: 100%;
+  border-radius: 5px;
+  aspect-ratio: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+}
+
+button:hover {
+  background-color: var(--border-primary);
+}
+
+dialog {
+  background-color: var(--background-primary);
+  border: var(--dialog-border);
+  border-radius: 10px;
+}
+
+dialog::backdrop {
+  backdrop-filter: blur(2px);
+}
+
+dialog[open] {
+  animation-duration: 0.5s;
+  animation-name: slidein;
+}
+
+@keyframes slidein {
+  from {
+    scale: 0;
+  }
+
+  to {
+    scale: 1;
+  }
+}

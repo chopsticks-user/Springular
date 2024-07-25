@@ -1,0 +1,29 @@
+:host {
+  --header-height: 3rem;
+  --sidebar-flex: 0 1 15%;
+
+  height: 100%;
+  display: flex;
+}
+
+.content {
+  flex: 1 1 85%;
+  height: 100%;
+  display: block;
+}
+
+app-home-header {
+  height: var(--header-height);
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  height: calc(100% - var(--header-height));
+}
+
+app-home-navigation-bar {
+  height: 100%;
+  flex: 0 1 15%;
+}
