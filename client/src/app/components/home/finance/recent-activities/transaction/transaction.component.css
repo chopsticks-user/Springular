@@ -1,17 +1,46 @@
 :host {
-  display: block;
-  height: 30px;
-  margin-bottom: 5px;
+  background-color: var(--background-secondary);
+  border: 1px solid green;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+  height: 40px;
+  width: calc(100% - 5px * 2 + 2px);
+  /*padding: 5px;*/
+  display: flex;
 }
 
-.container {
-  height: 100%;
+p {
+  padding: 0;
+  margin: 0;
+}
+
+mat-icon {
+  cursor: pointer;
+}
+
+div {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  margin-left: 30px;
-  color: var(--foreground-quinary);
-  /*background-color: gray;*/
-  background-color: #312d2a;
-  /*background-color: #161513;*/
+}
+
+.info {
+  flex: 1 1 auto;
+  padding-left: 5px;
+  padding-right: 5px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  align-items: self-start;
+}
+
+.profits {
+  flex-basis: 25%;
+  padding-right: 10px;
+}
+
+.group {
+  flex-basis: 10%;
 }
