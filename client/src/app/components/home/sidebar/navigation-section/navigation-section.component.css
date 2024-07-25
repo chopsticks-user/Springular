@@ -6,7 +6,7 @@
 
 header {
   margin-bottom: 1rem;
-  color: var(--foreground-secondary);
+  color: var(--typography-quaternary);
   text-transform: capitalize;
   font-weight: 300;
   margin-left: 35px;

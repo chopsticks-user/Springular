@@ -1,23 +1,15 @@
 :root {
-  --dark-accent-0: #08090a;
-  --dark-accent-1: #0f0f11;
-  --dark-accent-2: #151719;
-  --dark-accent-3: #161513;
-
-  --light-accent-0: #eaeaea;
-  --light-accent-1: #f2f5ff;
-  --light-accent-2: #f7f7f7;
-  --light-accent-3: #fbfbff;
-
-  --gray-accent-0: #312d2a;
-  --gray-accent-1: #333333;
-  --gray-accent-2: #555555;
-
   --background-primary: #1d1d1f;
-  --background-secondary: #343434;
+  --background-secondary: #242425;
   --background-tertiary: #343434;
   --background-quaternary: #e2d8d8;
   --background-quinary: #e2d8d8;
+  --background-gradient-100: linear-gradient(
+    110.6deg, rgb(76, 49, 58) -18.3%,
+    rgb(67, 54, 74) 16.4%,
+    rgb(47, 48, 67) 68.2%,
+    rgb(27, 23, 36) 99.1%
+  );
 
   --foreground-primary: #08090a;
   --foreground-secondary: #a3b9cc;
@@ -52,5 +44,10 @@ body {
   overflow: hidden;
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  color: var(--typography-primary);
+}
+
+dialog {
+  background-color: var(--background-primary);
   color: var(--typography-primary);
 }

@@ -8,4 +8,6 @@
 main {
   flex: 1 1 auto;
   background-color: var(--background-secondary);
+  /*background: var(--background-gradient-100);*/
+  border-radius: 20px;
 }

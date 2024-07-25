@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 
 @Component({
-  selector: 'app-daily-transactions',
+  selector: 'app-home-finance-daily-transactions',
   standalone: true,
   imports: [],
   templateUrl: './daily-transactions.component.html',

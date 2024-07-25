@@ -1,24 +1,29 @@
-.container {
+:host {
+  --header-height: 3rem;
+  --sidebar-flex: 0 1 15%;
+
   height: 100%;
   display: flex;
-  flex-direction: row;
 }
 
-.container ::ng-deep app-home-sidebar {
-  width: 15%;
-}
-
-.main-container {
+.content {
+  flex: 1 1 85%;
   height: 100%;
+  display: block;
+}
+
+app-home-header {
+  height: var(--header-height);
+}
+
+main {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  overflow-y: scroll;
+  height: calc(100% - var(--header-height));
 }
 
-.main-container ::ng-deep app-home-header {
-  height: 5%;
-}
-
-.main-container ::ng-deep app-home-calendar {
-  height: 95%;
+app-home-sidebar {
+  height: 100%;
+  flex: 0 1 15%;
 }

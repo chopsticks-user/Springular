@@ -1,6 +1,7 @@
 :host {
   height: 100%;
   margin: 20px;
+  margin-top: 0;
 }
 
 main {

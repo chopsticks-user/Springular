@@ -1,24 +1,20 @@
-<div class="container">
-  <div class="calendar-view">
-    <header class="calendar-header">
-      <app-home-calendar-header (onAddEventButtonClicked)="openEventEditor()" />
-    </header>
-    <main class="calendar-main">
-      <app-home-calendar-week-view
-        [calendarEvents]="(calendarEvents$ | async) ?? []"
-        (onEventClicked)="openEventEditor($event)"
-      />
-      <dialog #eventEditorModal (close)="closeEventEditor()">
-        @if(eventEditorVisible){
-        <app-shared-calendar-event-editor
-          [type]="eventEditorType"
-          [calendarEvent]="selectedCalendarEvent"
-          ($submitButtonClicked)="submitCalendarEvent($event)"
-          ($cancelButtonClicked)="closeEventEditor()"
-          ($deleteButtonClicked)="deleteCalendarEvent($event)"
-        ></app-shared-calendar-event-editor>
-        }
-      </dialog>
-    </main>
-  </div>
-</div>
+<header>
+  <app-home-calendar-header (onAddEventButtonClicked)="openEventEditor()"/>
+</header>
+<main>
+  <app-home-calendar-week-view
+    [calendarEvents]="(calendarEvents$ | async) ?? []"
+    (onEventClicked)="openEventEditor($event)"
+  />
+  <dialog #eventEditorModal (close)="closeEventEditor()">
+    @if (eventEditorVisible) {
+      <app-shared-calendar-event-editor
+        [type]="eventEditorType"
+        [calendarEvent]="selectedCalendarEvent"
+        ($submitButtonClicked)="submitCalendarEvent($event)"
+        ($cancelButtonClicked)="closeEventEditor()"
+        ($deleteButtonClicked)="deleteCalendarEvent($event)"
+      ></app-shared-calendar-event-editor>
+    }
+  </dialog>
+</main>

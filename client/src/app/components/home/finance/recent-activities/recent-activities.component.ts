@@ -1,12 +1,16 @@
 import {Component} from '@angular/core';
 import {Transaction} from "@shared/types";
 import {TransactionComponent} from "@components/home/finance/recent-activities/transaction/transaction.component";
+import {
+  DailyTransactionsComponent
+} from "@components/home/finance/recent-activities/daily-transactions/daily-transactions.component";
 
 @Component({
   selector: 'app-home-finance-recent-activities',
   standalone: true,
   imports: [
-    TransactionComponent
+    TransactionComponent,
+    DailyTransactionsComponent
   ],
   templateUrl: './recent-activities.component.html',
   styleUrl: './recent-activities.component.css',
