@@ -4,21 +4,22 @@
     (mouseenter)="onTodayButtonHovered()"
     (click)="onTodayButtonClicked()"
   >
-    <p style="color: var(--foreground-light); font-size: small">Today</p>
+    <p style="color: var(--foreground-quinary); font-size: small">Today</p>
   </div>
   <div
     class="calendar-header-left-today-info"
-    style="color: var(--foreground-light); font-size: small"
+    style="color: var(--foreground-quinary); font-size: small"
   >
     {{ todayString$ | async }}
   </div>
 </div>
 <div class="calendar-header-navigation">
   <mat-icon
-    style="color: var(--foreground-light); cursor: pointer"
+    style="color: var(--foreground-quinary); cursor: pointer"
     matSuffix
     (click)="onPrevButtonClicked()"
-    >arrow_back_ios</mat-icon
+  >arrow_back_ios
+  </mat-icon
   >
   <p style="color: white">
     {{ (firstWeekday$ | async)?.toFormat("MMMM dd, yyyy") }}
@@ -28,17 +29,19 @@
     {{ (lastWeekday$ | async)?.toFormat("MMMM dd, yyyy") }}
   </p>
   <mat-icon
-    style="color: var(--foreground-light); cursor: pointer"
+    style="color: var(--foreground-quinary); cursor: pointer"
     matSuffix
     (click)="onNextButtonClicked()"
-    >arrow_forward_ios</mat-icon
+  >arrow_forward_ios
+  </mat-icon
   >
 </div>
 <div class="calendar-header-right">
   <mat-icon
     matSuffix
-    style="color: var(--foreground-light); cursor: pointer; align-self: center"
+    style="color: var(--foreground-quinary); cursor: pointer; align-self: center"
     (click)="onAddEventButtonClicked.emit()"
-    >edit_calendar</mat-icon
+  >edit_calendar
+  </mat-icon
   >
 </div>

@@ -1,13 +1,14 @@
-import { NgStyle } from '@angular/common';
-import { Component, inject, input } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
-import { Router } from '@angular/router';
-import { SidebarItem } from '@shared/types';
+import {NgClass, NgStyle} from '@angular/common';
+import {Component, inject, input} from '@angular/core';
+import {MatIconModule} from '@angular/material/icon';
+import {Router} from '@angular/router';
+import {SidebarItem} from '@shared/types';
+import {MatSuffix} from "@angular/material/form-field";
 
 @Component({
   selector: 'app-home-sidebar-navigation-section',
   standalone: true,
-  imports: [MatIconModule, NgStyle],
+  imports: [MatIconModule, NgStyle, MatSuffix, NgClass],
   templateUrl: './navigation-section.component.html',
   styleUrl: './navigation-section.component.css',
 })
@@ -25,7 +26,7 @@ export class NavigationSectionComponent {
           break;
         }
 
-        this._router.navigateByUrl(item.url!);
+        void this._router.navigateByUrl(item.url!);
         break;
       }
       case 'dropdown': {

@@ -1,5 +1,22 @@
 :host {
   flex-basis: 20%;
-  background-color: var(--background-secondary);
+  background-color: var(--background-primary);
+  border-radius: 20px;
   margin-right: 20px;
+  overflow-y: scroll;
+  display: block;
+  padding: 10px;
+}
+
+header {
+  height: 40px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
 }

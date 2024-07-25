@@ -1,8 +1,8 @@
-import { Component, inject } from '@angular/core';
-import { UserSectionComponent } from './user-section/user-section.component';
-import { NavigationSectionComponent } from './navigation-section/navigation-section.component';
-import { SidebarSection } from '@shared/types';
-import { AuthService } from '@services/auth.service';
+import {Component, inject} from '@angular/core';
+import {UserSectionComponent} from './user-section/user-section.component';
+import {NavigationSectionComponent} from './navigation-section/navigation-section.component';
+import {SidebarSection} from '@shared/types';
+import {AuthService} from '@services/auth.service';
 
 @Component({
   selector: 'app-home-sidebar',

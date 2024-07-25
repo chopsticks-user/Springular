@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { BalanceSummaryComponent } from './balance-summary.component';
+import {BalanceSummaryComponent} from './balance-summary.component';
 
 describe('BalanceSummaryComponent', () => {
   let component: BalanceSummaryComponent;

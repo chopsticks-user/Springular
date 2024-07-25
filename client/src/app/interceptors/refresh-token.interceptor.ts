@@ -1,13 +1,8 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpEventType,
-  HttpInterceptorFn,
-} from '@angular/common/http';
-import { inject } from '@angular/core';
-import { AuthService } from '@services/auth.service';
-import { BYPASS_AUTH_HEADER, REFRESH_TOKEN_REQUESTED } from '@shared/constants';
-import { catchError, map, switchMap, tap, throwError } from 'rxjs';
+import {HttpClient, HttpErrorResponse, HttpInterceptorFn,} from '@angular/common/http';
+import {inject} from '@angular/core';
+import {AuthService} from '@services/auth.service';
+import {BYPASS_AUTH_HEADER, REFRESH_TOKEN_REQUESTED} from '@shared/constants';
+import {catchError, switchMap, throwError} from 'rxjs';
 
 export const refreshTokenInterceptor: HttpInterceptorFn = (req, next) => {
   // todo: move to a service

@@ -1,53 +1,29 @@
-.container {
+:host {
+  background: var(--background-gradient-100);
   display: flex;
-  height: 100%;
-}
-
-.calendar-view {
-  flex: 1;
-  margin: 20px;
-  /* margin-bottom: 0; */
-  background-color: var(--background-secondary);
-  display: block;
   flex-direction: column;
-  overflow-y: auto;
-  /* border-bottom: 1px solid gray; */
-  border-right: 1px solid gray;
+  overflow-y: scroll;
+  border-right: 1px solid var(--border-primary);
 }
 
-.calendar-header {
+header {
   height: 2rem;
   padding: 5px;
-  border-bottom: 1px solid gray;
+  border-bottom: 1px solid var(--border-primary);
   display: flex;
   flex-direction: row;
-  /* justify-content: center; */
   align-items: center;
 }
 
-.calendar-header ::ng-deep app-home-calendar-header {
-  width: 100%;
-  height: 100%;
-  display: flex;
-}
-
-.calendar-main {
+main {
   flex: 1;
   padding-top: 0;
   display: flex;
   flex-direction: column;
 }
 
-.sidebar-view {
-  width: 20%;
-  margin: 20px;
-  margin-left: 0;
-  background-color: var(--background-secondary);
-  display: flex;
-}
-
 dialog {
-  background-color: var(--background-secondary);
+  background-color: var(--background-tertiary);
   border: var(--dialog-border);
   border-radius: 10px;
 }

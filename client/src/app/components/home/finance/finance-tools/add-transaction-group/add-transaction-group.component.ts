@@ -1,17 +1,12 @@
-import { Component, inject, input, output } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { FormFieldComponent } from '@shared/form-field/form-field.component';
-import { TransactionGroup } from '@shared/types';
+import {Component, input, output} from '@angular/core';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators,} from '@angular/forms';
+import {MatButtonModule} from '@angular/material/button';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatIconModule} from '@angular/material/icon';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {FormFieldComponent} from '@shared/form-field/form-field.component';
+import {TransactionGroup} from '@shared/types';
 
 @Component({
   selector: 'app-home-finance-tools-add-transaction-group',

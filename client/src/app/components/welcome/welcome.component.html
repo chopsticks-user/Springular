@@ -1,30 +1,26 @@
-<div class="container">
-  <main class="main-container">
-    <h1 class="welcome-message">Welcome to Springular!</h1>
-    <button mat-flat-button (click)="openAuthModal()">Get Started</button>
-    <dialog #authModal>
-      @if(showModal){
-      <header class="modal-header">
-        <div class="modal-header-span"></div>
-        <mat-icon matSuffix (click)="closeAuthModal()"> close </mat-icon>
-      </header>
-      <main class="modal-main">
-        @if (showLogin){
+<h1 class="welcome-message">Welcome to Springular!</h1>
+<button mat-flat-button (click)="openAuthModal()">Get Started</button>
+<dialog #authModal>
+  @if (showModal) {
+    <header class="modal-header">
+      <div class="modal-header-span"></div>
+      <mat-icon matSuffix (click)="closeAuthModal()"> close</mat-icon>
+    </header>
+    <main class="modal-main">
+      @if (showLogin) {
         <app-login></app-login>
-        }@else {
+      } @else {
         <app-signup></app-signup>
-        }
-      </main>
-      <footer class="modal-footer">
-        @if (showLogin){
+      }
+    </main>
+    <footer class="modal-footer">
+      @if (showLogin) {
         <p>New to Springular?</p>
         <a (click)="showLogin = !showLogin"><p>Sign up</p></a>
-        }@else {
+      } @else {
         <p>Already have an account?</p>
         <a (click)="showLogin = !showLogin"><p>Sign in</p></a>
-        }
-      </footer>
       }
-    </dialog>
-  </main>
-</div>
+    </footer>
+  }
+</dialog>

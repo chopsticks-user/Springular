@@ -4,28 +4,17 @@
   --button-background-color: var(--foreground-primary);
   --button-width: 100px;
   --button-margin: 10px;
-  --text-color: var(--foreground-light);
+  --text-color: var(--foreground-quinary);
   --button-shadow: var(--shadow-primary);
-  --dialog-background: var(--background-secondary);
   --dialog-border: 1px solid var(--border-secondary);
-}
 
-.container {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
 
-.main-container {
+  background: var(--background-gradient-100);
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   height: 100%;
-}
-
-.welcome-message {
-  color: var(--text-color);
 }
 
 .modal-header {
@@ -44,15 +33,6 @@
   align-items: center;
 }
 
-.mat-icon {
-  color: var(--text-color);
-}
-
-a,
-p {
-  color: var(--text-color);
-}
-
 a {
   text-decoration: underline;
   cursor: pointer;
@@ -63,7 +43,6 @@ p {
 }
 
 dialog {
-  background-color: var(--dialog-background);
   border: var(--dialog-border);
   border-radius: 10px;
 }
@@ -74,10 +53,10 @@ dialog::backdrop {
 
 dialog[open] {
   animation-duration: 0.5s;
-  animation-name: slidein;
+  animation-name: zoom-in;
 }
 
-@keyframes slidein {
+@keyframes zoom-in {
   from {
     scale: 0;
   }

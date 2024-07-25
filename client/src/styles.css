@@ -1,29 +1,36 @@
-@import "@angular/cdk/overlay-prebuilt.css";
-
 :root {
+  --background-primary: #1d1d1f;
+  --background-secondary: #242425;
+  --background-tertiary: #343434;
+  --background-quaternary: #e2d8d8;
+  --background-quinary: #e2d8d8;
+  --background-gradient-100: linear-gradient(
+    110.6deg, rgb(76, 49, 58) -18.3%,
+    rgb(67, 54, 74) 16.4%,
+    rgb(47, 48, 67) 68.2%,
+    rgb(27, 23, 36) 99.1%
+  );
+
   --foreground-primary: #08090a;
   --foreground-secondary: #a3b9cc;
   --foreground-tertiary: #f4faff;
   --foreground-quaternary: #e2d8d8;
-  --foreground-light: #e2d8d8;
+  --foreground-quinary: #f2f5ff;
 
-  --background-primary: #0f0f11;
-  --background-secondary: #151719;
-  --background-tertiary: #08090a;
-  --background-light: #41474d;
+  --typography-primary: #f2f5ff;
+  --typography-secondary: #ffffffb3;
+  --typography-tertiary: #6cb4ee;
+  --typography-quaternary: #6cb4ee;
 
-  --border-primary: #a3b9cc;
+  --static-blue-accent: blue;
+  --static-green-accent: green;
+  --static-red-accent: red;
+  --static-gray-accent: dimgray;
+
+  --border-primary: dimgray;
   --border-secondary: #921e1e;
 
   --shadow-primary: 0 1px 3px 0 rgba(8, 9, 10, 0.5);
-
-  --error-primary: #ef3e36;
-  --error-dark: #921e1e;
-  --error-light: #ffcecc;
-}
-
-.cdk-overlay-container {
-  z-index: 1200 !important;
 }
 
 html,
@@ -35,13 +42,12 @@ body {
 body {
   background: var(--background-primary);
   overflow: hidden;
-}
-
-html,
-body {
-  height: 100%;
-}
-body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  color: var(--typography-primary);
+}
+
+dialog {
+  background-color: var(--background-primary);
+  color: var(--typography-primary);
 }

@@ -1,15 +1,15 @@
-import { Routes } from '@angular/router';
-import { WelcomeComponent } from '@components/welcome/welcome.component';
-import { HomeComponent } from '@components/home/home.component';
-import { authorizedGuard } from '@guards/authorized.guard';
-import { PageNotFoundComponent } from '@components/page-not-found/page-not-found.component';
-import { CalendarComponent } from '@components/home/calendar/calendar.component';
-import { FinanceComponent } from '@components/home/finance/finance.component';
-import { DashboardComponent } from '@components/home/dashboard/dashboard.component';
-import { ContactsComponent } from '@components/home/contacts/contacts.component';
-import { ProfileComponent } from '@components/home/profile/profile.component';
-import { SettingsComponent } from '@components/home/settings/settings.component';
-import { FaqComponent } from '@components/home/faq/faq.component';
+import {Routes} from '@angular/router';
+import {WelcomeComponent} from '@components/welcome/welcome.component';
+import {HomeComponent} from '@components/home/home.component';
+import {authorizedGuard} from '@guards/authorized.guard';
+import {PageNotFoundComponent} from '@components/page-not-found/page-not-found.component';
+import {CalendarComponent} from '@components/home/calendar/calendar.component';
+import {FinanceComponent} from '@components/home/finance/finance.component';
+import {DashboardComponent} from '@components/home/dashboard/dashboard.component';
+import {ContactsComponent} from '@components/home/contacts/contacts.component';
+import {ProfileComponent} from '@components/home/profile/profile.component';
+import {SettingsComponent} from '@components/home/settings/settings.component';
+import {FaqComponent} from '@components/home/faq/faq.component';
 
 export const routes: Routes = [
   { path: '', component: WelcomeComponent },

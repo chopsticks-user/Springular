@@ -1,21 +1,21 @@
-@if(name()){
-<header>
-  <p>{{ name() }}</p>
-</header>
+@if (name()) {
+  <header>
+    <p>{{ name() }}</p>
+  </header>
 }
 <main>
-  @for(item of items(); track $index){ @let isSelected = isSelectedItem(item);
-  <div
-    class="item"
-    (click)="onItemClicked(item)"
-    [ngStyle]="{ color: isSelected ? '#6cb4ee' : 'var(--foreground-light)' }"
-  >
-    <div class="item-icon">
-      <mat-icon matSuffix>{{ item.icon }}</mat-icon>
+  @for (item of items(); track $index) {
+    @let isSelected = isSelectedItem(item);
+    <div
+      [ngClass]="['item', isSelected ? 'item-selected': 'item-normal']"
+      (click)="onItemClicked(item)"
+    >
+      <div class="item-icon">
+        <mat-icon matSuffix>{{ item.icon }}</mat-icon>
+      </div>
+      <div class="item-name">
+        <p>{{ item.name }}</p>
+      </div>
     </div>
-    <div class="item-name">
-      <p>{{ item.name }}</p>
-    </div>
-  </div>
   }
 </main>

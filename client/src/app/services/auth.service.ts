@@ -1,9 +1,9 @@
-import { HttpClient, HttpContext, HttpResponse } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
-import { LoginInfo, SignupInfo, JwtToken, JwtTokenPack } from '@shared/types';
-import { JwtKeeperService } from './jwt-keeper.service';
-import { BYPASS_AUTH_HEADER } from '@shared/constants';
-import { BehaviorSubject, finalize, Observable, tap } from 'rxjs';
+import {HttpClient, HttpContext, HttpResponse} from '@angular/common/http';
+import {inject, Injectable} from '@angular/core';
+import {JwtToken, JwtTokenPack, LoginInfo, SignupInfo} from '@shared/types';
+import {JwtKeeperService} from './jwt-keeper.service';
+import {BYPASS_AUTH_HEADER} from '@shared/constants';
+import {BehaviorSubject, finalize, Observable, tap} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

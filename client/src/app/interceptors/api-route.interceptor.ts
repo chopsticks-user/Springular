@@ -1,6 +1,6 @@
-import { HttpInterceptorFn } from '@angular/common/http';
-import { inject } from '@angular/core';
-import { ApiRouteService } from '@services/api-route.service';
+import {HttpInterceptorFn} from '@angular/common/http';
+import {inject} from '@angular/core';
+import {ApiRouteService} from '@services/api-route.service';
 
 export const apiRouteInterceptor: HttpInterceptorFn = (req, next) => {
   return next(

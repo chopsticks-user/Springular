@@ -1,0 +1,17 @@
+:host {
+  display: block;
+  height: 30px;
+  margin-bottom: 5px;
+}
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 30px;
+  color: var(--foreground-quinary);
+  /*background-color: gray;*/
+  background-color: #312d2a;
+  /*background-color: #161513;*/
+}
