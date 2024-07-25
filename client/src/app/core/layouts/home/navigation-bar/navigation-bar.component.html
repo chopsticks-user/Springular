@@ -1,0 +1,12 @@
+<header>
+  <app-home-navigation-bar-user/>
+</header>
+<main>
+  @for (section of sections; track $index) {
+    <app-home-navigation-bar-section
+      [name]="section.name"
+      [items]="section.items"
+    />
+  }
+</main>
+<footer></footer>

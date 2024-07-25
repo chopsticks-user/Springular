@@ -1,34 +1,67 @@
 import {Routes} from '@angular/router';
-import {WelcomeComponent} from '@components/welcome/welcome.component';
-import {HomeComponent} from '@components/home/home.component';
-import {authorizedGuard} from '@guards/authorized.guard';
-import {PageNotFoundComponent} from '@components/page-not-found/page-not-found.component';
-import {CalendarComponent} from '@components/home/calendar/calendar.component';
-import {FinanceComponent} from '@components/home/finance/finance.component';
-import {DashboardComponent} from '@components/home/dashboard/dashboard.component';
-import {ContactsComponent} from '@components/home/contacts/contacts.component';
-import {ProfileComponent} from '@components/home/profile/profile.component';
-import {SettingsComponent} from '@components/home/settings/settings.component';
-import {FaqComponent} from '@components/home/faq/faq.component';
+import {WelcomeComponent} from "@features/welcome/welcome.component";
+import {HomeComponent} from "@features/home/home.component";
+import {authorizedGuard} from "@core/providers/authorized.guard";
+import {DashboardComponent} from "@features/home/dashboard/dashboard.component";
+import {ProfileComponent} from "@features/home/settings/profile/profile.component";
+import {CalendarComponent} from "@features/home/calendar/calendar.component";
+import {FinanceComponent} from "@features/home/finance/finance.component";
+import {ContactsComponent} from "@features/home/contacts/contacts.component";
+import {SettingsComponent} from "@features/home/settings/settings.component";
+import {FaqComponent} from "@features/home/faq/faq.component";
+import {PageNotFoundComponent} from "@features/page-not-found/page-not-found.component";
+import {LoginComponent} from "@features/auth/login/login.component";
+import {SignupComponent} from "@features/auth/signup/signup.component";
+import {ThemesComponent} from "@features/home/settings/themes/themes.component";
+import {LanguagesComponent} from "@features/home/settings/languages/languages.component";
+import {AuthComponent} from "@features/auth/auth.component";
 
 export const routes: Routes = [
-  { path: '', component: WelcomeComponent },
-  { path: 'login', redirectTo: '' },
-  { path: 'signup', redirectTo: '' },
+  {
+    path: '',
+    children: [
+      {
+        path: '',
+        component: WelcomeComponent,
+      },
+      {
+        path: 'welcome',
+        component: WelcomeComponent,
+      },
+    ],
+  },
+  {
+    path: 'auth',
+    component: AuthComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'login',
+        pathMatch: 'prefix',
+      },
+      {
+        path: 'login',
+        component: LoginComponent,
+      },
+      {
+        path: 'signup',
+        component: SignupComponent,
+      },
+    ],
+  },
   {
     path: 'home',
     component: HomeComponent,
     canActivate: [authorizedGuard],
     children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'prefix' },
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'prefix',
+      },
       {
         path: 'dashboard',
         component: DashboardComponent,
-        canActivate: [authorizedGuard],
-      },
-      {
-        path: 'profile',
-        component: ProfileComponent,
         canActivate: [authorizedGuard],
       },
       {
@@ -50,6 +83,23 @@ export const routes: Routes = [
         path: 'settings',
         component: SettingsComponent,
         canActivate: [authorizedGuard],
+        children: [
+          {
+            path: 'profile',
+            component: ProfileComponent,
+            canActivate: [authorizedGuard],
+          },
+          {
+            path: 'themes',
+            component: ThemesComponent,
+            canActivate: [authorizedGuard],
+          },
+          {
+            path: 'languages',
+            component: LanguagesComponent,
+            canActivate: [authorizedGuard],
+          },
+        ],
       },
       {
         path: 'faq',
@@ -58,5 +108,5 @@ export const routes: Routes = [
       },
     ],
   },
-  { path: '**', component: PageNotFoundComponent },
+  {path: '**', component: PageNotFoundComponent},
 ];
