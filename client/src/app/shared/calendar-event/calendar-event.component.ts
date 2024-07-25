@@ -1,7 +1,6 @@
-import { AsyncPipe } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CalendarEvent } from '@shared/types';
-import { Observable } from 'rxjs';
+import {AsyncPipe} from '@angular/common';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {CalendarEvent} from '@shared/types';
 
 @Component({
   selector: 'app-shared-calendar-event',

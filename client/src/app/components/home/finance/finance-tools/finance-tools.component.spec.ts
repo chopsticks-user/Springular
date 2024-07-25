@@ -1,7 +1,3 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { FinanceToolsComponent } from './finance-tools.component';
-
 // describe('FinanceToolsComponent', () => {
 //   let component: FinanceToolsComponent;
 //   let fixture: ComponentFixture<FinanceToolsComponent>;

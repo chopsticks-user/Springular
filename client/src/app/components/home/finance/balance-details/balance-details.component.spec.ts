@@ -1,7 +1,3 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { BalanceDetailsComponent } from './balance-details.component';
-
 // describe('BalanceDetailsComponent', () => {
 //   let component: BalanceDetailsComponent;
 //   let fixture: ComponentFixture<BalanceDetailsComponent>;

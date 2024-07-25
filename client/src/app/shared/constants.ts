@@ -1,4 +1,4 @@
-import { HttpContextToken } from '@angular/common/http';
+import {HttpContextToken} from '@angular/common/http';
 
 export const BYPASS_AUTH_HEADER = new HttpContextToken<boolean>(() => false);
 

@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { JwtToken, JwtTokenPack } from '@shared/types';
+import {Injectable} from '@angular/core';
+import {JwtToken, JwtTokenPack} from '@shared/types';
 
 @Injectable({
   providedIn: 'root',

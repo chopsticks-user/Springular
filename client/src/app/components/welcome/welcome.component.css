@@ -4,7 +4,7 @@
   --button-background-color: var(--foreground-primary);
   --button-width: 100px;
   --button-margin: 10px;
-  --text-color: var(--foreground-light);
+  --text-color: var(--foreground-quinary);
   --button-shadow: var(--shadow-primary);
   --dialog-background: var(--background-secondary);
   --dialog-border: 1px solid var(--border-secondary);

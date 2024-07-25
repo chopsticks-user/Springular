@@ -1,7 +1,7 @@
-import { Component, ElementRef, output, ViewChild } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
-import { AddTransactionComponent } from './add-transaction/add-transaction.component';
-import { AddTransactionGroupComponent } from './add-transaction-group/add-transaction-group.component';
+import {Component, ElementRef, output, ViewChild} from '@angular/core';
+import {MatIconModule} from '@angular/material/icon';
+import {AddTransactionComponent} from './add-transaction/add-transaction.component';
+import {AddTransactionGroupComponent} from './add-transaction-group/add-transaction-group.component';
 
 @Component({
   selector: 'app-home-finance-tools',

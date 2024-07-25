@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
-import { Transaction, TransactionGroup } from '@shared/types';
-import { DateTime } from 'luxon';
-import { BehaviorSubject, filter, map, Observable, zip } from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {inject, Injectable} from '@angular/core';
+import {Transaction, TransactionGroup} from '@shared/types';
+import {DateTime} from 'luxon';
+import {BehaviorSubject, map, Observable, zip} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

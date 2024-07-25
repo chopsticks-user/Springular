@@ -31,6 +31,18 @@ main {
   height: 25px;
 }
 
+.item-normal {
+  color: var(--typography-secondary);
+}
+
+.item-normal:hover {
+  color: var(--typography-primary);
+}
+
+.item-selected {
+  color: var(--typography-quaternary);
+}
+
 .item-icon {
   display: flex;
   justify-content: center;

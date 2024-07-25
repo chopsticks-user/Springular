@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { CalendarWeekDay } from '@shared/types';
-import { DateTime, Info } from 'luxon';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {CalendarWeekDay} from '@shared/types';
+import {DateTime, Info} from 'luxon';
+import {BehaviorSubject, map, Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

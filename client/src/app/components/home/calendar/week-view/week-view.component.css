@@ -16,7 +16,7 @@
   flex-direction: column;
   /* justify-content: center; */
   align-items: center;
-  border-left: 1px solid gray;
+  border-left: 1px solid var(--border-primary);
 }
 
 .day-of-month {
@@ -26,13 +26,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: green;
+  background-color: var(--static-green-accent);
   margin-bottom: 5px;
   border-radius: 10000px;
-}
-
-p {
-  color: var(--foreground-light);
 }
 
 .day-of-week-text {
@@ -57,12 +53,11 @@ p {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  border-top: 1px solid gray;
+  border-top: 1px solid var(--border-primary);
   border-bottom: 1px hidden;
 }
 
 .time-text {
-  color: var(--foreground-light);
   font-size: small;
 }
 
@@ -74,13 +69,13 @@ p {
 
 .week-day-view {
   flex: 1;
-  border-left: 1px solid gray; /* variable */
+  border-left: 1px solid var(--border-primary); /* variable */
 }
 
 .hour {
   height: 50px; /* variable */
   display: flex;
-  border-top: 1px solid gray;
+  border-top: 1px solid var(--border-primary);
   padding-right: 10px;
   overflow-y: visible;
   /* cursor: pointer; */

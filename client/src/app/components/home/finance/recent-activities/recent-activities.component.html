@@ -1,2 +1,8 @@
 <header></header>
-<main></main>
+<main>
+  @for (transaction of transactions; track transaction.id) {
+    <app-home-finance-recent-activities-transaction
+      [transaction]="transaction"
+    />
+  }
+</main>

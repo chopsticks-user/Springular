@@ -1,6 +1,6 @@
 :host {
   --prompt-border: 1px solid var(--border-secondary);
-  --text-color: var(--foreground-light);
+  --text-color: var(--foreground-quinary);
 }
 
 .container {

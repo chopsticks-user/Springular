@@ -1,10 +1,10 @@
-import { AsyncPipe } from '@angular/common';
-import { Component, inject, output } from '@angular/core';
-import { MatIcon } from '@angular/material/icon';
-import { CalendarWeekViewComponent } from '../week-view/week-view.component';
-import { DateTime } from 'luxon';
-import { Observable } from 'rxjs';
-import { DateTimeService } from '@services/date-time.service';
+import {AsyncPipe} from '@angular/common';
+import {Component, inject, output} from '@angular/core';
+import {MatIcon} from '@angular/material/icon';
+import {CalendarWeekViewComponent} from '../week-view/week-view.component';
+import {DateTime} from 'luxon';
+import {Observable} from 'rxjs';
+import {DateTimeService} from '@services/date-time.service';
 
 @Component({
   selector: 'app-home-calendar-header',

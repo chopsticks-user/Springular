@@ -1,7 +1,3 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { CalendarWeekViewComponent } from './week-view.component';
-
 // describe('CalendarWeekViewComponent', () => {
 //   let component: CalendarWeekViewComponent;
 //   let fixture: ComponentFixture<CalendarWeekViewComponent>;

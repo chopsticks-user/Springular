@@ -1,7 +1,7 @@
-import { HttpInterceptorFn } from '@angular/common/http';
-import { inject } from '@angular/core';
-import { AuthService } from '@services/auth.service';
-import { BYPASS_AUTH_HEADER } from '@shared/constants';
+import {HttpInterceptorFn} from '@angular/common/http';
+import {inject} from '@angular/core';
+import {AuthService} from '@services/auth.service';
+import {BYPASS_AUTH_HEADER} from '@shared/constants';
 
 export const authHeaderInterceptor: HttpInterceptorFn = (req, next) => {
   if (req.context.get(BYPASS_AUTH_HEADER) === true) {

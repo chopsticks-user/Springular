@@ -1,18 +1,12 @@
-import {
-  Component,
-  ElementRef,
-  inject,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import { CalendarWeekViewComponent } from './week-view/week-view.component';
-import { CalendarHeaderComponent } from './header/header.component';
-import { CalendarEventEditorComponent } from '@shared/calendar-event-editor/calendar-event-editor.component';
-import { CalendarEvent, EventEditorTypes } from '@shared/types';
-import { AsyncPipe } from '@angular/common';
-import { MatIcon } from '@angular/material/icon';
-import { CalendarEventsService } from '@services/calendar-events.service';
-import { DateTimeService } from '@services/date-time.service';
+import {Component, ElementRef, inject, OnInit, ViewChild,} from '@angular/core';
+import {CalendarWeekViewComponent} from './week-view/week-view.component';
+import {CalendarHeaderComponent} from './header/header.component';
+import {CalendarEventEditorComponent} from '@shared/calendar-event-editor/calendar-event-editor.component';
+import {CalendarEvent, EventEditorTypes} from '@shared/types';
+import {AsyncPipe} from '@angular/common';
+import {MatIcon} from '@angular/material/icon';
+import {CalendarEventsService} from '@services/calendar-events.service';
+import {DateTimeService} from '@services/date-time.service';
 
 @Component({
   selector: 'app-home-calendar',

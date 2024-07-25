@@ -3,7 +3,7 @@
     <mat-form-field appearance="outline" color="primary">
       <mat-label>Title</mat-label>
       <input
-        style="color: var(--foreground-light)"
+        style="color: var(--foreground-quinary)"
         formControlName="title"
         matInput
       />
@@ -14,7 +14,7 @@
     <mat-form-field appearance="outline" color="primary">
       <mat-label>Description</mat-label>
       <input
-        style="color: var(--foreground-light)"
+        style="color: var(--foreground-quinary)"
         formControlName="description"
         matInput
       />
@@ -25,7 +25,7 @@
     <mat-form-field appearance="outline" color="primary">
       <mat-label>Start</mat-label>
       <input
-        style="color: var(--foreground-light)"
+        style="color: var(--foreground-quinary)"
         formControlName="start"
         matInput
         type="datetime-local"
@@ -36,7 +36,7 @@
     <mat-form-field appearance="outline" color="primary">
       <mat-label>Duration (minutes)</mat-label>
       <input
-        style="color: var(--foreground-light)"
+        style="color: var(--foreground-quinary)"
         formControlName="duration"
         matInput
       />
@@ -47,7 +47,7 @@
     <mat-form-field appearance="outline" color="primary">
       <mat-label>Color</mat-label>
       <input
-        style="color: var(--foreground-light)"
+        style="color: var(--foreground-quinary)"
         formControlName="color"
         matInput
         type="color"
@@ -59,7 +59,7 @@
     <mat-form-field appearance="outline" color="primary">
       <mat-label>Repeat</mat-label>
       <select
-        style="color: var(--foreground-light)"
+        style="color: var(--foreground-quinary)"
         formControlName="repeat"
         matNativeControl
       >
@@ -73,44 +73,44 @@
       <mat-icon matSuffix>event_repeat</mat-icon>
     </mat-form-field>
   </p>
-  @if(repeatEveryEnabled$ | async){
-  <p>
-    <mat-form-field appearance="outline" color="primary">
-      <mat-label>Repeat every</mat-label>
-      <div style="display: flex">
-        <input
-          style="color: var(--foreground-light)"
-          matInput
-          formControlName="repeatEveryValue"
-        />
-        <select
-          style="color: var(--foreground-light)"
-          formControlName="repeatEveryUnit"
-          matNativeControl
-        >
-          <option>days</option>
-          <option>weeks</option>
-          <option>months</option>
-          <option>years</option>
-        </select>
-      </div>
-      <mat-icon matSuffix>repeat</mat-icon>
-    </mat-form-field>
-  </p>
+  @if (repeatEveryEnabled$ | async) {
+    <p>
+      <mat-form-field appearance="outline" color="primary">
+        <mat-label>Repeat every</mat-label>
+        <div style="display: flex">
+          <input
+            style="color: var(--foreground-quinary)"
+            matInput
+            formControlName="repeatEveryValue"
+          />
+          <select
+            style="color: var(--foreground-quinary)"
+            formControlName="repeatEveryUnit"
+            matNativeControl
+          >
+            <option>days</option>
+            <option>weeks</option>
+            <option>months</option>
+            <option>years</option>
+          </select>
+        </div>
+        <mat-icon matSuffix>repeat</mat-icon>
+      </mat-form-field>
+    </p>
   }
   <div class="button-container">
     <button mat-flat-button (click)="submitEvent()">Submit</button>
     <button mat-flat-button (click)="$cancelButtonClicked.emit()" type="button">
       Cancel
     </button>
-    @if(type === "edit" && calendarEvent){
-    <button
-      mat-flat-button
-      (click)="$deleteButtonClicked.emit(calendarEvent)"
-      type="button"
-    >
-      Delete
-    </button>
+    @if (type === "edit" && calendarEvent) {
+      <button
+        mat-flat-button
+        (click)="$deleteButtonClicked.emit(calendarEvent)"
+        type="button"
+      >
+        Delete
+      </button>
     }
   </div>
 </form>

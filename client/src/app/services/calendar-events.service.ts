@@ -1,8 +1,8 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
-import { CalendarEvent, CalendarWeekDay } from '@shared/types';
-import { DateTime, Info } from 'luxon';
-import { BehaviorSubject, map, Observable, tap } from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {inject, Injectable} from '@angular/core';
+import {CalendarEvent} from '@shared/types';
+import {DateTime} from 'luxon';
+import {BehaviorSubject, Observable, tap} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

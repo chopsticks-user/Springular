@@ -1,10 +1,10 @@
-import { Component, inject, Input, output } from '@angular/core';
-import { CalendarEvent, CalendarWeekDay } from '@shared/types';
-import { CalendarEventComponent } from '@shared/calendar-event/calendar-event.component';
-import { Observable } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
-import { MatIcon } from '@angular/material/icon';
-import { DateTimeService } from '@services/date-time.service';
+import {Component, inject, Input, output} from '@angular/core';
+import {CalendarEvent, CalendarWeekDay} from '@shared/types';
+import {CalendarEventComponent} from '@shared/calendar-event/calendar-event.component';
+import {Observable} from 'rxjs';
+import {AsyncPipe} from '@angular/common';
+import {MatIcon} from '@angular/material/icon';
+import {DateTimeService} from '@services/date-time.service';
 
 @Component({
   selector: 'app-home-calendar-week-view',
