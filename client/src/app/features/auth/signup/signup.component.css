@@ -1,18 +1,101 @@
 :host {
-  display: flex;
+  display: block;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 20px;
-  border: 1px solid var(--border-primary);
-  border-radius: 20px;
-  background-color: var(--background-primary);
-  box-shadow: 0 1px 3px 0 rgba(200, 200, 200, 0.5);
 }
 
-.submit-container {
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+header > h3 {
+  text-transform: uppercase;
+}
+
+main {
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+form {
+  width: 50%;
+}
+
+form > div {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  background-color: var(--background-tertiary);
+}
+
+form div > input {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+  background-color: transparent;
+  color: var(--typography-primary);
+}
+
+form div > mat-icon {
+  color: var(--static-green-accent);
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+main > div {
+  width: 50%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+main > div > button {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  width: 100%;
+  background-color: var(--static-green-accent);
+  border: 0;
+  padding: 15px;
+  color: var(--typography-primary);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+main > div > p {
+  color: var(--typography-primary);
+  font-size: small;
+}
+
+footer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+footer > p:not(.separator) {
+  font-size: small;
+}
+
+.link {
+  cursor: pointer;
+  color: var(--typography-quaternary);
+}
+
+footer > span {
+  width: 5px;
 }

@@ -1,50 +1,41 @@
-<form [formGroup]="loginFormGroup" (submit)="loginHandler()">
-  <p>
-    <mat-form-field appearance="outline">
-      <mat-label>Email</mat-label>
+<header>
+  <h3>log in</h3>
+</header>
+<main>
+  <form [formGroup]="formGroup">
+    <div>
       <input
-        style="color: var(--text-color)"
-        formControlName="email"
         type="email"
-        matInput
-      />
-      <mat-icon matSuffix>mail</mat-icon>
-      @if (emailInvalid) {
-        <mat-hint style="color: var(--text-color)">
-          {{
-            email?.hasError("required") ? "Email is required" : "Invalid email"
-          }}
-        </mat-hint>
-      }
-    </mat-form-field>
-  </p>
-  <p>
-    <mat-form-field appearance="outline">
-      <mat-label>Password</mat-label>
+        formControlName="email"
+        placeholder="email"
+      >
+      <mat-icon>mail</mat-icon>
+    </div>
+    <div>
       <input
-        matInput
         [type]="hidePassword ? 'password' : 'text'"
         formControlName="password"
-        style="color: var(--text-color)"
-      />
-      <mat-icon matSuffix (click)="hidePassword = !hidePassword">
+        placeholder="password"
+      >
+      <mat-icon
+        (click)="hidePassword = !hidePassword"
+        style="cursor: pointer"
+      >
         {{ hidePassword ? "visibility_off" : "visibility" }}
       </mat-icon>
-      @if (passwordInvalid) {
-        <mat-hint style="color: var(--text-color)">
-          {{
-            password?.hasError("required")
-              ? "Password is required"
-              : "Insufficient password length"
-          }}
-        </mat-hint>
-      }
-    </mat-form-field>
-  </p>
-  <div class="submit-container">
-    <p style="color: var(--text-color); font-size: small">
-      {{ loginStatus || "" }}
-    </p>
-    <button mat-flat-button type="submit">Sign In</button>
+    </div>
+  </form>
+  <div>
+    <p>{{ status || "" }}</p>
+    <button (click)="loginHandler()">Log In</button>
   </div>
-</form>
+</main>
+<footer>
+  <p>Don't have an account?</p>
+  <span></span>
+  <p class="link" (click)="navigateToSignUp()">Sign up</p>
+  <span></span>
+  <p class="separator">|</p>
+  <span></span>
+  <p class="link" (click)="navigateToResetPassword()">Reset password</p>
+</footer>

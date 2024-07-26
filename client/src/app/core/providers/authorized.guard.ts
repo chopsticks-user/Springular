@@ -19,14 +19,14 @@ export const authorizedGuard: CanActivateFn = (route, state) => {
 
       const verifyResponse$ = authService.verify();
       if (!verifyResponse$) {
-        router.navigateByUrl('/');
+        void router.navigateByUrl('/auth/login');
         return of(false);
       }
 
       return verifyResponse$.pipe(
         map(() => true),
         catchError(() => {
-          router.navigateByUrl('/');
+          void router.navigateByUrl('/auth/login');
           return of(false);
         })
       );

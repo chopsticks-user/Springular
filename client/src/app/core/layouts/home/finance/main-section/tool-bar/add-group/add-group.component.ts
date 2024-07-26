@@ -5,7 +5,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
-import {FormFieldComponent} from '@shared/ui/form-field/form-field.component';
+import {FieldComponent} from '@core/layouts/form/field/field.component';
 import {TransactionGroup} from '@shared/domain/types';
 
 @Component({
@@ -18,7 +18,7 @@ import {TransactionGroup} from '@shared/domain/types';
     MatIconModule,
     MatSelectModule,
     MatButtonModule,
-    FormFieldComponent,
+    FieldComponent,
   ],
   templateUrl: './add-group.component.html',
   styleUrl: './add-group.component.css',

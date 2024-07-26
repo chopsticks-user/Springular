@@ -1,29 +1,22 @@
 import {Component, inject} from '@angular/core';
-import {Router} from '@angular/router';
-import {MatButtonModule} from '@angular/material/button';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {MatIconModule} from '@angular/material/icon';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators,} from '@angular/forms';
-import {AuthService} from '@shared/services/auth.service';
-import {LoginInfo} from '@shared/domain/types';
-import {HttpErrorResponse} from '@angular/common/http';
+import {MatIcon} from "@angular/material/icon";
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {AuthService} from "@shared/services/auth.service";
+import {Router} from "@angular/router";
+import {LoginInfo} from "@shared/domain/types";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-reset-password',
   standalone: true,
   imports: [
-    MatFormFieldModule,
-    MatInputModule,
-    FormsModule,
-    MatButtonModule,
-    ReactiveFormsModule,
-    MatIconModule,
+    MatIcon,
+    ReactiveFormsModule
   ],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
+  templateUrl: './reset-password.component.html',
+  styleUrl: './reset-password.component.css'
 })
-export class LoginComponent {
+export class ResetPasswordComponent {
   private _authService = inject(AuthService);
   private _router = inject(Router);
 
@@ -45,7 +38,7 @@ export class LoginComponent {
     void this._router.navigateByUrl('/auth/reset-password');
   }
 
-  public loginHandler() {
+  public resetPasswordHandler() {
     if (this.formGroup.invalid) {
       this.formGroup.markAllAsTouched();
       return;

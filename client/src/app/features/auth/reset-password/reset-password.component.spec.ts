@@ -1,18 +1,18 @@
-// describe('FormFieldComponent', () => {
-//   let component: FormFieldComponent;
-//   let fixture: ComponentFixture<FormFieldComponent>;
-
+// describe('ResetPasswordComponent', () => {
+//   let component: ResetPasswordComponent;
+//   let fixture: ComponentFixture<ResetPasswordComponent>;
+//
 //   beforeEach(async () => {
 //     await TestBed.configureTestingModule({
-//       imports: [FormFieldComponent]
+//       imports: [ResetPasswordComponent]
 //     })
 //     .compileComponents();
-
-//     fixture = TestBed.createComponent(FormFieldComponent);
+//
+//     fixture = TestBed.createComponent(ResetPasswordComponent);
 //     component = fixture.componentInstance;
 //     fixture.detectChanges();
 //   });
-
+//
 //   it('should create', () => {
 //     expect(component).toBeTruthy();
 //   });

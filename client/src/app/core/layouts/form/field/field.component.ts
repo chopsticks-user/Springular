@@ -5,7 +5,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 
 @Component({
-  selector: 'app-shared-form-field',
+  selector: 'app-layout-form-field',
   standalone: true,
   imports: [
     ReactiveFormsModule,
@@ -13,10 +13,10 @@ import {MatInputModule} from '@angular/material/input';
     MatInputModule,
     MatIconModule,
   ],
-  templateUrl: './form-field.component.html',
-  styleUrl: './form-field.component.css',
+  templateUrl: './field.component.html',
+  styleUrl: './field.component.css',
 })
-export class FormFieldComponent {
+export class FieldComponent {
   public label = input.required<string>();
   public control = input.required<FormControl>();
   public type = input<string>('input');

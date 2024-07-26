@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators,} from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
@@ -23,10 +23,13 @@ import {HttpErrorResponse} from '@angular/common/http';
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css',
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent {
+  private _authService = inject(AuthService);
+  private _router = inject(Router);
+
   public hidePassword = true;
-  public signupStatus: string = '';
-  public signupFormGroup: FormGroup = new FormGroup({
+  public status: string = '';
+  public formGroup: FormGroup = new FormGroup({
     firstName: new FormControl<string>('', [Validators.required]),
     lastName: new FormControl<string>('', [Validators.required]),
     dateOfBirth: new FormControl<Date>(new Date(), [Validators.required]), // TODO: custom validator
@@ -37,75 +40,26 @@ export class SignupComponent implements OnInit {
     ]),
   });
 
-  private _authService = inject(AuthService);
-  private _router = inject(Router);
-
-  public ngOnInit(): void {
+  public navigateToLogin(): void {
+    void this._router.navigateByUrl('/auth/login');
   }
 
-  // TODO: verify input validity
-  public get firstName() {
-    return this.signupFormGroup.get('firstName');
-  }
-
-  public get firstNameInvalid() {
-    return (
-      this.firstName?.invalid &&
-      (this.firstName?.dirty || this.firstName?.touched)
-    );
-  }
-
-  public get lastName() {
-    return this.signupFormGroup.get('lastName');
-  }
-
-  public get lastNameInvalid() {
-    return (
-      this.lastName?.invalid && (this.lastName?.dirty || this.lastName?.touched)
-    );
-  }
-
-  public get dateOfBirth() {
-    return this.signupFormGroup.get('dateOfBirth');
-  }
-
-  public get dateOfBirthInvalid() {
-    return (
-      this.dateOfBirth?.invalid &&
-      (this.dateOfBirth?.dirty || this.dateOfBirth?.touched)
-    );
-  }
-
-  public get email() {
-    return this.signupFormGroup.get('email');
-  }
-
-  public get emailInvalid() {
-    return this.email?.invalid && (this.email?.dirty || this.email?.touched);
-  }
-
-  public get password() {
-    return this.signupFormGroup.get('password');
-  }
-
-  public get passwordInvalid() {
-    return (
-      this.password?.invalid && (this.password?.dirty || this.password?.touched)
-    );
+  public navigateToResetPassword(): void {
+    void this._router.navigateByUrl('/auth/reset-password');
   }
 
   public signupHandler() {
-    if (this.signupFormGroup.invalid) {
-      this.signupFormGroup.markAllAsTouched();
+    if (this.formGroup.invalid) {
+      this.formGroup.markAllAsTouched();
       return;
     }
 
     const signupInfo: SignupInfo = {
-      firstName: this.firstName?.value,
-      lastName: this.lastName?.value,
-      dateOfBirth: this.dateOfBirth?.value,
-      email: this.email?.value,
-      password: this.password?.value,
+      firstName: this.formGroup.get('firstName')?.value,
+      lastName: this.formGroup.get('lastName')?.value,
+      dateOfBirth: this.formGroup.get('dateOfBirth')?.value,
+      email: this.formGroup.get('email')?.value,
+      password: this.formGroup.get('password')?.value,
     };
 
     this._authService.register(signupInfo).subscribe({
@@ -118,12 +72,12 @@ export class SignupComponent implements OnInit {
           .subscribe({
             next: () => this._router.navigateByUrl('/home'),
             error: (error: HttpErrorResponse) =>
-              (this.signupStatus = JSON.parse(error.error)
+              (this.status = JSON.parse(error.error)
                 .description as string),
           });
       },
       error: (error: HttpErrorResponse) =>
-        (this.signupStatus = JSON.parse(error.error).description as string),
+        (this.status = JSON.parse(error.error).description as string),
     });
   }
 }

@@ -21,6 +21,6 @@ export const appConfig: ApplicationConfig = {
         authHeaderInterceptor,
         refreshTokenInterceptor,
       ])
-    ),
+    ), provideAnimationsAsync(),
   ],
 };
