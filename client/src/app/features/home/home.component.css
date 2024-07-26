@@ -12,7 +12,7 @@
   display: block;
 }
 
-app-home-header {
+app-layout-home-header {
   height: var(--header-height);
 }
 
@@ -23,7 +23,7 @@ main {
   height: calc(100% - var(--header-height));
 }
 
-app-home-navigation-bar {
+app-layout-home-navigation-bar {
   height: 100%;
   flex: 0 1 15%;
 }

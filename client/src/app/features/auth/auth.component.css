@@ -6,7 +6,7 @@
 }
 
 header {
-  flex: 0 0 2rem;
+  /*flex: 0 0 2rem;*/
 }
 
 main {
@@ -14,4 +14,27 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+main > article {
+  flex-basis: 70%;
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+app-layout-auth-form {
+  flex: 1 1 60%;
+  height: 100%;
+  background-color: var(--background-primary);
+}
+
+main > article > div {
+  flex: 1 1 40%;
+  height: 100%;
+  background: var(--background-gradient-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

@@ -15,6 +15,7 @@ import {SignupComponent} from "@features/auth/signup/signup.component";
 import {ThemesComponent} from "@features/home/settings/themes/themes.component";
 import {LanguagesComponent} from "@features/home/settings/languages/languages.component";
 import {AuthComponent} from "@features/auth/auth.component";
+import {ResetPasswordComponent} from "@features/auth/reset-password/reset-password.component";
 
 export const routes: Routes = [
   {
@@ -46,6 +47,9 @@ export const routes: Routes = [
       {
         path: 'signup',
         component: SignupComponent,
+      }, {
+        path: 'reset-password',
+        component: ResetPasswordComponent,
       },
     ],
   },

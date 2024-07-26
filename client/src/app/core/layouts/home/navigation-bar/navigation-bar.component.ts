@@ -5,7 +5,7 @@ import {SidebarSection} from '@shared/domain/types';
 import {AuthService} from '@shared/services/auth.service';
 
 @Component({
-  selector: 'app-home-navigation-bar',
+  selector: 'app-layout-home-navigation-bar',
   standalone: true,
   imports: [UserComponent, SectionComponent],
   templateUrl: './navigation-bar.component.html',
@@ -26,7 +26,7 @@ export class NavigationBarComponent {
       ],
     },
     {
-      name: 'tools',
+      name: 'tool-bar',
       items: [
         {
           name: 'calendar & events',

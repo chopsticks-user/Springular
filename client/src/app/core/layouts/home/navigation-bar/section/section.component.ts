@@ -6,7 +6,7 @@ import {SidebarItem} from '@shared/domain/types';
 import {MatSuffix} from "@angular/material/form-field";
 
 @Component({
-  selector: 'app-home-navigation-bar-section',
+  selector: 'app-layout-home-navigation-bar-section',
   standalone: true,
   imports: [MatIconModule, NgStyle, MatSuffix, NgClass],
   templateUrl: './section.component.html',

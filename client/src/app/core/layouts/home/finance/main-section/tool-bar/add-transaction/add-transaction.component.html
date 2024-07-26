@@ -1,0 +1,41 @@
+<form [formGroup]="formGroup">
+  <app-layout-form-field
+    label="Revenues"
+    [control]="formGroup.controls['revenues']"
+    icon="savings"
+    width="300px"
+  />
+  <app-layout-form-field
+    label="Expenses"
+    [control]="formGroup.controls['expenses']"
+    icon="payments"
+    width="300px"
+  />
+  <app-layout-form-field
+    label="Time"
+    [control]="formGroup.controls['time']"
+    type="datetime-local"
+    width="300px"
+  />
+  <app-layout-form-field
+    label="Note"
+    [control]="formGroup.controls['note']"
+    icon="edit_note"
+    width="300px"
+  />
+  <app-layout-form-field
+    label="Group name"
+    [control]="formGroup.controls['group']"
+    icon="tab_group"
+    type="select"
+    width="300px"
+  >
+    @for (group of availableGroups(); track group.name) {
+      <option>{{ group.name }}</option>
+    }
+  </app-layout-form-field>
+  <section>
+    <button mat-flat-button>Submit</button>
+    <button mat-flat-button (click)="onCloseModal.emit()">Cancel</button>
+  </section>
+</form>

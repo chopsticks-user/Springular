@@ -6,7 +6,7 @@ import {UserInfo} from '@shared/domain/types';
 import {Observable} from 'rxjs';
 
 @Component({
-  selector: 'app-home-navigation-bar-user',
+  selector: 'app-layout-home-navigation-bar-user',
   standalone: true,
   imports: [AsyncPipe],
   templateUrl: './user.component.html',

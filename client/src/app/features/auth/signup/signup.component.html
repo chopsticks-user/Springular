@@ -1,100 +1,64 @@
-<form [formGroup]="signupFormGroup" (submit)="signupHandler()">
-  <p>
-    <mat-form-field appearance="outline" color="primary">
-      <mat-label>First name</mat-label>
+<header>
+  <h3>sign up</h3>
+</header>
+<main>
+  <form [formGroup]="formGroup" (submit)="signupHandler()">
+    <div>
       <input
-        style="color: var(--text-color)"
+        type="text"
         formControlName="firstName"
-        matInput
+        placeholder="first Name"
       />
       <mat-icon matSuffix>badge</mat-icon>
-      @if (firstNameInvalid) {
-        <mat-hint style="color: var(--text-color)">
-          {{ "First name is required" }}
-        </mat-hint>
-      }
-    </mat-form-field>
-  </p>
-  <p>
-    <mat-form-field appearance="outline">
-      <mat-label>Last name</mat-label>
+    </div>
+    <div>
       <input
-        style="color: var(--text-color)"
+        type="text"
         formControlName="lastName"
-        matInput
+        placeholder="last name"
       />
       <mat-icon matSuffix>badge</mat-icon>
-      @if (lastNameInvalid) {
-        <mat-hint style="color: var(--text-color)">
-          {{ "Last name is required" }}
-        </mat-hint>
-      }
-    </mat-form-field>
-  </p>
-  <p>
-    <mat-form-field appearance="outline">
-      <mat-label>Date of birth</mat-label>
+    </div>
+    <div>
       <input
-        style="color: var(--text-color)"
-        formControlName="dateOfBirth"
-        matInput
         type="date"
+        formControlName="dateOfBirth"
       />
       <mat-icon matSuffix>calendar_month</mat-icon>
-      @if (dateOfBirthInvalid) {
-        <mat-hint style="color: var(--text-color)">
-          {{ "Date of birth is required" }}
-        </mat-hint>
-      }
-    </mat-form-field>
-  </p>
-  <p>
-    <mat-form-field appearance="outline">
-      <mat-label>Email</mat-label>
+    </div>
+    <div>
       <input
-        style="color: var(--text-color)"
+        type="email"
         formControlName="email"
-        matInput
-      />
-      <mat-icon matSuffix>mail</mat-icon>
-      @if (emailInvalid) {
-        <mat-hint style="color: var(--text-color)">
-          {{
-            email?.hasError("required") ? "Email is required" : "Invalid email"
-          }}
-        </mat-hint>
-      }
-    </mat-form-field>
-  </p>
-  <p>
-    <mat-form-field appearance="outline">
-      <mat-label>Password</mat-label>
+        placeholder="email"
+      >
+      <mat-icon>mail</mat-icon>
+    </div>
+    <div>
       <input
-        style="color: var(--text-color)"
-        matInput
         [type]="hidePassword ? 'password' : 'text'"
         formControlName="password"
-      />
-      <mat-icon matSuffix (click)="hidePassword = !hidePassword">
+        placeholder="password"
+      >
+      <mat-icon
+        (click)="hidePassword = !hidePassword"
+        style="cursor: pointer"
+      >
         {{ hidePassword ? "visibility_off" : "visibility" }}
       </mat-icon>
-      @if (passwordInvalid) {
-        <mat-hint style="color: var(--text-color)">
-          {{
-            password?.hasError("required")
-              ? "Password is required"
-              : "Insufficient password length"
-          }}
-        </mat-hint>
-      }
-    </mat-form-field>
-  </p>
-  <div class="submit-container">
-    @if (signupStatus && signupStatus.length > 0) {
-      <p style="color: var(--text-color); font-size: small">
-        {{ signupStatus }}
-      </p>
-    }
-    <button mat-flat-button type="submit">Sign Up</button>
+    </div>
+  </form>
+  <div>
+    <p>{{ status || "" }}</p>
+    <button (click)="signupHandler()">Sign Up</button>
   </div>
-</form>
+</main>
+<footer>
+  <p>Already have an account?</p>
+  <span></span>
+  <p class="link" (click)="navigateToLogin()">Login</p>
+  <span></span>
+  <p class="separator">|</p>
+  <span></span>
+  <p class="link" (click)="navigateToResetPassword()">Reset password</p>
+</footer>

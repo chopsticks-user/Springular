@@ -6,10 +6,24 @@
   --background-quinary: #e2d8d8;
 
   --background-gradient-100: linear-gradient(
-    110.6deg, rgb(76, 49, 58) -18.3%,
+    110.6deg,
+    rgb(76, 49, 58) -18.3%,
     rgb(67, 54, 74) 16.4%,
     rgb(47, 48, 67) 68.2%,
     rgb(27, 23, 36) 99.1%
+  );
+  --background-gradient-200: linear-gradient(
+    130deg,
+    hsl(143deg 84% 46%) 0%,
+    hsl(135deg 52% 53%) 11%,
+    hsl(133deg 35% 54%) 22%,
+    hsl(133deg 21% 53%) 33%,
+    hsl(144deg 8% 51%) 44%,
+    hsl(264deg 5% 50%) 56%,
+    hsl(285deg 16% 48%) 67%,
+    hsl(288deg 30% 44%) 78%,
+    hsl(289deg 48% 40%) 89%,
+    hsl(290deg 95% 32%) 100%
   );
 
   --foreground-primary: #08090a;
@@ -26,11 +40,11 @@
   --border-primary: dimgray;
   --border-secondary: #921e1e;
 
-  --shadow-primary: 0 1px 3px 0 rgba(200, 200, 200, 0.5);
+  --shadow-primary: 0 2px 5px 0 rgba(200, 200, 200, 0.5);
   --shadow-secondary: 0 1px 3px 0 rgba(200, 200, 200, 0.5);
 
   --static-blue-accent: blue;
-  --static-green-accent: green;
+  --static-green-accent: #4caf50;
   --static-red-accent: red;
   --static-gray-accent: dimgray;
 }

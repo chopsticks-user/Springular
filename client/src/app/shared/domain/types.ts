@@ -51,7 +51,7 @@ export type CalendarEventRepeatEveryUnit =
   (typeof calendarEventRepeatEveryUnits)[number];
 
 export interface CalendarEventRepeatEvery {
-  value: number; // interger
+  value: number;
   unit: CalendarEventRepeatEveryUnit;
 }
 
