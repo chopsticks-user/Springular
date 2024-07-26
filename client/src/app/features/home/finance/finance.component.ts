@@ -1,17 +1,18 @@
 import {Component} from '@angular/core';
-import {BalanceSummaryComponent} from './balance-summary/balance-summary.component';
-import {BalanceDetailsComponent} from './balance-details/balance-details.component';
-import {RecentActivitiesComponent} from './recent-activities/recent-activities.component';
+import {MainSectionComponent} from '@core/layouts/home/finance/main-section/main-section.component';
+import {RecentActivitiesComponent} from '@core/layouts/home/finance/recent-activities/recent-activities.component';
+import {SummarySectionComponent} from "@core/layouts/home/finance/summary-section/summary-section.component";
 
 @Component({
   selector: 'app-home-finance',
   standalone: true,
   imports: [
-    BalanceSummaryComponent,
-    BalanceDetailsComponent,
+    MainSectionComponent,
     RecentActivitiesComponent,
+    SummarySectionComponent,
   ],
   templateUrl: './finance.component.html',
   styleUrl: './finance.component.css',
 })
-export class FinanceComponent {}
+export class FinanceComponent {
+}

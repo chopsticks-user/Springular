@@ -1,7 +1,7 @@
 import {Component, ElementRef, inject, OnInit, ViewChild,} from '@angular/core';
-import {CalendarWeekViewComponent} from './week-view/week-view.component';
-import {CalendarHeaderComponent} from './header/header.component';
-import {CalendarEventEditorComponent} from '@shared/ui/calendar-event-editor/calendar-event-editor.component';
+import {CalendarWeekViewComponent} from '@core/layouts/home/calendar/week-view/week-view.component';
+import {CalendarHeaderComponent} from '@core/layouts/home/calendar/header/header.component';
+import {EditorComponent} from '@core/layouts/home/calendar/editor/editor.component';
 import {CalendarEvent, EventEditorTypes} from '@shared/domain/types';
 import {AsyncPipe} from '@angular/common';
 import {MatIcon} from '@angular/material/icon';
@@ -16,7 +16,7 @@ import {DateTimeService} from './date-time.service';
     AsyncPipe,
     MatIcon,
     CalendarHeaderComponent,
-    CalendarEventEditorComponent,
+    EditorComponent,
   ],
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.css',

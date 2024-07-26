@@ -1,0 +1,36 @@
+<div class="date-view">
+  <div class="date-view-span"></div>
+  @for (weekDay of (weekDays$ |async); track weekDay.dayOfWeek) {
+    <div class="date-label-view">
+      <p class="day-of-week-text">{{ weekDay.dayOfWeek }}</p>
+      <div class="day-of-month">
+        <p class="day-of-month-text">{{ weekDay.dayOfMonth }}</p>
+      </div>
+    </div>
+  }
+</div>
+<div class="timeline-view">
+  <div class="time-view">
+    @for (hour of hourTexts; track hour) {
+      <div class="time">
+        <p class="time-text">{{ hour }}</p>
+      </div>
+    }
+  </div>
+  <div class="week-view">
+    @for (weekDay of (weekDays$ |async); track weekDay.dayOfWeek) {
+      <div class="week-day-view">
+        @for (hour of hours; track hour) {
+          <div class="hour">
+            <app-layout-home-calendar-event
+              [events]="scheduledEvents(hour, weekDay.dayOfMonth)"
+              [pixelsPerHour]="50"
+              [borderPixelWidth]="1"
+              (eventClicked)="onEventClicked.emit($event)"
+            />
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

@@ -1,20 +1,20 @@
 <header>
-  <app-home-calendar-header (onAddEventButtonClicked)="openEventEditor()"/>
+  <app-layout-home-calendar-header (onAddEventButtonClicked)="openEventEditor()"/>
 </header>
 <main>
-  <app-home-calendar-week-view
+  <app-layout-home-calendar-week-view
     [calendarEvents]="(calendarEvents$ | async) ?? []"
     (onEventClicked)="openEventEditor($event)"
   />
   <dialog #eventEditorModal (close)="closeEventEditor()">
     @if (eventEditorVisible) {
-      <app-shared-calendar-event-editor
+      <app-layout-home-calendar-editor
         [type]="eventEditorType"
         [calendarEvent]="selectedCalendarEvent"
         ($submitButtonClicked)="submitCalendarEvent($event)"
         ($cancelButtonClicked)="closeEventEditor()"
         ($deleteButtonClicked)="deleteCalendarEvent($event)"
-      ></app-shared-calendar-event-editor>
+      ></app-layout-home-calendar-editor>
     }
   </dialog>
 </main>

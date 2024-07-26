@@ -1,0 +1,28 @@
+@let openModal = false;
+<div class="group info"></div>
+<div class="group">
+  <button (click)="openTransactionModal()">
+    <mat-icon matSuffix>add</mat-icon>
+  </button>
+  <button (click)="openTransactionGroupModal()">
+    <mat-icon matSuffix>create_new_folder</mat-icon>
+  </button>
+</div>
+<div class="group">
+  <button (click)="onSearch.emit()">
+    <mat-icon matSuffix>search</mat-icon>
+  </button>
+  <button (click)="onFilter.emit()">
+    <mat-icon matSuffix>sort</mat-icon>
+  </button>
+</div>
+<dialog #addTransactionModal>
+  <app-layout-home-tool-bar-add-transaction
+    (onCloseModal)="closeTransactionModal()"
+  />
+</dialog>
+<dialog #addTransactionGroupModal>
+  <app-layout-home-tool-bar-add-transaction
+    (onCloseModal)="closeTransactionGroupModal()"
+  />
+</dialog>

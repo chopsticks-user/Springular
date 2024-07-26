@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {Router} from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -23,7 +23,7 @@ import {HttpErrorResponse} from '@angular/common/http';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   private _authService = inject(AuthService);
   private _router = inject(Router);
 
@@ -36,9 +36,6 @@ export class LoginComponent implements OnInit {
       Validators.minLength(3),
     ]),
   });
-
-  public ngOnInit(): void {
-  }
 
   public get email() {
     return this.loginFormGroup.get('email');
