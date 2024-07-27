@@ -2,8 +2,8 @@
   <ng-content/>
 </form>
 <section>
-  <p>{{ status || "" }}</p>
-  <button (click)="submitted.emit(null)">
+  <p>{{ errorMessage }}</p>
+  <button (click)="submitHandler()">
     {{ submitButtonName() }}
   </button>
 </section>

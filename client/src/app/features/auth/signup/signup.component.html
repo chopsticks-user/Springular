@@ -5,6 +5,7 @@
   <app-layout-form-group
     submitButtonName="sign up"
     [formGroup]="formGroup"
+    [errorDictionaries]="errorDictionaries"
     (submitted)="signupHandler()"
   >
     <app-layout-form-field

@@ -5,6 +5,7 @@
   <app-layout-form-group
     [formGroup]="formGroup"
     submitButtonName="login"
+    [errorDictionaries]="errorDictionaries"
     (submitted)="loginHandler()"
   >
     <app-layout-form-field

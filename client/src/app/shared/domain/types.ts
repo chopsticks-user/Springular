@@ -108,3 +108,13 @@ export interface TransactionGroup {
   expenses: number;
   parentId: string | null;
 }
+
+export interface FormControlErrorEntry {
+  type: string;
+  message: string;
+}
+
+export interface FormControlErrorDictionary {
+  name: string;
+  entries: FormControlErrorEntry[];
+}

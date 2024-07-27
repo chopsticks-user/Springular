@@ -4,7 +4,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
-import {SignupInfo} from '@shared/domain/types';
+import {FormControlErrorDictionary, SignupInfo} from '@shared/domain/types';
 import {AuthService} from '@shared/services/auth.service';
 import {Router} from '@angular/router';
 import {HttpErrorResponse} from '@angular/common/http';
@@ -43,6 +43,40 @@ export class SignupComponent {
       Validators.minLength(3),
     ]),
   });
+  public readonly errorDictionaries: FormControlErrorDictionary[] = [
+    {
+      name: 'firstName',
+      entries: [
+        {type: 'required', message: 'First name is required'},
+      ],
+    },
+    {
+      name: 'lastName',
+      entries: [
+        {type: 'required', message: 'Last name is required'},
+      ],
+    },
+    {
+      name: 'dateOfBirth',
+      entries: [
+        {type: 'required', message: 'Date of birth is required'},
+      ],
+    },
+    {
+      name: 'email',
+      entries: [
+        {type: 'required', message: 'Email is required'},
+        {type: 'email', message: 'Invalid email address'},
+      ],
+    },
+    {
+      name: 'password',
+      entries: [
+        {type: 'required', message: 'Password is required'},
+        {type: 'minlength', message: 'Password must be at least 3 characters'},
+      ],
+    },
+  ];
 
   public navigateToLogin(): void {
     void this._router.navigateByUrl('/auth/login');
