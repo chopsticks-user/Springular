@@ -1,5 +1,4 @@
 import {Routes} from '@angular/router';
-import {WelcomeComponent} from "@features/welcome/welcome.component";
 import {HomeComponent} from "@features/home/home.component";
 import {authorizedGuard} from "@core/providers/authorized.guard";
 import {DashboardComponent} from "@features/home/dashboard/dashboard.component";
@@ -16,20 +15,16 @@ import {ThemesComponent} from "@features/home/settings/themes/themes.component";
 import {LanguagesComponent} from "@features/home/settings/languages/languages.component";
 import {AuthComponent} from "@features/auth/auth.component";
 import {ResetPasswordComponent} from "@features/auth/reset-password/reset-password.component";
+import {WelcomeComponent} from "@features/welcome/welcome.component";
 
 export const routes: Routes = [
   {
     path: '',
-    children: [
-      {
-        path: '',
-        component: WelcomeComponent,
-      },
-      {
-        path: 'welcome',
-        component: WelcomeComponent,
-      },
-    ],
+    component: WelcomeComponent,
+  },
+  {
+    path: 'welcome',
+    redirectTo: '/',
   },
   {
     path: 'auth',

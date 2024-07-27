@@ -8,6 +8,7 @@ import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators,} f
 import {AuthService} from '@shared/services/auth.service';
 import {LoginInfo} from '@shared/domain/types';
 import {HttpErrorResponse} from '@angular/common/http';
+import {FieldComponent} from "@core/layouts/form/field/field.component";
 
 @Component({
   selector: 'app-login',
@@ -19,9 +20,10 @@ import {HttpErrorResponse} from '@angular/common/http';
     MatButtonModule,
     ReactiveFormsModule,
     MatIconModule,
+    FieldComponent,
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
+  styleUrl: '../../../shared/ui/auth-form.css',
 })
 export class LoginComponent {
   private _authService = inject(AuthService);

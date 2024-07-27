@@ -1,24 +1,17 @@
-<p>
-  <mat-form-field appearance="outline" color="primary" [style.width]="width()">
-    <mat-label>{{ label() }}</mat-label>
-    @switch (type()) {
-      @case ("select") {
-        <select [style.color]="color()" [formControl]="control()" matNativeControl>
-          <ng-content/>
-        </select>
-      }
-      @default {
-        <input
-          [style.color]="color()"
-          [formControl]="control()"
-          matInput
-          [type]="type()"
-        />
-      }
+<ng-container [formGroup]="formGroup()">
+  @switch (type()) {
+    @case ("select") {
+      <select [formControlName]="controlName()">
+        <ng-content/>
+      </select>
     }
-    @let iconName = icon();
-    @if (iconName) {
-      <mat-icon matSuffix>{{ iconName }}</mat-icon>
+    @default {
+      <input
+        [formControlName]="controlName()"
+        [type]="type()"
+        [placeholder]="placeholder()"
+      />
     }
-  </mat-form-field>
-</p>
+  }
+  <mat-icon matSuffix (click)="iconClicked.emit()">{{ icon() }}</mat-icon>
+</ng-container>

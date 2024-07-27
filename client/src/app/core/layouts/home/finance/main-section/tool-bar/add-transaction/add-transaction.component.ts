@@ -4,7 +4,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
-import {FieldComponent} from '@core/layouts/form/field/field.component';
+import {FieldComponent} from '@core/layouts/form/mat-field/field.component';
 import {Transaction, TransactionGroup} from '@shared/domain/types';
 
 @Component({

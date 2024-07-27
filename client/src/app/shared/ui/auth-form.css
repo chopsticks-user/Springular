@@ -28,34 +28,8 @@ form {
   width: 50%;
 }
 
-form > div {
-  margin-bottom: 15px;
-  display: flex;
-  align-items: center;
-  background-color: var(--background-tertiary);
-}
-
-form div > input {
-  font-family: "Roboto", sans-serif;
-  outline: 0;
-  width: 100%;
-  border: 0;
-  padding: 15px;
-  box-sizing: border-box;
-  font-size: 14px;
-  background-color: transparent;
-  color: var(--typography-primary);
-}
-
-form div > mat-icon {
-  color: var(--static-green-accent);
-  padding-right: 10px;
-  padding-left: 10px;
-}
-
 main > div {
   width: 50%;
-  height: fit-content;
   display: flex;
   flex-direction: column;
   justify-content: center;

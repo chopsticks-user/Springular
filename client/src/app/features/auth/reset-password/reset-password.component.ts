@@ -5,16 +5,18 @@ import {AuthService} from "@shared/services/auth.service";
 import {Router} from "@angular/router";
 import {LoginInfo} from "@shared/domain/types";
 import {HttpErrorResponse} from "@angular/common/http";
+import {FieldComponent} from "@core/layouts/form/field/field.component";
 
 @Component({
   selector: 'app-reset-password',
   standalone: true,
   imports: [
     MatIcon,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FieldComponent
   ],
   templateUrl: './reset-password.component.html',
-  styleUrl: './reset-password.component.css'
+  styleUrl: '../../../shared/ui/auth-form.css'
 })
 export class ResetPasswordComponent {
   private _authService = inject(AuthService);

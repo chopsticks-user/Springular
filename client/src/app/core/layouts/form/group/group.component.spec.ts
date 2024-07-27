@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FieldComponent } from './field.component';
+import { GroupComponent } from './group.component';
 
-describe('FormFieldComponent', () => {
-  let component: FieldComponent;
-  let fixture: ComponentFixture<FieldComponent>;
+describe('GroupComponent', () => {
+  let component: GroupComponent;
+  let fixture: ComponentFixture<GroupComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FieldComponent]
+      imports: [GroupComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(FieldComponent);
+    fixture = TestBed.createComponent(GroupComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

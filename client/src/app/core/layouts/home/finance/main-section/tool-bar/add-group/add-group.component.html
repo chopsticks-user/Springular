@@ -1,24 +1,24 @@
 <form [formGroup]="formGroup">
-  <app-layout-form-field
+  <app-layout-form-mat-field
     label="Name"
     [control]="formGroup.controls['name']"
     icon="receipt_long"
     width="300px"
   />
-  <app-layout-form-field
+  <app-layout-form-mat-field
     label="Description"
     [control]="formGroup.controls['description']"
     icon="description"
     width="300px"
   />
-  <app-layout-form-field
+  <app-layout-form-mat-field
     label="Color"
     [control]="formGroup.controls['color']"
     icon="palette"
     type="color"
     width="300px"
   />
-  <app-layout-form-field
+  <app-layout-form-mat-field
     label="Group name"
     [control]="formGroup.controls['parent']"
     icon="tab_group"
@@ -28,7 +28,7 @@
     @for (group of availableGroups(); track group.name) {
       <option>{{ group.name }}</option>
     }
-  </app-layout-form-field>
+  </app-layout-form-mat-field>
   <section>
     <button mat-flat-button>Submit</button>
     <button mat-flat-button (click)="onCloseModal.emit()">Cancel</button>

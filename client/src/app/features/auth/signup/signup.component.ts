@@ -8,6 +8,7 @@ import {SignupInfo} from '@shared/domain/types';
 import {AuthService} from '@shared/services/auth.service';
 import {Router} from '@angular/router';
 import {HttpErrorResponse} from '@angular/common/http';
+import {FieldComponent} from "@core/layouts/form/field/field.component";
 
 @Component({
   selector: 'app-signup',
@@ -18,10 +19,11 @@ import {HttpErrorResponse} from '@angular/common/http';
     MatIconModule,
     ReactiveFormsModule,
     MatButtonModule,
+    FieldComponent,
   ],
   providers: [],
   templateUrl: './signup.component.html',
-  styleUrl: './signup.component.css',
+  styleUrl: '../../../shared/ui/auth-form.css',
 })
 export class SignupComponent {
   private _authService = inject(AuthService);
@@ -80,4 +82,6 @@ export class SignupComponent {
         (this.status = JSON.parse(error.error).description as string),
     });
   }
+
+  protected readonly FormControl = FormControl;
 }
