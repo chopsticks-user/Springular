@@ -5,6 +5,8 @@ import {LoginComponent} from '../auth/login/login.component';
 import {SignupComponent} from '../auth/signup/signup.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSuffix} from "@angular/material/form-field";
+import {ModalComponent} from "@core/layouts/dialog/modal/modal.component";
+import {AsyncPipe} from "@angular/common";
 
 @Component({
   selector: 'app-welcome',
@@ -18,6 +20,8 @@ import {MatSuffix} from "@angular/material/form-field";
     SignupComponent,
     MatIconModule,
     MatSuffix,
+    ModalComponent,
+    AsyncPipe,
   ],
   templateUrl: './welcome.component.html',
   styleUrl: './welcome.component.css',
@@ -25,7 +29,9 @@ import {MatSuffix} from "@angular/material/form-field";
 export class WelcomeComponent {
   private _router = inject(Router);
 
-  public getStarted():void {
+  public modalShouldOpen = false;
+
+  public getStarted(): void {
     void this._router.navigateByUrl('/auth/login');
   }
 }

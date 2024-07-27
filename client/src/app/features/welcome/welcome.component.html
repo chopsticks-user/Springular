@@ -1,2 +1,9 @@
 <h1 class="welcome-message">Welcome to Springular!</h1>
 <button mat-flat-button (click)="getStarted()">Get Started</button>
+<button mat-flat-button (click)="modalShouldOpen=true">OpenModal</button>
+<app-layout-dialog-modal
+  [modalShouldOpen]="modalShouldOpen"
+  (modalShouldClose)="modalShouldOpen=false"
+>
+  <h1>Modal</h1>
+</app-layout-dialog-modal>
