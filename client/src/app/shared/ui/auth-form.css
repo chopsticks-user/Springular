@@ -1,5 +1,5 @@
 :host {
-  display: block;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -17,41 +17,10 @@ header > h3 {
 }
 
 main {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-form {
-  width: 50%;
-}
-
-main > div {
   width: 50%;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-main > div > button {
-  font-family: "Roboto", sans-serif;
-  text-transform: uppercase;
-  outline: 0;
-  width: 100%;
-  background-color: var(--static-green-accent);
-  border: 0;
-  padding: 15px;
-  color: var(--typography-primary);
-  font-size: 14px;
-  cursor: pointer;
-}
-
-main > div > p {
-  color: var(--typography-primary);
-  font-size: small;
 }
 
 footer {

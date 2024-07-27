@@ -9,6 +9,7 @@ import {AuthService} from '@shared/services/auth.service';
 import {LoginInfo} from '@shared/domain/types';
 import {HttpErrorResponse} from '@angular/common/http';
 import {FieldComponent} from "@core/layouts/form/field/field.component";
+import {FormGroupComponent} from "@core/layouts/form/group/form-group.component";
 
 @Component({
   selector: 'app-login',
@@ -21,6 +22,7 @@ import {FieldComponent} from "@core/layouts/form/field/field.component";
     ReactiveFormsModule,
     MatIconModule,
     FieldComponent,
+    FormGroupComponent,
   ],
   templateUrl: './login.component.html',
   styleUrl: '../../../shared/ui/auth-form.css',

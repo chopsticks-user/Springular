@@ -2,7 +2,11 @@
   <h3>sign up</h3>
 </header>
 <main>
-  <form [formGroup]="formGroup" (submit)="signupHandler()">
+  <app-layout-form-group
+    submitButtonName="sign up"
+    [formGroup]="formGroup"
+    (submitted)="signupHandler()"
+  >
     <app-layout-form-field
       [formGroup]="formGroup"
       icon="badge"
@@ -36,11 +40,7 @@
       [icon]="hidePassword ? 'visibility_off' : 'visibility'"
       (iconClicked)="hidePassword=!hidePassword"
     />
-  </form>
-  <div>
-    <p>{{ status || "" }}</p>
-    <button (click)="signupHandler()">Sign Up</button>
-  </div>
+  </app-layout-form-group>
 </main>
 <footer>
   <p>Already have an account?</p>

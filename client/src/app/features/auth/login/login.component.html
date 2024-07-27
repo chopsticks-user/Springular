@@ -2,7 +2,11 @@
   <h3>log in</h3>
 </header>
 <main>
-  <form [formGroup]="formGroup">
+  <app-layout-form-group
+    [formGroup]="formGroup"
+    submitButtonName="login"
+    (submitted)="loginHandler()"
+  >
     <app-layout-form-field
       [formGroup]="formGroup"
       type="email"
@@ -18,11 +22,7 @@
       [icon]="hidePassword ? 'visibility_off' : 'visibility'"
       (iconClicked)="hidePassword=!hidePassword"
     />
-  </form>
-  <div>
-    <p>{{ status || "" }}</p>
-    <button (click)="loginHandler()">Log In</button>
-  </div>
+  </app-layout-form-group>
 </main>
 <footer>
   <p>Don't have an account?</p>
