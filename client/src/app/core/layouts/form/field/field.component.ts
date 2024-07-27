@@ -1,26 +1,29 @@
-import {Component, input} from '@angular/core';
-import {FormControl, ReactiveFormsModule} from '@angular/forms';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatIconModule} from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
+import {Component, input, output} from '@angular/core';
+import {FormGroup, ReactiveFormsModule} from "@angular/forms";
+import {MatFormField, MatLabel, MatSuffix} from "@angular/material/form-field";
+import {MatIcon} from "@angular/material/icon";
+import {MatInput} from "@angular/material/input";
 
 @Component({
   selector: 'app-layout-form-field',
   standalone: true,
   imports: [
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
+    MatFormField,
+    MatIcon,
+    MatInput,
+    MatLabel,
+    MatSuffix,
+    ReactiveFormsModule
   ],
   templateUrl: './field.component.html',
-  styleUrl: './field.component.css',
+  styleUrl: './field.component.css'
 })
 export class FieldComponent {
-  public label = input.required<string>();
-  public control = input.required<FormControl>();
-  public type = input<string>('input');
-  public icon = input<string>();
-  public color = input<string>('var(--foreground-light');
-  public width = input<string>();
+  public type = input<string>('text');
+  public placeholder = input<string>();
+  public formGroup = input.required<FormGroup>();
+  public controlName = input.required<string>();
+  public icon = input.required<string>();
+
+  public iconClicked = output<void>();
 }

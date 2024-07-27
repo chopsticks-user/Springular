@@ -1,0 +1,44 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+header > h3 {
+  text-transform: uppercase;
+}
+
+main {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+footer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+footer > p:not(.separator) {
+  font-size: small;
+}
+
+.link {
+  cursor: pointer;
+  color: var(--typography-quaternary);
+}
+
+footer > span {
+  width: 5px;
+}

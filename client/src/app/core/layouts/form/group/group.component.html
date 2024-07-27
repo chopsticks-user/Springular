@@ -1,0 +1,9 @@
+<form [formGroup]="formGroup()">
+  <ng-content/>
+</form>
+<section>
+  <p>{{ errorMessage }}</p>
+  <button (click)="submitHandler()">
+    {{ submitButtonName() }}
+  </button>
+</section>
