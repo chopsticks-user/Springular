@@ -6,7 +6,7 @@ import {Router} from "@angular/router";
 import {FormControlErrorDictionary, LoginInfo} from "@shared/domain/types";
 import {HttpErrorResponse} from "@angular/common/http";
 import {FieldComponent} from "@core/layouts/form/field/field.component";
-import {FormGroupComponent} from "@core/layouts/form/group/form-group.component";
+import {GroupComponent} from "@core/layouts/form/group/group.component";
 
 @Component({
   selector: 'app-reset-password',
@@ -15,7 +15,7 @@ import {FormGroupComponent} from "@core/layouts/form/group/form-group.component"
     MatIcon,
     ReactiveFormsModule,
     FieldComponent,
-    FormGroupComponent
+    GroupComponent
   ],
   templateUrl: './reset-password.component.html',
   styleUrl: '../../../shared/ui/auth-form.css'

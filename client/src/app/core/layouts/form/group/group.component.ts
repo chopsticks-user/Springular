@@ -9,10 +9,10 @@ import {FormService} from "@shared/services/form.service";
   imports: [
     ReactiveFormsModule
   ],
-  templateUrl: './form-group.component.html',
-  styleUrl: './form-group.component.css'
+  templateUrl: './group.component.html',
+  styleUrl: './group.component.css'
 })
-export class FormGroupComponent {
+export class GroupComponent {
   private _formService = inject(FormService);
 
   public submitButtonName = input<string>('submit');
@@ -32,7 +32,7 @@ export class FormGroupComponent {
       );
       return;
     }
-    
+
     this.submitted.emit();
   }
 }

@@ -9,7 +9,7 @@ import {AuthService} from '@shared/services/auth.service';
 import {FormControlErrorDictionary, LoginInfo} from '@shared/domain/types';
 import {HttpErrorResponse} from '@angular/common/http';
 import {FieldComponent} from "@core/layouts/form/field/field.component";
-import {FormGroupComponent} from "@core/layouts/form/group/form-group.component";
+import {GroupComponent} from "@core/layouts/form/group/group.component";
 
 @Component({
   selector: 'app-login',
@@ -22,7 +22,7 @@ import {FormGroupComponent} from "@core/layouts/form/group/form-group.component"
     ReactiveFormsModule,
     MatIconModule,
     FieldComponent,
-    FormGroupComponent,
+    GroupComponent,
   ],
   templateUrl: './login.component.html',
   styleUrl: '../../../shared/ui/auth-form.css',

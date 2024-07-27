@@ -9,7 +9,7 @@ import {AuthService} from '@shared/services/auth.service';
 import {Router} from '@angular/router';
 import {HttpErrorResponse} from '@angular/common/http';
 import {FieldComponent} from "@core/layouts/form/field/field.component";
-import {FormGroupComponent} from "@core/layouts/form/group/form-group.component";
+import {GroupComponent} from "@core/layouts/form/group/group.component";
 
 @Component({
   selector: 'app-signup',
@@ -21,7 +21,7 @@ import {FormGroupComponent} from "@core/layouts/form/group/form-group.component"
     ReactiveFormsModule,
     MatButtonModule,
     FieldComponent,
-    FormGroupComponent,
+    GroupComponent,
   ],
   providers: [],
   templateUrl: './signup.component.html',
