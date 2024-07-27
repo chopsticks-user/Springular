@@ -1,14 +1,9 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, input, OnInit, output} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators,} from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
-import {
-  CalendarEvent,
-  CalendarEventRepeat,
-  CalendarEventRepeatEveryUnit,
-  EventEditorTypes,
-} from '@shared/domain/types';
+import {CalendarEvent, CalendarEventRepeat, CalendarEventRepeatEveryUnit,} from '@shared/domain/types';
 import {map, Observable, startWith} from 'rxjs';
 import {MatSelectModule} from '@angular/material/select';
 import {AsyncPipe} from '@angular/common';
@@ -30,12 +25,11 @@ import {DateTime} from 'luxon';
   templateUrl: './editor.component.html',
   styleUrl: './editor.component.css',
 })
-export class EditorComponent {
-  @Input({required: true}) public type!: EventEditorTypes;
-  @Input({required: true}) public calendarEvent!: CalendarEvent | null;
-  @Output() public $cancelButtonClicked = new EventEmitter<void>();
-  @Output() public $submitButtonClicked = new EventEmitter<CalendarEvent>();
-  @Output() public $deleteButtonClicked = new EventEmitter<CalendarEvent>();
+export class EditorComponent implements OnInit {
+  public calendarEvent = input<CalendarEvent>();
+  public $cancelButtonClicked = output<void>();
+  public $submitButtonClicked = output<CalendarEvent>();
+  public $deleteButtonClicked = output<CalendarEvent>();
 
   public eventFormGroup: FormGroup = new FormGroup({
     title: new FormControl<string>('', [Validators.required]),
@@ -49,29 +43,29 @@ export class EditorComponent {
     repeat: new FormControl<CalendarEventRepeat>('none', [Validators.required]),
   });
 
-  ngOnChanges(): void {
-    if (this.type === 'edit') {
+  ngOnInit(): void {
+    if (this.calendarEvent()) {
       this.eventFormGroup = new FormGroup({
-        title: new FormControl<string>(this.calendarEvent?.title || '', [
+        title: new FormControl<string>(this.calendarEvent()?.title || '', [
           Validators.required,
         ]),
         description: new FormControl<string>(
-          this.calendarEvent?.description || ''
+          this.calendarEvent()?.description || ''
         ),
         start: new FormControl<string>(
-          this._formatDate(this.calendarEvent?.start) ||
+          this._formatDate(this.calendarEvent()?.start) ||
           this._formatDate(DateTime.local().toJSDate()),
           [Validators.required]
         ),
         duration: new FormControl<number>(
-          this.calendarEvent?.durationMinutes || 15,
+          this.calendarEvent()?.durationMinutes || 15,
           [Validators.required]
         ),
-        color: new FormControl<string>(this.calendarEvent?.color || 'green', [
+        color: new FormControl<string>(this.calendarEvent()?.color || 'green', [
           Validators.required,
         ]),
         repeat: new FormControl<CalendarEventRepeat>(
-          this.calendarEvent?.repeat || 'none',
+          this.calendarEvent()?.repeat || 'none',
           [Validators.required]
         ),
       });
@@ -109,7 +103,7 @@ export class EditorComponent {
     }
 
     const submittedCalendarEvent: CalendarEvent = {
-      id: this.calendarEvent?.id,
+      id: this.calendarEvent()?.id,
       title: this.eventFormGroup.get('title')?.value as string,
       description: this.eventFormGroup.get('description')?.value as string,
       color: this.eventFormGroup.get('color')?.value as string,

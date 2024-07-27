@@ -1,4 +1,4 @@
-import {Component, inject, input, output} from '@angular/core';
+import {Component, inject, input, signal, WritableSignal} from '@angular/core';
 import {FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {FormControlErrorDictionary} from "@shared/domain/types";
 import {FormService} from "@shared/services/form.service";
@@ -18,21 +18,26 @@ export class GroupComponent {
   public submitButtonName = input<string>('submit');
   public formGroup = input.required<FormGroup>();
   public errorDictionaries = input<FormControlErrorDictionary[]>([]);
-  public submitted = output<void>();
+  public submitHandler =
+    input.required<(errorMessageSignal: WritableSignal<string>) => void>();
 
-  public errorMessage = '';
+  public errorMessageSignal = signal('');
 
-  public submitHandler(): void {
+  public submitRequestedHandler(): void {
+    this.errorMessageSignal.set('');
+
     if (this.formGroup().invalid) {
       // TODO: this statement might have no effect
       this.formGroup().markAllAsTouched();
-      this.errorMessage = this._formService.getErrorMessage(
-        this.formGroup(),
-        this.errorDictionaries()
+      this.errorMessageSignal.set(
+        this._formService.getErrorMessage(
+          this.formGroup(),
+          this.errorDictionaries()
+        )
       );
       return;
     }
 
-    this.submitted.emit();
+    this.submitHandler.apply(this.errorMessageSignal);
   }
 }

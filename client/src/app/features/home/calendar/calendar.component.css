@@ -21,28 +21,3 @@ main {
   display: flex;
   flex-direction: column;
 }
-
-dialog {
-  background-color: var(--background-tertiary);
-  border: var(--dialog-border);
-  border-radius: 10px;
-}
-
-dialog::backdrop {
-  backdrop-filter: blur(2px);
-}
-
-dialog[open] {
-  animation-duration: 0.5s;
-  animation-name: slidein;
-}
-
-@keyframes slidein {
-  from {
-    scale: 0;
-  }
-
-  to {
-    scale: 1;
-  }
-}
