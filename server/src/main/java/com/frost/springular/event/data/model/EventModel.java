@@ -60,7 +60,7 @@ public class EventModel {
   @Enumerated(EnumType.STRING)
   private EventRepeatUnit repeatEveryUnit;
 
-  @ManyToOne(cascade = CascadeType.REMOVE)
+  @ManyToOne
   @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
   private UserModel user;
 }

@@ -1,93 +1,89 @@
-import {Component, input, OnInit, output} from '@angular/core';
+import {Component, inject, input, OnInit, output, WritableSignal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators,} from '@angular/forms';
-import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
-import {CalendarEvent, CalendarEventRepeat, CalendarEventRepeatEveryUnit,} from '@shared/domain/types';
+import {
+  CalendarEvent,
+  CalendarEventRepeat,
+  CalendarEventRepeatEveryUnit,
+  calendarEventRepeatEveryUnits,
+  calendarEventRepeatOptions,
+  FormControlErrorDictionary,
+} from '@shared/domain/types';
 import {map, Observable, startWith} from 'rxjs';
-import {MatSelectModule} from '@angular/material/select';
 import {AsyncPipe} from '@angular/common';
-import {MatButtonModule} from '@angular/material/button';
 import {DateTime} from 'luxon';
+import {GroupComponent} from "@core/layouts/form/group/group.component";
+import {FieldComponent} from "@core/layouts/form/field/field.component";
+import {CalendarEventsService} from "@features/home/calendar/calendar-events.service";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-layout-home-calendar-editor',
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
     MatIconModule,
-    MatSelectModule,
     AsyncPipe,
-    MatButtonModule,
+    GroupComponent,
+    FieldComponent,
   ],
   templateUrl: './editor.component.html',
   styleUrl: './editor.component.css',
 })
 export class EditorComponent implements OnInit {
-  public calendarEvent = input<CalendarEvent>();
-  public $cancelButtonClicked = output<void>();
-  public $submitButtonClicked = output<CalendarEvent>();
-  public $deleteButtonClicked = output<CalendarEvent>();
+  private _calendarEventsService = inject(CalendarEventsService);
 
-  public eventFormGroup: FormGroup = new FormGroup({
-    title: new FormControl<string>('', [Validators.required]),
-    description: new FormControl<string>(''),
-    start: new FormControl<string>(
-      this._formatDate(DateTime.local().toJSDate()),
-      [Validators.required]
-    ),
-    duration: new FormControl<number>(15, [Validators.required]),
-    color: new FormControl<string>('#7cfc00', [Validators.required]),
-    repeat: new FormControl<CalendarEventRepeat>('none', [Validators.required]),
-  });
+  public calendarEvent = input<CalendarEvent>();
+  public editorShouldClose = output<void>();
+
+  public readonly repeatOptions = calendarEventRepeatOptions;
+  public readonly repeatEveryUnits = calendarEventRepeatEveryUnits;
+  public readonly errorDictionaries: FormControlErrorDictionary[] = [];
+  public formGroup!: FormGroup;
 
   ngOnInit(): void {
-    if (this.calendarEvent()) {
-      this.eventFormGroup = new FormGroup({
-        title: new FormControl<string>(this.calendarEvent()?.title || '', [
-          Validators.required,
-        ]),
-        description: new FormControl<string>(
-          this.calendarEvent()?.description || ''
-        ),
-        start: new FormControl<string>(
-          this._formatDate(this.calendarEvent()?.start) ||
-          this._formatDate(DateTime.local().toJSDate()),
-          [Validators.required]
-        ),
-        duration: new FormControl<number>(
-          this.calendarEvent()?.durationMinutes || 15,
-          [Validators.required]
-        ),
-        color: new FormControl<string>(this.calendarEvent()?.color || 'green', [
-          Validators.required,
-        ]),
-        repeat: new FormControl<CalendarEventRepeat>(
-          this.calendarEvent()?.repeat || 'none',
-          [Validators.required]
-        ),
-      });
-    }
+    this.formGroup = new FormGroup({
+      title: new FormControl<string>(this.calendarEvent()?.title || '', [
+        Validators.required,
+      ]),
+      description: new FormControl<string>(
+        this.calendarEvent()?.description || ''
+      ),
+      start: new FormControl<string>(
+        this._formatDate(this.calendarEvent()?.start) ||
+        this._formatDate(DateTime.local().toJSDate()),
+        [Validators.required]
+      ),
+      duration: new FormControl<number>(
+        this.calendarEvent()?.durationMinutes || 15,
+        [Validators.required]
+      ),
+      color: new FormControl<string>(this.calendarEvent()?.color || 'green', [
+        Validators.required,
+      ]),
+      repeat: new FormControl<CalendarEventRepeat>(
+        this.calendarEvent()?.repeat || 'none',
+        [Validators.required]
+      ),
+    });
   }
 
   public get repeatEveryEnabled$(): Observable<boolean> {
-    return this.eventFormGroup.get('repeat')?.valueChanges.pipe(
-      startWith(this.eventFormGroup.get('repeat')?.value),
+    return this.formGroup.get('repeat')?.valueChanges.pipe(
+      startWith(this.formGroup.get('repeat')?.value),
       map((value: string | null) => {
         if (!value || value.toLowerCase() !== 'custom') {
-          this.eventFormGroup.removeControl('repeatEvery');
+          this.formGroup.removeControl('repeatEvery');
           return false;
         }
 
-        this.eventFormGroup.addControl(
+        this.formGroup.addControl(
           'repeatEveryUnit',
           new FormControl<CalendarEventRepeatEveryUnit>('weeks', [
             Validators.required,
           ])
         );
-        this.eventFormGroup.addControl(
+        this.formGroup.addControl(
           'repeatEveryValue',
           new FormControl<number>(1, [Validators.required])
         );
@@ -96,35 +92,49 @@ export class EditorComponent implements OnInit {
     ) as Observable<boolean>;
   }
 
-  public submitEvent(): void {
-    if (!this.eventFormGroup.valid) {
-      // todo:
-      return;
-    }
-
-    const submittedCalendarEvent: CalendarEvent = {
-      id: this.calendarEvent()?.id,
-      title: this.eventFormGroup.get('title')?.value as string,
-      description: this.eventFormGroup.get('description')?.value as string,
-      color: this.eventFormGroup.get('color')?.value as string,
-      start: new Date(this.eventFormGroup.get('start')?.value as string),
-      durationMinutes: this.eventFormGroup.get('duration')?.value as number,
-      repeat: this.eventFormGroup.get('repeat')?.value as CalendarEventRepeat,
-    };
-
-    if (
-      this.eventFormGroup.contains('repeatEveryValue') &&
-      this.eventFormGroup.contains('repeatEveryUnit')
-    ) {
-      submittedCalendarEvent.repeatEvery = {
-        value: this.eventFormGroup.get('repeatEveryValue')?.value as number,
-        unit: this.eventFormGroup.get('repeatEveryUnit')
-          ?.value as CalendarEventRepeatEveryUnit,
+  public submitHandler =
+    (errorMessage: WritableSignal<string>): void => {
+      const submittedCalendarEvent: CalendarEvent = {
+        id: this.calendarEvent()?.id,
+        title: this.formGroup.get('title')?.value as string,
+        description: this.formGroup.get('description')?.value as string,
+        color: this.formGroup.get('color')?.value as string,
+        start: new Date(this.formGroup.get('start')?.value as string),
+        durationMinutes: this.formGroup.get('duration')?.value as number,
+        repeat: this.formGroup.get('repeat')?.value as CalendarEventRepeat,
       };
-    }
 
-    this.$submitButtonClicked.emit(submittedCalendarEvent);
-  }
+      if (
+        this.formGroup.contains('repeatEveryValue') &&
+        this.formGroup.contains('repeatEveryUnit')
+      ) {
+        submittedCalendarEvent.repeatEvery = {
+          value: this.formGroup.get('repeatEveryValue')?.value as number,
+          unit: this.formGroup.get('repeatEveryUnit')
+            ?.value as CalendarEventRepeatEveryUnit,
+        };
+      }
+
+      if (!submittedCalendarEvent.id) {
+        this._calendarEventsService.addCalendarEvent(
+          submittedCalendarEvent
+        ).subscribe({
+          next: () => this.editorShouldClose.emit(),
+          error: (res: HttpErrorResponse) =>
+            errorMessage.set(res.error.description),
+        });
+        return;
+      } else {
+        this._calendarEventsService.editCalendarEvent(
+          submittedCalendarEvent
+        ).subscribe({
+          next: () => this.editorShouldClose.emit(),
+          error: (res: HttpErrorResponse) =>
+            errorMessage.set(res.error.description),
+        });
+        return;
+      }
+    }
 
   private _formatDate(date?: Date): string {
     if (!date) {

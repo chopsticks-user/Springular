@@ -1,116 +1,63 @@
-<form [formGroup]="eventFormGroup">
-  <p>
-    <mat-form-field appearance="outline" color="primary">
-      <mat-label>Title</mat-label>
-      <input
-        style="color: var(--foreground-quinary)"
-        formControlName="title"
-        matInput
-      />
-      <mat-icon matSuffix>title</mat-icon>
-    </mat-form-field>
-  </p>
-  <p>
-    <mat-form-field appearance="outline" color="primary">
-      <mat-label>Description</mat-label>
-      <input
-        style="color: var(--foreground-quinary)"
-        formControlName="description"
-        matInput
-      />
-      <mat-icon matSuffix>description</mat-icon>
-    </mat-form-field>
-  </p>
-  <p>
-    <mat-form-field appearance="outline" color="primary">
-      <mat-label>Start</mat-label>
-      <input
-        style="color: var(--foreground-quinary)"
-        formControlName="start"
-        matInput
-        type="datetime-local"
-      />
-    </mat-form-field>
-  </p>
-  <p>
-    <mat-form-field appearance="outline" color="primary">
-      <mat-label>Duration (minutes)</mat-label>
-      <input
-        style="color: var(--foreground-quinary)"
-        formControlName="duration"
-        matInput
-      />
-      <mat-icon matSuffix>timer</mat-icon>
-    </mat-form-field>
-  </p>
-  <p>
-    <mat-form-field appearance="outline" color="primary">
-      <mat-label>Color</mat-label>
-      <input
-        style="color: var(--foreground-quinary)"
-        formControlName="color"
-        matInput
-        type="color"
-      />
-      <mat-icon matSuffix>palette</mat-icon>
-    </mat-form-field>
-  </p>
-  <p>
-    <mat-form-field appearance="outline" color="primary">
-      <mat-label>Repeat</mat-label>
-      <select
-        style="color: var(--foreground-quinary)"
-        formControlName="repeat"
-        matNativeControl
-      >
-        <option>none</option>
-        <option>daily</option>
-        <option>weekly</option>
-        <option>monthly</option>
-        <option>yearly</option>
-        <option>custom</option>
-      </select>
-      <mat-icon matSuffix>event_repeat</mat-icon>
-    </mat-form-field>
-  </p>
-  @if (repeatEveryEnabled$ | async) {
-    <p>
-      <mat-form-field appearance="outline" color="primary">
-        <mat-label>Repeat every</mat-label>
-        <div style="display: flex">
-          <input
-            style="color: var(--foreground-quinary)"
-            matInput
-            formControlName="repeatEveryValue"
-          />
-          <select
-            style="color: var(--foreground-quinary)"
-            formControlName="repeatEveryUnit"
-            matNativeControl
-          >
-            <option>days</option>
-            <option>weeks</option>
-            <option>months</option>
-            <option>years</option>
-          </select>
-        </div>
-        <mat-icon matSuffix>repeat</mat-icon>
-      </mat-form-field>
-    </p>
-  }
-  <div class="button-container">
-    <button mat-flat-button (click)="submitEvent()">Submit</button>
-    <button mat-flat-button (click)="$cancelButtonClicked.emit()" type="button">
-      Cancel
-    </button>
-    @if (calendarEvent()) {
-      <button
-        mat-flat-button
-        (click)="$deleteButtonClicked.emit(calendarEvent()!)"
-        type="button"
-      >
-        Delete
-      </button>
+<app-layout-form-group
+  [formGroup]="formGroup"
+  [submitHandler]="submitHandler"
+  [errorDictionaries]="errorDictionaries"
+  submitButtonName="save"
+>
+  <app-layout-form-field
+    [formGroup]="formGroup"
+    controlName="title"
+    placeholder="title"
+    icon="title"
+  />
+  <app-layout-form-field
+    [formGroup]="formGroup"
+    controlName="description"
+    placeholder="description"
+    icon="description"
+  />
+  <app-layout-form-field
+    [formGroup]="formGroup"
+    controlName="start"
+    icon="calendar_month"
+    type="datetime-local"
+  />
+  <app-layout-form-field
+    [formGroup]="formGroup"
+    controlName="duration"
+    icon="timer"
+  />
+  <app-layout-form-field
+    [formGroup]="formGroup"
+    controlName="color"
+    icon="palette"
+    type="color"
+  />
+  <app-layout-form-field
+    [formGroup]="formGroup"
+    controlName="repeat"
+    icon="event_repeat"
+    type="select"
+  >
+    @for (option of repeatOptions; track option) {
+      <option>{{ option }}</option>
     }
-  </div>
-</form>
+  </app-layout-form-field>
+  @if (repeatEveryEnabled$ | async) {
+    <app-layout-form-field
+      [formGroup]="formGroup"
+      controlName="repeatEveryUnit"
+      icon="repeat"
+      type="select"
+    >
+      @for (option of repeatEveryUnits; track option) {
+        <option>{{ option }}</option>
+      }
+    </app-layout-form-field>
+    <app-layout-form-field
+      [formGroup]="formGroup"
+      controlName="repeatEveryValue"
+      icon="repeat"
+    />
+  }
+</app-layout-form-group>

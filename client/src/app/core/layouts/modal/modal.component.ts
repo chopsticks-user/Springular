@@ -1,9 +1,12 @@
 import {Component, effect, ElementRef, input, output, ViewChild} from '@angular/core';
+import {MatIcon} from "@angular/material/icon";
 
 @Component({
-  selector: 'app-layout-dialog-modal',
+  selector: 'app-layout-modal',
   standalone: true,
-  imports: [],
+  imports: [
+    MatIcon
+  ],
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.css'
 })

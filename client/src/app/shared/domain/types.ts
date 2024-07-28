@@ -30,12 +30,12 @@ export interface JwtTokenPack {
 }
 
 export const calendarEventRepeatOptions = [
+  'none',
   'daily',
   'weekly',
   'monthly',
   'yearly',
   'custom',
-  'none',
 ] as const;
 
 export type CalendarEventRepeat = (typeof calendarEventRepeatOptions)[number];
@@ -71,8 +71,6 @@ export interface CalendarWeekDay {
   dayOfWeek: string;
   dayOfMonth: number;
 }
-
-export type EventEditorTypes = 'add' | 'edit';
 
 export type SidebarItemActionType = 'navigate' | 'toggle' | 'dropdown';
 

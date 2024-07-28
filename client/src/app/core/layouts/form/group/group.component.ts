@@ -38,6 +38,6 @@ export class GroupComponent {
       return;
     }
 
-    this.submitHandler.apply(this.errorMessageSignal);
+    this.submitHandler()(this.errorMessageSignal);
   }
 }

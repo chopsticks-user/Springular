@@ -1,0 +1,16 @@
+:host {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+mat-icon {
+  color: var(--typography-secondary);
+  transform: scale(0.75);
+  cursor: pointer;
+}
+
+mat-icon:hover {
+  color: var(--typography-primary);
+}

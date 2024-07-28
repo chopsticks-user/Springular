@@ -26,7 +26,10 @@ export class ResetPasswordComponent {
 
   public hidePassword = true;
   public formGroup: FormGroup = new FormGroup({
-    email: new FormControl('', [Validators.email, Validators.required]),
+    email: new FormControl('', [
+      Validators.email,
+      Validators.required,
+    ]),
     password: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
@@ -57,16 +60,17 @@ export class ResetPasswordComponent {
     void this._router.navigateByUrl('/auth/reset-password');
   }
 
-  public resetPasswordHandler(errorMessageSignal: WritableSignal<string>) {
-    const loginInfo: LoginInfo = {
-      email: this.formGroup.get('email')?.value,
-      password: this.formGroup.get('password')?.value,
-    };
+  public resetPasswordHandler =
+    (errorMessageSignal: WritableSignal<string>): void => {
+      const loginInfo: LoginInfo = {
+        email: this.formGroup.get('email')?.value,
+        password: this.formGroup.get('password')?.value,
+      };
 
-    this._authService.authenticate(loginInfo).subscribe({
-      next: () => this._router.navigateByUrl('/home'),
-      error: (res: HttpErrorResponse) =>
-        errorMessageSignal.set(res.error.description),
-    });
-  }
+      this._authService.authenticate(loginInfo).subscribe({
+        next: () => this._router.navigateByUrl('/home'),
+        error: (res: HttpErrorResponse) =>
+          errorMessageSignal.set(res.error.description),
+      });
+    }
 }
