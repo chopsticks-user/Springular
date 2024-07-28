@@ -75,7 +75,7 @@ export class CalendarEventsService {
 
   public editCalendarEvent(event: CalendarEvent): Observable<CalendarEvent> {
     return this._http
-      .put<CalendarEvent>(`/events/${event.id}`, event, {
+      .patch<CalendarEvent>(`/events/${event.id}`, event, {
         // observe: 'response',
       })
       .pipe(

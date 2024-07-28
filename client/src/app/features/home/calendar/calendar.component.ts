@@ -1,12 +1,13 @@
-import {Component, ElementRef, inject, OnInit, ViewChild,} from '@angular/core';
+import {Component, inject, OnInit,} from '@angular/core';
 import {CalendarWeekViewComponent} from '@core/layouts/home/calendar/week-view/week-view.component';
 import {CalendarHeaderComponent} from '@core/layouts/home/calendar/header/header.component';
 import {EditorComponent} from '@core/layouts/home/calendar/editor/editor.component';
-import {CalendarEvent, EventEditorTypes} from '@shared/domain/types';
+import {CalendarEvent} from '@shared/domain/types';
 import {AsyncPipe} from '@angular/common';
 import {MatIcon} from '@angular/material/icon';
 import {CalendarEventsService} from './calendar-events.service';
 import {DateTimeService} from './date-time.service';
+import {ModalComponent} from "@core/layouts/dialog/modal/modal.component";
 
 @Component({
   selector: 'app-home-calendar',
@@ -17,22 +18,19 @@ import {DateTimeService} from './date-time.service';
     MatIcon,
     CalendarHeaderComponent,
     EditorComponent,
+    ModalComponent,
   ],
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.css',
 })
 export class CalendarComponent implements OnInit {
-  @ViewChild('eventEditorModal', {static: true})
-  private _eventEditorModal!: ElementRef<HTMLDialogElement>;
-
   private _calendarEventsService = inject(CalendarEventsService);
   private _dateTimeService = inject(DateTimeService);
 
   private _selectedCalendarEvent: CalendarEvent | null = null;
-  private _eventEditorVisible: boolean = false;
-  private _eventEditorType: EventEditorTypes = 'add';
 
   public calendarEvents$ = this._calendarEventsService.calendarEvents$;
+  public modalShouldOpen = false;
 
   ngOnInit(): void {
     this._dateTimeService.firstDayOfWeek$.subscribe((firstDayOfWeek) =>
@@ -40,34 +38,23 @@ export class CalendarComponent implements OnInit {
     );
   }
 
-  public get eventEditorVisible(): boolean {
-    return this._eventEditorVisible;
-  }
 
   public get selectedCalendarEvent(): CalendarEvent | null {
     return this._selectedCalendarEvent;
   }
 
-  public get eventEditorType(): EventEditorTypes {
-    return this._eventEditorType;
-  }
-
   public openEventEditor(calendarEvent?: CalendarEvent) {
     if (calendarEvent) {
-      this._eventEditorType = 'edit';
       this._selectedCalendarEvent = calendarEvent;
     } else {
-      this._eventEditorType = 'add';
       this._selectedCalendarEvent = null;
     }
 
-    this._eventEditorVisible = true;
-    this._eventEditorModal.nativeElement.showModal();
+    this.modalShouldOpen = true;
   }
 
   public closeEventEditor(): void {
-    this._eventEditorVisible = false;
-    this._eventEditorModal.nativeElement.close();
+    this.modalShouldOpen = false;
   }
 
   public deleteCalendarEvent(calendarEvent: CalendarEvent): void {
@@ -77,21 +64,20 @@ export class CalendarComponent implements OnInit {
   }
 
   public submitCalendarEvent(calendarEvent: CalendarEvent): void {
-    switch (this._eventEditorType) {
-      case 'add': {
-        this._calendarEventsService.addCalendarEvent(calendarEvent).subscribe({
+    if (!calendarEvent.id) {
+      this._calendarEventsService.addCalendarEvent(calendarEvent)
+        .subscribe({
           next: () => this.closeEventEditor(),
           error: () => console.log('error'),
         });
-        return;
-      }
-      case 'edit': {
-        this._calendarEventsService.editCalendarEvent(calendarEvent).subscribe({
+      return;
+    } else {
+      this._calendarEventsService.editCalendarEvent(calendarEvent)
+        .subscribe({
           next: () => this.closeEventEditor(),
           error: () => console.log('error'),
         });
-        return;
-      }
+      return;
     }
   }
 }

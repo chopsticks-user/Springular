@@ -103,10 +103,10 @@
     <button mat-flat-button (click)="$cancelButtonClicked.emit()" type="button">
       Cancel
     </button>
-    @if (type === "edit" && calendarEvent) {
+    @if (calendarEvent()) {
       <button
         mat-flat-button
-        (click)="$deleteButtonClicked.emit(calendarEvent)"
+        (click)="$deleteButtonClicked.emit(calendarEvent()!)"
         type="button"
       >
         Delete

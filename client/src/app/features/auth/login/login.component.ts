@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, WritableSignal} from '@angular/core';
 import {Router} from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -32,7 +32,6 @@ export class LoginComponent {
   private _router = inject(Router);
 
   public hidePassword = true;
-  public errorMessage: string = '';
   public formGroup: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.email, Validators.required]),
     password: new FormControl('', [
@@ -65,7 +64,7 @@ export class LoginComponent {
     void this._router.navigateByUrl('/auth/reset-password');
   }
 
-  public loginHandler() {
+  public loginHandler(errorMessageSignal: WritableSignal<string>): void {
     const loginInfo: LoginInfo = {
       email: this.formGroup.get('email')?.value,
       password: this.formGroup.get('password')?.value,
@@ -74,7 +73,7 @@ export class LoginComponent {
     this._authService.authenticate(loginInfo).subscribe({
       next: () => this._router.navigateByUrl('/home'),
       error: (res: HttpErrorResponse) =>
-        (this.errorMessage = res.error.description),
+        errorMessageSignal.set(res.error.description),
     });
   }
 }

@@ -3,10 +3,10 @@
 </header>
 <main>
   <app-layout-form-group
-    [formGroup]="formGroup"
     submitButtonName="login"
+    [formGroup]="formGroup"
     [errorDictionaries]="errorDictionaries"
-    (submitted)="loginHandler()"
+    [submitHandler]="loginHandler"
   >
     <app-layout-form-field
       [formGroup]="formGroup"

@@ -2,8 +2,8 @@
   <ng-content/>
 </form>
 <section>
-  <p>{{ errorMessage }}</p>
-  <button (click)="submitHandler()">
+  <p>{{ errorMessageSignal() }}</p>
+  <button (click)="submitRequestedHandler()">
     {{ submitButtonName() }}
   </button>
 </section>

@@ -6,7 +6,7 @@
     submitButtonName="sign up"
     [formGroup]="formGroup"
     [errorDictionaries]="errorDictionaries"
-    (submitted)="signupHandler()"
+    [submitHandler]="signupHandler"
   >
     <app-layout-form-field
       [formGroup]="formGroup"
