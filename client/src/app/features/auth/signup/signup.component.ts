@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, WritableSignal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators,} from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
@@ -32,7 +32,6 @@ export class SignupComponent {
   private _router = inject(Router);
 
   public hidePassword = true;
-  public status: string = '';
   public formGroup: FormGroup = new FormGroup({
     firstName: new FormControl<string>('', [Validators.required]),
     lastName: new FormControl<string>('', [Validators.required]),
@@ -86,7 +85,7 @@ export class SignupComponent {
     void this._router.navigateByUrl('/auth/reset-password');
   }
 
-  public signupHandler() {
+  public signupHandler(errorMessageSignal: WritableSignal<string>) {
     if (this.formGroup.invalid) {
       this.formGroup.markAllAsTouched();
       return;
@@ -109,15 +108,12 @@ export class SignupComponent {
           })
           .subscribe({
             next: () => this._router.navigateByUrl('/home'),
-            error: (error: HttpErrorResponse) =>
-              (this.status = JSON.parse(error.error)
-                .description as string),
+            error: (res: HttpErrorResponse) =>
+              errorMessageSignal.set(res.error.description)
           });
       },
-      error: (error: HttpErrorResponse) =>
-        (this.status = JSON.parse(error.error).description as string),
+      error: (res: HttpErrorResponse) =>
+        errorMessageSignal.set(res.error.description),
     });
   }
-
-  protected readonly FormControl = FormControl;
 }

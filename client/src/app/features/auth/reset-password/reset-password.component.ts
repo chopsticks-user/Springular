@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, WritableSignal} from '@angular/core';
 import {MatIcon} from "@angular/material/icon";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AuthService} from "@shared/services/auth.service";
@@ -25,7 +25,6 @@ export class ResetPasswordComponent {
   private _router = inject(Router);
 
   public hidePassword = true;
-  public status: string = '';
   public formGroup: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.email, Validators.required]),
     password: new FormControl('', [
@@ -58,7 +57,7 @@ export class ResetPasswordComponent {
     void this._router.navigateByUrl('/auth/reset-password');
   }
 
-  public resetPasswordHandler() {
+  public resetPasswordHandler(errorMessageSignal: WritableSignal<string>) {
     const loginInfo: LoginInfo = {
       email: this.formGroup.get('email')?.value,
       password: this.formGroup.get('password')?.value,
@@ -67,7 +66,7 @@ export class ResetPasswordComponent {
     this._authService.authenticate(loginInfo).subscribe({
       next: () => this._router.navigateByUrl('/home'),
       error: (res: HttpErrorResponse) =>
-        (this.status = res.error.description),
+        errorMessageSignal.set(res.error.description),
     });
   }
 }
