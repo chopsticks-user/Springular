@@ -1,0 +1,43 @@
+dialog {
+  padding: 0;
+  border: 0;
+  display: block;
+}
+
+dialog > header {
+  height: 18px;
+  position: relative;
+  background: var(--background-tertiary);
+  padding: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+mat-icon {
+  cursor: pointer;
+  color: var(--typography-secondary);
+  transform: scale(0.75);
+  flex: 0 0 fit-content;
+}
+
+mat-icon:hover {
+  color: var(--typography-primary);
+}
+
+dialog > header > span {
+  display: flex;
+  flex: 1 1 auto;
+}
+
+.menu {
+  flex-basis: fit-content;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+app-layout-menu-tool:hover {
+  color: var(--typography-primary);
+}

@@ -64,7 +64,7 @@ export class LoginComponent {
     void this._router.navigateByUrl('/auth/reset-password');
   }
 
-  public loginHandler(errorMessageSignal: WritableSignal<string>): void {
+  public loginHandler = (errorMessageSignal: WritableSignal<string>): void => {
     const loginInfo: LoginInfo = {
       email: this.formGroup.get('email')?.value,
       password: this.formGroup.get('password')?.value,

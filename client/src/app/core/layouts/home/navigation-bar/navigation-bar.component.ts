@@ -26,7 +26,7 @@ export class NavigationBarComponent {
       ],
     },
     {
-      name: 'tool-bar',
+      name: 'tools',
       items: [
         {
           name: 'calendar & events',

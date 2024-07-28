@@ -85,35 +85,36 @@ export class SignupComponent {
     void this._router.navigateByUrl('/auth/reset-password');
   }
 
-  public signupHandler(errorMessageSignal: WritableSignal<string>) {
-    if (this.formGroup.invalid) {
-      this.formGroup.markAllAsTouched();
-      return;
+  public signupHandler =
+    (errorMessageSignal: WritableSignal<string>): void => {
+      if (this.formGroup.invalid) {
+        this.formGroup.markAllAsTouched();
+        return;
+      }
+
+      const signupInfo: SignupInfo = {
+        firstName: this.formGroup.get('firstName')?.value,
+        lastName: this.formGroup.get('lastName')?.value,
+        dateOfBirth: this.formGroup.get('dateOfBirth')?.value,
+        email: this.formGroup.get('email')?.value,
+        password: this.formGroup.get('password')?.value,
+      };
+
+      this._authService.register(signupInfo).subscribe({
+        next: () => {
+          this._authService
+            .authenticate({
+              email: signupInfo.email,
+              password: signupInfo.password,
+            })
+            .subscribe({
+              next: () => this._router.navigateByUrl('/home'),
+              error: (res: HttpErrorResponse) =>
+                errorMessageSignal.set(res.error.description)
+            });
+        },
+        error: (res: HttpErrorResponse) =>
+          errorMessageSignal.set(res.error.description),
+      });
     }
-
-    const signupInfo: SignupInfo = {
-      firstName: this.formGroup.get('firstName')?.value,
-      lastName: this.formGroup.get('lastName')?.value,
-      dateOfBirth: this.formGroup.get('dateOfBirth')?.value,
-      email: this.formGroup.get('email')?.value,
-      password: this.formGroup.get('password')?.value,
-    };
-
-    this._authService.register(signupInfo).subscribe({
-      next: () => {
-        this._authService
-          .authenticate({
-            email: signupInfo.email,
-            password: signupInfo.password,
-          })
-          .subscribe({
-            next: () => this._router.navigateByUrl('/home'),
-            error: (res: HttpErrorResponse) =>
-              errorMessageSignal.set(res.error.description)
-          });
-      },
-      error: (res: HttpErrorResponse) =>
-        errorMessageSignal.set(res.error.description),
-    });
-  }
 }
