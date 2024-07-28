@@ -13,12 +13,15 @@
     (modalShouldClose)="closeEventEditor()"
   >
     @if (selectedCalendarEvent) {
-      <app-layout-modal-tool icon="delete" (click)="deleteCalendarEvent(selectedCalendarEvent)"/>
+      <app-layout-modal-tool
+        icon="delete"
+        (click)="deleteCalendarEvent(selectedCalendarEvent)"
+      />
     }
     @if (modalShouldOpen) {
       <app-layout-home-calendar-editor
         [calendarEvent]="selectedCalendarEvent"
-        (submitButtonClicked)="submitCalendarEvent($event)"
+        (editorShouldClose)="closeEventEditor()"
       ></app-layout-home-calendar-editor>
     }
   </app-layout-modal>

@@ -1,34 +1,29 @@
-import {Component, input, OnInit, output, WritableSignal} from '@angular/core';
+import {Component, inject, input, OnInit, output, WritableSignal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators,} from '@angular/forms';
-import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
 import {
   CalendarEvent,
   CalendarEventRepeat,
   CalendarEventRepeatEveryUnit,
   calendarEventRepeatEveryUnits,
   calendarEventRepeatOptions,
+  FormControlErrorDictionary,
 } from '@shared/domain/types';
 import {map, Observable, startWith} from 'rxjs';
-import {MatSelectModule} from '@angular/material/select';
 import {AsyncPipe} from '@angular/common';
-import {MatButtonModule} from '@angular/material/button';
 import {DateTime} from 'luxon';
 import {GroupComponent} from "@core/layouts/form/group/group.component";
 import {FieldComponent} from "@core/layouts/form/field/field.component";
+import {CalendarEventsService} from "@features/home/calendar/calendar-events.service";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-layout-home-calendar-editor',
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
     MatIconModule,
-    MatSelectModule,
     AsyncPipe,
-    MatButtonModule,
     GroupComponent,
     FieldComponent,
   ],
@@ -36,11 +31,14 @@ import {FieldComponent} from "@core/layouts/form/field/field.component";
   styleUrl: './editor.component.css',
 })
 export class EditorComponent implements OnInit {
+  private _calendarEventsService = inject(CalendarEventsService);
+
   public calendarEvent = input<CalendarEvent>();
-  public submitButtonClicked = output<CalendarEvent>();
+  public editorShouldClose = output<void>();
 
   public readonly repeatOptions = calendarEventRepeatOptions;
   public readonly repeatEveryUnits = calendarEventRepeatEveryUnits;
+  public readonly errorDictionaries: FormControlErrorDictionary[] = [];
   public formGroup!: FormGroup;
 
   ngOnInit(): void {
@@ -117,7 +115,25 @@ export class EditorComponent implements OnInit {
         };
       }
 
-      this.submitButtonClicked.emit(submittedCalendarEvent);
+      if (!submittedCalendarEvent.id) {
+        this._calendarEventsService.addCalendarEvent(
+          submittedCalendarEvent
+        ).subscribe({
+          next: () => this.editorShouldClose.emit(),
+          error: (res: HttpErrorResponse) =>
+            errorMessage.set(res.error.description),
+        });
+        return;
+      } else {
+        this._calendarEventsService.editCalendarEvent(
+          submittedCalendarEvent
+        ).subscribe({
+          next: () => this.editorShouldClose.emit(),
+          error: (res: HttpErrorResponse) =>
+            errorMessage.set(res.error.description),
+        });
+        return;
+      }
     }
 
   private _formatDate(date?: Date): string {

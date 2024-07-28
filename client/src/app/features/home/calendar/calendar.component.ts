@@ -53,22 +53,4 @@ export class CalendarComponent implements OnInit {
       .deleteCalendarEvent(calendarEvent)
       .subscribe(() => this.closeEventEditor());
   }
-
-  public submitCalendarEvent(calendarEvent: CalendarEvent): void {
-    if (!calendarEvent.id) {
-      this._calendarEventsService.addCalendarEvent(calendarEvent)
-        .subscribe({
-          next: () => this.closeEventEditor(),
-          error: () => console.log('error'),
-        });
-      return;
-    } else {
-      this._calendarEventsService.editCalendarEvent(calendarEvent)
-        .subscribe({
-          next: () => this.closeEventEditor(),
-          error: () => console.log('error'),
-        });
-      return;
-    }
-  }
 }
