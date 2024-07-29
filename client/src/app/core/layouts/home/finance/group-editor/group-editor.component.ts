@@ -6,6 +6,7 @@ import {ModalComponent} from "@core/layouts/modal/modal.component";
 import {GroupComponent} from "@core/layouts/form/group/group.component";
 import {FinanceService} from "@features/home/finance/finance.service";
 import {FieldComponent} from "@core/layouts/form/field/field.component";
+import {directoryValidator} from "@shared/directives/validators/directory.validator";
 
 @Component({
   selector: 'app-layout-home-finance-group-editor',
@@ -51,7 +52,7 @@ export class GroupEditorComponent implements OnInit {
     {
       name: 'directory',
       entries: [
-        {type: 'pattern', message: 'Invalid directory'},
+        {type: 'directory', message: 'Invalid directory'},
       ],
     },
   ];
@@ -83,7 +84,7 @@ export class GroupEditorComponent implements OnInit {
         directory,
         [
           Validators.required,
-          Validators.pattern(/^(\/([a-zA-Z][a-zA-Z0-9_-]*))+(?<!\/)$/),
+          directoryValidator(),
         ],
       ),
     })

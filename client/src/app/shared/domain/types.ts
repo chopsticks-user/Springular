@@ -94,7 +94,7 @@ export interface Transaction {
   note: string;
   revenues: number;
   expenses: number;
-  groupId: string;
+  path: string;
 }
 
 export interface TransactionGroup {

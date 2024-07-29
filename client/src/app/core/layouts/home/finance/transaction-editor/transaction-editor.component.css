@@ -1,7 +1,5 @@
 :host {
-  background-color: var(--background-secondary);
-}
-
-button {
-  margin-left: 10px;
+  display: block;
+  width: 300px;
+  margin: 30px;
 }

@@ -1,49 +1,37 @@
-<!--<app-layout-form-group-->
-<!--  submitButtonName="save"-->
-<!--  [formGroup]="formGroup"-->
-<!--  [submitHandler]="submitHandler"-->
-<!--&gt;-->
-
-<!--</app-layout-form-group>-->
-
-<!--<form [formGroup]="formGroup">-->
-<!--  <app-layout-form-mat-field-->
-<!--    label="Revenues"-->
-<!--    [control]="formGroup.controls['revenues']"-->
-<!--    icon="savings"-->
-<!--    width="300px"-->
-<!--  />-->
-<!--  <app-layout-form-mat-field-->
-<!--    label="Expenses"-->
-<!--    [control]="formGroup.controls['expenses']"-->
-<!--    icon="payments"-->
-<!--    width="300px"-->
-<!--  />-->
-<!--  <app-layout-form-mat-field-->
-<!--    label="Time"-->
-<!--    [control]="formGroup.controls['time']"-->
-<!--    type="datetime-local"-->
-<!--    width="300px"-->
-<!--  />-->
-<!--  <app-layout-form-mat-field-->
-<!--    label="Note"-->
-<!--    [control]="formGroup.controls['note']"-->
-<!--    icon="edit_note"-->
-<!--    width="300px"-->
-<!--  />-->
-<!--  <app-layout-form-mat-field-->
-<!--    label="Group name"-->
-<!--    [control]="formGroup.controls['group']"-->
-<!--    icon="tab_group"-->
-<!--    type="select"-->
-<!--    width="300px"-->
-<!--  >-->
-<!--    @for (group of availableGroups(); track group.name) {-->
-<!--      <option>{{ group.name }}</option>-->
-<!--    }-->
-<!--  </app-layout-form-mat-field>-->
-<!--  <section>-->
-<!--    <button mat-flat-button>Submit</button>-->
-<!--    <button mat-flat-button (click)="onCloseModal.emit()">Cancel</button>-->
-<!--  </section>-->
-<!--</form>-->
+<app-layout-form-group
+  submitButtonName="save transaction"
+  [formGroup]="formGroup"
+  [submitHandler]="submitHandler"
+  [errorDictionaries]="errorDictionaries"
+>
+  <app-layout-form-field
+    [formGroup]="formGroup"
+    controlName="revenues"
+    icon="savings"
+    placeholder="revenues"
+  />
+  <app-layout-form-field
+    [formGroup]="formGroup"
+    controlName="expenses"
+    icon="payments"
+    placeholder="expenses"
+  />
+  <app-layout-form-field
+    [formGroup]="formGroup"
+    controlName="time"
+    icon="schedule"
+    type="datetime-local"
+  />
+  <app-layout-form-field
+    [formGroup]="formGroup"
+    controlName="note"
+    icon="edit_note"
+    placeholder="note"
+  />
+  <app-layout-form-field
+    [formGroup]="formGroup"
+    controlName="path"
+    icon="tab_group"
+    placeholder="/path/to/group"
+  />
+</app-layout-form-group>

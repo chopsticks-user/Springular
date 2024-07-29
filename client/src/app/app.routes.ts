@@ -51,7 +51,7 @@ export const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-    canActivate: [authorizedGuard],
+    // canActivate: [authorizedGuard],
     children: [
       {
         path: '',
@@ -66,12 +66,12 @@ export const routes: Routes = [
       {
         path: 'calendar',
         component: CalendarComponent,
-        canActivate: [authorizedGuard],
+        // canActivate: [authorizedGuard],
       },
       {
         path: 'finance',
         component: FinanceComponent,
-        canActivate: [authorizedGuard],
+        // canActivate: [authorizedGuard],
       },
       {
         path: 'contacts',
