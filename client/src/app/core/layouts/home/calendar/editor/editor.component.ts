@@ -18,6 +18,7 @@ import {CalendarEventsService} from "@features/home/calendar/calendar-events.ser
 import {HttpErrorResponse} from "@angular/common/http";
 import {FormService} from "@shared/services/form.service";
 import {divisibleByValidator} from "@shared/directives/validators/divisible-by.validator";
+import {divisibleByMinutesValidator} from "@shared/directives/validators/divisible-by-minutes.validator";
 
 @Component({
   selector: 'app-layout-home-calendar-editor',
@@ -59,6 +60,7 @@ export class EditorComponent implements OnInit {
       name: 'start',
       entries: [
         {type: 'required', message: 'Start time is required'},
+        {type: 'divisibleByMinutes', message: 'Start time minutes must be divisible by 5'},
       ],
     },
     {
@@ -111,7 +113,10 @@ export class EditorComponent implements OnInit {
       start: new FormControl<string>(
         this._formatDate(this.calendarEvent()?.start) ||
         this._formatDate(DateTime.local().toJSDate()),
-        [Validators.required]
+        [
+          Validators.required,
+          divisibleByMinutesValidator(5),
+        ]
       ),
       duration: new FormControl<number>(
         this.calendarEvent()?.durationMinutes || 15,

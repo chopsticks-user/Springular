@@ -35,6 +35,7 @@ export class GroupComponent {
           this.errorDictionaries()
         )
       );
+      console.log(this.errorMessageSignal());
       return;
     }
 

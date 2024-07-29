@@ -62,7 +62,7 @@ export class GroupEditorComponent implements OnInit {
     const transactionGroup: TransactionGroup | undefined = this.group();
 
     const {name, directory} =
-      this.splitPath(transactionGroup?.path || '/');
+      this.splitPath(transactionGroup?.path || '');
     this.formGroup = new FormGroup({
       name: new FormControl<string>(
         name,
@@ -82,10 +82,7 @@ export class GroupEditorComponent implements OnInit {
       ),
       directory: new FormControl<string>(
         directory,
-        [
-          Validators.required,
-          directoryValidator(),
-        ],
+        [directoryValidator()],
       ),
     })
     ;
@@ -119,17 +116,20 @@ export class GroupEditorComponent implements OnInit {
 
   private splitPath(path: string): { name: string, directory: string } {
     if (path.trim() === '/' || path.trim() === '') {
-      return {name: '', directory: '/'};
+      return {name: '', directory: ''};
     }
 
     const index: number = path.lastIndexOf('/');
     return {
-      name: path.substring(0, index),
-      directory: path.substring(index + 1),
+      name: path.substring(0, index).trim(),
+      directory: path.substring(index + 1).trim(),
     }
   }
 
   private getPath(name: string, directory: string): string {
-    return `${directory}/${name}`;
+    if (directory === '/') {
+      return `/${name.trim()}`;
+    }
+    return `${directory.trim()}/${name.trim()}`;
   }
 }
