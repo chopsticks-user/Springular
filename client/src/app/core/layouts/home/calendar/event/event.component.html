@@ -1,7 +1,11 @@
-@if(((events) || []).length > 0 ) { @for(event of events; track event.id){
-<div
-  class="event"
-  (click)="eventClicked.emit(event)"
-  [style]="getStyle(event)"
-></div>
-}}
+@if (events().length > 0) {
+  @for (event of events(); track event.id) {
+    <div
+      class="event"
+      [attr.title]="event.title + ' \nDescription: ' + event.description"
+      [style]="getStyle(event)"
+      (click)="eventClicked.emit(event)"
+    >
+    </div>
+  }
+}

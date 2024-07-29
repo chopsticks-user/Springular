@@ -16,7 +16,6 @@ import {GroupComponent} from "@core/layouts/form/group/group.component";
 import {FieldComponent} from "@core/layouts/form/field/field.component";
 import {CalendarEventsService} from "@features/home/calendar/calendar-events.service";
 import {HttpErrorResponse} from "@angular/common/http";
-import {FormService} from "@shared/services/form.service";
 import {divisibleByValidator} from "@shared/directives/validators/divisible-by.validator";
 import {divisibleByMinutesValidator} from "@shared/directives/validators/divisible-by-minutes.validator";
 
@@ -35,7 +34,6 @@ import {divisibleByMinutesValidator} from "@shared/directives/validators/divisib
 })
 export class EditorComponent implements OnInit {
   private _calendarEventsService = inject(CalendarEventsService);
-  private _formService = inject(FormService);
 
   public calendarEvent = input<CalendarEvent>();
   public editorShouldClose = output<void>();

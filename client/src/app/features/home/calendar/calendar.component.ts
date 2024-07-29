@@ -7,8 +7,9 @@ import {AsyncPipe} from '@angular/common';
 import {MatIcon} from '@angular/material/icon';
 import {CalendarEventsService} from './calendar-events.service';
 import {DateTimeService} from './date-time.service';
-import {ModalComponent} from "@core/layouts/modal/modal.component";
-import {ToolComponent} from "@core/layouts/modal/tool/tool.component";
+import {ModalComponent} from "@core/layouts/dialog/modal/modal.component";
+import {ToolComponent} from "@core/layouts/dialog/modal/tool/tool.component";
+import {ConfirmationService} from "@shared/services/confirmation.service";
 
 @Component({
   selector: 'app-home-calendar',
@@ -28,6 +29,7 @@ import {ToolComponent} from "@core/layouts/modal/tool/tool.component";
 export class CalendarComponent implements OnInit {
   private _calendarEventsService = inject(CalendarEventsService);
   private _dateTimeService = inject(DateTimeService);
+  private _confirmationService = inject(ConfirmationService);
 
   public calendarEvents$ = this._calendarEventsService.calendarEvents$;
   public modalShouldOpen = false;
@@ -48,9 +50,14 @@ export class CalendarComponent implements OnInit {
     this.modalShouldOpen = false;
   }
 
-  public deleteCalendarEvent(calendarEvent: CalendarEvent): void {
-    this._calendarEventsService
-      .deleteCalendarEvent(calendarEvent)
-      .subscribe(() => this.closeEventEditor());
+  public deleteCalendarEvent = (calendarEvent: CalendarEvent): void => {
+    this._confirmationService.show(
+      'Are you sure you want to delete this event?',
+      () => this._calendarEventsService
+        .deleteCalendarEvent(calendarEvent)
+        .subscribe(() => this.closeEventEditor()),
+      () => {
+      }
+    );
   }
 }

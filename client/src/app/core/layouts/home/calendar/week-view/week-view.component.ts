@@ -1,4 +1,4 @@
-import {Component, inject, Input, output} from '@angular/core';
+import {Component, inject, input, output} from '@angular/core';
 import {CalendarEvent, CalendarWeekDay} from '@shared/domain/types';
 import {EventComponent} from '@core/layouts/home/calendar/event/event.component';
 import {Observable} from 'rxjs';
@@ -16,19 +16,20 @@ import {DateTimeService} from '@features/home/calendar/date-time.service';
 export class CalendarWeekViewComponent {
   private _dateTimeService = inject(DateTimeService);
 
-  @Input({required: true}) public calendarEvents!: CalendarEvent[];
+  public calendarEvents = input.required<CalendarEvent[]>();
   public onEventClicked = output<CalendarEvent>();
   public readonly hours: number[] = [...Array(24).keys()];
   public readonly hourTexts: string[] = this.hours.map((hourNumber) =>
     this.hourTotext(hourNumber)
   );
+  public readonly pixelsPerHour = 100;
 
   public get weekDays$(): Observable<CalendarWeekDay[]> {
     return this._dateTimeService.currentWeekDays$;
   }
 
   public scheduledEvents(hour: number, dayOfMonth: number): CalendarEvent[] {
-    return this.calendarEvents.filter(
+    return this.calendarEvents().filter(
       (event) =>
         event != null &&
         new Date(event.start).getHours() === hour &&

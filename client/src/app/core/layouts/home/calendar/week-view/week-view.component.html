@@ -12,7 +12,7 @@
 <div class="timeline-view">
   <div class="time-view">
     @for (hour of hourTexts; track hour) {
-      <div class="time">
+      <div class="time" [style.height]="pixelsPerHour+'px'">
         <p class="time-text">{{ hour }}</p>
       </div>
     }
@@ -21,10 +21,10 @@
     @for (weekDay of (weekDays$ |async); track weekDay.dayOfWeek) {
       <div class="week-day-view">
         @for (hour of hours; track hour) {
-          <div class="hour">
+          <div class="hour" [style.height]="pixelsPerHour+'px'">
             <app-layout-home-calendar-event
               [events]="scheduledEvents(hour, weekDay.dayOfMonth)"
-              [pixelsPerHour]="50"
+              [pixelsPerHour]="pixelsPerHour"
               [borderPixelWidth]="1"
               (eventClicked)="onEventClicked.emit($event)"
             />

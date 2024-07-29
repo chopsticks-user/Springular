@@ -19,18 +19,15 @@
     <mat-icon>sort</mat-icon>
   </button>
 </div>
-<!--@if (groupEditorShouldOpen) {-->
-<app-layout-modal
+<app-layout-dialog-modal
   [modalShouldOpen]="groupEditorShouldOpen"
   (modalShouldClose)="groupEditorShouldOpen=false"
 >
   <app-layout-home-finance-group-editor/>
-</app-layout-modal>
-<!--} @else if (transactionEditorShouldOpen) {-->
-<app-layout-modal
+</app-layout-dialog-modal>
+<app-layout-dialog-modal
   [modalShouldOpen]="transactionEditorShouldOpen"
   (modalShouldClose)="transactionEditorShouldOpen=false"
 >
   <app-layout-home-finance-transaction-editor/>
-</app-layout-modal>
-<!--}-->
+</app-layout-dialog-modal>

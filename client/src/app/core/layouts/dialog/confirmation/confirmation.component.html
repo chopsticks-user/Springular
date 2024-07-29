@@ -1,0 +1,14 @@
+<dialog #confirmationDialog (close)="runDecline()">
+  @if (open()) {
+    <header>
+      <mat-icon (click)="runDecline()">close</mat-icon>
+    </header>
+    <main>
+      <p>{{ question() }}</p>
+      <div>
+        <button class="accept" (click)="runAccept()">Yes</button>
+        <button class="decline" (click)="runDecline()">No</button>
+      </div>
+    </main>
+  }
+</dialog>

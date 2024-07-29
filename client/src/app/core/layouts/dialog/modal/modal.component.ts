@@ -2,7 +2,7 @@ import {Component, effect, ElementRef, input, output, viewChild} from '@angular/
 import {MatIcon} from "@angular/material/icon";
 
 @Component({
-  selector: 'app-layout-modal',
+  selector: 'app-layout-dialog-modal',
   standalone: true,
   imports: [
     MatIcon
@@ -28,9 +28,5 @@ export class ModalComponent {
         this._modalRef().nativeElement.close();
       }
     });
-  }
-
-  ngAfterViewInit() {
-
   }
 }

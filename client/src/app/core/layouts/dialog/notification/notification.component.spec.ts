@@ -1,14 +1,14 @@
-// describe('CalendarEventComponent', () => {
-//   let component: EventComponent;
-//   let fixture: ComponentFixture<EventComponent>;
+// describe('NotificationComponent', () => {
+//   let component: NotificationComponent;
+//   let fixture: ComponentFixture<NotificationComponent>;
 //
 //   beforeEach(async () => {
 //     await TestBed.configureTestingModule({
-//       imports: [EventComponent]
+//       imports: [NotificationComponent]
 //     })
 //     .compileComponents();
 //
-//     fixture = TestBed.createComponent(EventComponent);
+//     fixture = TestBed.createComponent(NotificationComponent);
 //     component = fixture.componentInstance;
 //     fixture.detectChanges();
 //   });

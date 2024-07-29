@@ -2,7 +2,7 @@ import {Component, inject, input, OnInit, WritableSignal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators,} from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
 import {FormControlErrorDictionary, TransactionGroup} from '@shared/domain/types';
-import {ModalComponent} from "@core/layouts/modal/modal.component";
+import {ModalComponent} from "@core/layouts/dialog/modal/modal.component";
 import {GroupComponent} from "@core/layouts/form/group/group.component";
 import {FinanceService} from "@features/home/finance/finance.service";
 import {FieldComponent} from "@core/layouts/form/field/field.component";
