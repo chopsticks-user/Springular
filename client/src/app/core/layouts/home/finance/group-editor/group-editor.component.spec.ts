@@ -1,14 +1,14 @@
-// describe('AddGroupComponent', () => {
-//   let component: AddGroupComponent;
-//   let fixture: ComponentFixture<AddGroupComponent>;
+// describe('GroupEditorComponent', () => {
+//   let component: GroupEditorComponent;
+//   let fixture: ComponentFixture<GroupEditorComponent>;
 
 //   beforeEach(async () => {
 //     await TestBed.configureTestingModule({
-//       imports: [AddGroupComponent]
+//       imports: [GroupEditorComponent]
 //     })
 //     .compileComponents();
 
-//     fixture = TestBed.createComponent(AddGroupComponent);
+//     fixture = TestBed.createComponent(GroupEditorComponent);
 //     component = fixture.componentInstance;
 //     fixture.detectChanges();
 //   });

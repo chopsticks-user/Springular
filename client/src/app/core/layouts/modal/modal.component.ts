@@ -11,7 +11,7 @@ import {MatIcon} from "@angular/material/icon";
   styleUrl: './modal.component.css'
 })
 export class ModalComponent {
-  @ViewChild('modal', {static: true})
+  @ViewChild('modal')
   private _modalRef!: ElementRef<HTMLDialogElement>;
 
   public modalShouldOpen = input.required<boolean>();
@@ -19,6 +19,10 @@ export class ModalComponent {
 
   constructor() {
     effect(() => {
+      if (!this._modalRef) {
+        return;
+      }
+
       if (this.modalShouldOpen()) {
         this._modalRef.nativeElement.showModal();
       } else {

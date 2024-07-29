@@ -10,9 +10,10 @@ import {Router} from '@angular/router';
 import {HttpErrorResponse} from '@angular/common/http';
 import {FieldComponent} from "@core/layouts/form/field/field.component";
 import {GroupComponent} from "@core/layouts/form/group/group.component";
+import {beforeNowValidator} from "@shared/directives/validators/before-now.validator";
 
 @Component({
-  selector: 'app-signup',
+  selector: 'app-auth-signup',
   standalone: true,
   imports: [
     MatFormFieldModule,
@@ -33,14 +34,29 @@ export class SignupComponent {
 
   public hidePassword = true;
   public formGroup: FormGroup = new FormGroup({
-    firstName: new FormControl<string>('', [Validators.required]),
-    lastName: new FormControl<string>('', [Validators.required]),
-    dateOfBirth: new FormControl<Date>(new Date(), [Validators.required]), // TODO: custom validator
+    firstName: new FormControl<string>(
+      '',
+      [Validators.required],
+    ),
+    lastName: new FormControl<string>(
+      '',
+      [Validators.required],
+    ),
+    dateOfBirth: new FormControl<Date>(
+      new Date(),
+      [
+        Validators.required,
+        beforeNowValidator(),
+      ],
+    ), // TODO: custom validator
     email: new FormControl<string>('', [Validators.email, Validators.required]),
-    password: new FormControl<string>('', [
-      Validators.required,
-      Validators.minLength(3),
-    ]),
+    password: new FormControl<string>(
+      '',
+      [
+        Validators.required,
+        Validators.minLength(3),
+      ],
+    ),
   });
   public readonly errorDictionaries: FormControlErrorDictionary[] = [
     {
@@ -59,6 +75,7 @@ export class SignupComponent {
       name: 'dateOfBirth',
       entries: [
         {type: 'required', message: 'Date of birth is required'},
+        {type: 'beforeNow', message: 'Invalid date of birth'},
       ],
     },
     {

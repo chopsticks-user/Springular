@@ -6,7 +6,6 @@ dialog {
 
 dialog > header {
   height: 18px;
-  position: relative;
   background: var(--background-tertiary);
   padding: 3px;
   display: flex;

@@ -94,17 +94,17 @@ export interface Transaction {
   note: string;
   revenues: number;
   expenses: number;
-  groupId: string;
+  path: string;
 }
 
 export interface TransactionGroup {
   id?: string;
-  name: string;
+  path: string;
+  level?: number;
   description: string;
   color: string;
-  revenues: number;
-  expenses: number;
-  parentId: string | null;
+  revenues?: number;
+  expenses?: number;
 }
 
 export interface FormControlErrorEntry {

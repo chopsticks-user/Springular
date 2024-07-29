@@ -1,0 +1,37 @@
+<app-layout-form-group
+  submitButtonName="save transaction"
+  [formGroup]="formGroup"
+  [submitHandler]="submitHandler"
+  [errorDictionaries]="errorDictionaries"
+>
+  <app-layout-form-field
+    [formGroup]="formGroup"
+    controlName="revenues"
+    icon="savings"
+    placeholder="revenues"
+  />
+  <app-layout-form-field
+    [formGroup]="formGroup"
+    controlName="expenses"
+    icon="payments"
+    placeholder="expenses"
+  />
+  <app-layout-form-field
+    [formGroup]="formGroup"
+    controlName="time"
+    icon="schedule"
+    type="datetime-local"
+  />
+  <app-layout-form-field
+    [formGroup]="formGroup"
+    controlName="note"
+    icon="edit_note"
+    placeholder="note"
+  />
+  <app-layout-form-field
+    [formGroup]="formGroup"
+    controlName="path"
+    icon="tab_group"
+    placeholder="/path/to/group"
+  />
+</app-layout-form-group>

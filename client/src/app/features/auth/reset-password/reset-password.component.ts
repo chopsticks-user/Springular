@@ -9,7 +9,7 @@ import {FieldComponent} from "@core/layouts/form/field/field.component";
 import {GroupComponent} from "@core/layouts/form/group/group.component";
 
 @Component({
-  selector: 'app-reset-password',
+  selector: 'app-auth-reset-password',
   standalone: true,
   imports: [
     MatIcon,
@@ -56,8 +56,8 @@ export class ResetPasswordComponent {
     void this._router.navigateByUrl('/auth/signup');
   }
 
-  public navigateToResetPassword(): void {
-    void this._router.navigateByUrl('/auth/reset-password');
+  public navigateToLogin(): void {
+    void this._router.navigateByUrl('/auth/login');
   }
 
   public resetPasswordHandler =
