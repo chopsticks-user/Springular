@@ -1,13 +1,13 @@
-<dialog #confirmationDialog (close)="runDecline()">
-  @if (open()) {
+<dialog #confirmationDialog (close)="declineHandler()">
+  @if (open$ | async) {
     <header>
-      <mat-icon (click)="runDecline()">close</mat-icon>
+      <mat-icon (click)="declineHandler()">close</mat-icon>
     </header>
     <main>
-      <p>{{ question() }}</p>
+      <p>{{ question$ | async }}</p>
       <div>
-        <button class="accept" (click)="runAccept()">Yes</button>
-        <button class="decline" (click)="runDecline()">No</button>
+        <button class="accept" (click)="acceptHandler()">Yes</button>
+        <button class="decline" (click)="declineHandler()">No</button>
       </div>
     </main>
   }

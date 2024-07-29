@@ -116,3 +116,5 @@ export interface FormControlErrorDictionary {
   name: string;
   entries: FormControlErrorEntry[];
 }
+
+export type NotificationLevel = 'info' | 'warning' | 'error';

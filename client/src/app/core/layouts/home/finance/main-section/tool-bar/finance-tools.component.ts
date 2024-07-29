@@ -5,6 +5,7 @@ import {GroupEditorComponent} from '@core/layouts/home/finance/group-editor/grou
 import {ModalComponent} from "@core/layouts/dialog/modal/modal.component";
 import {ConfirmationService} from "@shared/services/confirmation.service";
 import {ConfirmationComponent} from "@core/layouts/dialog/confirmation/confirmation.component";
+import {NotificationService} from "@shared/services/notification.service";
 
 @Component({
   selector: 'app-layout-home-finance-tool-bar',
@@ -21,15 +22,12 @@ import {ConfirmationComponent} from "@core/layouts/dialog/confirmation/confirmat
 })
 export class FinanceToolsComponent {
   private _confirmationService = inject(ConfirmationService);
+  private _notificationService = inject(NotificationService);
 
   public groupEditorShouldOpen = false;
   public transactionEditorShouldOpen = false;
 
-  public showConfirmationDialog() {
-    this._confirmationService.show(
-      'Confirmation',
-      () => console.log('accepted'),
-      () => console.log('declined'),
-    );
+  public search() {
+    this._notificationService.show(Math.random().toString(), 'warning');
   }
 }
