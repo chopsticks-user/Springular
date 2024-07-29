@@ -1,14 +1,14 @@
-// describe('AddTransactionComponent', () => {
-//   let component: AddTransactionComponent;
-//   let fixture: ComponentFixture<AddTransactionComponent>;
+// describe('TransactionEditorComponent', () => {
+//   let component: TransactionEditorComponent;
+//   let fixture: ComponentFixture<TransactionEditorComponent>;
 
 //   beforeEach(async () => {
 //     await TestBed.configureTestingModule({
-//       imports: [AddTransactionComponent]
+//       imports: [TransactionEditorComponent]
 //     })
 //     .compileComponents();
 
-//     fixture = TestBed.createComponent(AddTransactionComponent);
+//     fixture = TestBed.createComponent(TransactionEditorComponent);
 //     component = fixture.componentInstance;
 //     fixture.detectChanges();
 //   });

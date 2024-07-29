@@ -16,6 +16,8 @@ import {GroupComponent} from "@core/layouts/form/group/group.component";
 import {FieldComponent} from "@core/layouts/form/field/field.component";
 import {CalendarEventsService} from "@features/home/calendar/calendar-events.service";
 import {HttpErrorResponse} from "@angular/common/http";
+import {FormService} from "@shared/services/form.service";
+import {divisibleByValidator} from "@shared/directives/validators/divisible-by.validator";
 
 @Component({
   selector: 'app-layout-home-calendar-editor',
@@ -32,22 +34,79 @@ import {HttpErrorResponse} from "@angular/common/http";
 })
 export class EditorComponent implements OnInit {
   private _calendarEventsService = inject(CalendarEventsService);
+  private _formService = inject(FormService);
 
   public calendarEvent = input<CalendarEvent>();
   public editorShouldClose = output<void>();
 
   public readonly repeatOptions = calendarEventRepeatOptions;
   public readonly repeatEveryUnits = calendarEventRepeatEveryUnits;
-  public readonly errorDictionaries: FormControlErrorDictionary[] = [];
+  public readonly errorDictionaries: FormControlErrorDictionary[] = [
+    {
+      name: 'title',
+      entries: [
+        {type: 'required', message: 'Title is required'},
+        {type: 'maxLength', message: 'Title must contain at most 20 characters'},
+      ],
+    },
+    {
+      name: 'description',
+      entries: [
+        {type: 'maxLength', message: 'Description must contain at most 100 characters'},
+      ],
+    },
+    {
+      name: 'start',
+      entries: [
+        {type: 'required', message: 'Start time is required'},
+      ],
+    },
+    {
+      name: 'duration',
+      entries: [
+        {type: 'required', message: 'Duration is required'},
+        {type: 'divisibleBy', message: 'Duration minutes must be divisible by 5'},
+      ],
+    },
+    {
+      name: 'color',
+      entries: [
+        {type: 'required', message: 'Color is required'},
+      ],
+    },
+    {
+      name: 'repeat',
+      entries: [
+        {type: 'required', message: 'Repeat is required'},
+      ],
+    },
+    {
+      name: 'repeatEveryUnit',
+      entries: [
+        {type: 'required', message: 'Repeat interval unit is required'},
+      ],
+    },
+    {
+      name: 'repeatEveryValue',
+      entries: [
+        {type: 'required', message: 'Repeat interval value is required'},
+      ],
+    },
+  ];
   public formGroup!: FormGroup;
 
   ngOnInit(): void {
     this.formGroup = new FormGroup({
-      title: new FormControl<string>(this.calendarEvent()?.title || '', [
-        Validators.required,
-      ]),
+      title: new FormControl<string>(
+        this.calendarEvent()?.title || '',
+        [
+          Validators.required,
+          Validators.maxLength(20),
+        ],
+      ),
       description: new FormControl<string>(
-        this.calendarEvent()?.description || ''
+        this.calendarEvent()?.description || '',
+        [Validators.maxLength(100)],
       ),
       start: new FormControl<string>(
         this._formatDate(this.calendarEvent()?.start) ||
@@ -56,7 +115,10 @@ export class EditorComponent implements OnInit {
       ),
       duration: new FormControl<number>(
         this.calendarEvent()?.durationMinutes || 15,
-        [Validators.required]
+        [
+          Validators.required,
+          divisibleByValidator(5),
+        ]
       ),
       color: new FormControl<string>(this.calendarEvent()?.color || 'green', [
         Validators.required,

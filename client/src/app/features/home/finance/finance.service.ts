@@ -13,7 +13,7 @@ export class FinanceService {
   private $groups = new BehaviorSubject<TransactionGroup[]>([]);
 
   public transactions$: Observable<Transaction[]> = this.$transactions;
-  public groups$: Observable<TransactionGroup[]> = this.$groups;
+  public groups$: Observable<TransactionGroup[]> = this.$groups.asObservable();
 
   public load(interval: string, start: DateTime): void {
     zip(

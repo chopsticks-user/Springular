@@ -12,7 +12,7 @@ import {FieldComponent} from "@core/layouts/form/field/field.component";
 import {GroupComponent} from "@core/layouts/form/group/group.component";
 
 @Component({
-  selector: 'app-signup',
+  selector: 'app-auth-signup',
   standalone: true,
   imports: [
     MatFormFieldModule,

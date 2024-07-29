@@ -1,46 +1,22 @@
-import {Component, ElementRef, output, ViewChild} from '@angular/core';
+import {Component} from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
-import {AddTransactionComponent} from './add-transaction/add-transaction.component';
-import {AddGroupComponent} from '@core/layouts/home/finance/main-section/tool-bar/add-group/add-group.component';
-import {MatSuffix} from "@angular/material/form-field";
+import {TransactionEditorComponent} from '@core/layouts/home/finance/transaction-editor/transaction-editor.component';
+import {GroupEditorComponent} from '@core/layouts/home/finance/group-editor/group-editor.component';
+import {ModalComponent} from "@core/layouts/modal/modal.component";
 
 @Component({
   selector: 'app-layout-home-finance-tool-bar',
   standalone: true,
   imports: [
     MatIconModule,
-    AddTransactionComponent,
-    AddGroupComponent,
-    MatSuffix,
+    TransactionEditorComponent,
+    GroupEditorComponent,
+    ModalComponent,
   ],
   templateUrl: './finance-tools.component.html',
   styleUrl: './finance-tools.component.css',
 })
 export class FinanceToolsComponent {
-  @ViewChild('addTransactionModal', {static: true})
-  private _addTransactionModalRef!: ElementRef<HTMLDialogElement>;
-
-  @ViewChild('addTransactionGroupModal', {static: true})
-  private _addTransactionGroupModalRef!: ElementRef<HTMLDialogElement>;
-
-  public onAddTransaction = output<void>();
-  public onAddTransactionGroup = output<void>();
-  public onSearch = output<void>();
-  public onFilter = output<void>();
-
-  public openTransactionModal(): void {
-    this._addTransactionModalRef.nativeElement.showModal();
-  }
-
-  public closeTransactionModal(): void {
-    this._addTransactionModalRef.nativeElement.close();
-  }
-
-  public openTransactionGroupModal(): void {
-    this._addTransactionGroupModalRef.nativeElement.showModal();
-  }
-
-  public closeTransactionGroupModal(): void {
-    this._addTransactionGroupModalRef.nativeElement.close();
-  }
+  public groupEditorShouldOpen = false;
+  public transactionEditorShouldOpen = false;
 }

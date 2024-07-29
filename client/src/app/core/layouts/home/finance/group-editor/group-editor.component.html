@@ -1,0 +1,30 @@
+<app-layout-form-group
+  submitButtonName="save group"
+  [formGroup]="formGroup"
+  [errorDictionaries]="errorDictionaries"
+  [submitHandler]="submitHandler"
+>
+  <app-layout-form-field
+    [formGroup]="formGroup"
+    controlName="name"
+    placeholder="name"
+    icon="dns"
+  />
+  <app-layout-form-field
+    [formGroup]="formGroup"
+    controlName="description"
+    placeholder="description"
+    icon="description"
+  />
+  <app-layout-form-field
+    [formGroup]="formGroup"
+    controlName="color"
+    icon="palette"
+    type="color"
+  />
+  <app-layout-form-field
+    [formGroup]="formGroup"
+    controlName="directory"
+    icon="folder"
+  />
+</app-layout-form-group>

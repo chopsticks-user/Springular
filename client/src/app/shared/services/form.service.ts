@@ -16,7 +16,7 @@ export class FormService {
 
     const dictionary = dictionaries.find(
       (dict) =>
-        formGroup.get(dict.name)?.invalid
+        !formGroup.contains(dict.name) || formGroup.get(dict.name)?.invalid
     );
 
     if (!dictionary) {

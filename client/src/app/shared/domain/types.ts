@@ -99,12 +99,12 @@ export interface Transaction {
 
 export interface TransactionGroup {
   id?: string;
-  name: string;
+  path: string;
+  level?: number;
   description: string;
   color: string;
-  revenues: number;
-  expenses: number;
-  parentId: string | null;
+  revenues?: number;
+  expenses?: number;
 }
 
 export interface FormControlErrorEntry {
