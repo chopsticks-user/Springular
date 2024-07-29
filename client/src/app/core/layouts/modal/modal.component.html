@@ -1,9 +1,11 @@
-<dialog #modal (close)="this.modalShouldClose.emit()">
-  <header>
-    <mat-icon>menu_open</mat-icon>
-    <ng-content select="app-layout-modal-tool"/>
-    <span></span>
-    <mat-icon (click)="modalShouldClose.emit()">close</mat-icon>
-  </header>
-  <ng-content/>
+<dialog #modal (close)="modalShouldClose.emit()">
+  @if (modalShouldOpen()) {
+    <header>
+      <mat-icon>menu_open</mat-icon>
+      <ng-content select="app-layout-modal-tool"/>
+      <span></span>
+      <mat-icon (click)="modalShouldClose.emit()">close</mat-icon>
+    </header>
+    <ng-content/>
+  }
 </dialog>
