@@ -1,18 +1,18 @@
-// describe('FieldComponent', () => {
-//   let component: FieldComponent;
-//   let fixture: ComponentFixture<FieldComponent>;
-
+// describe('NotificationComponent', () => {
+//   let component: NotificationComponent;
+//   let fixture: ComponentFixture<NotificationComponent>;
+//
 //   beforeEach(async () => {
 //     await TestBed.configureTestingModule({
-//       imports: [FieldComponent]
+//       imports: [NotificationComponent]
 //     })
 //     .compileComponents();
-
-//     fixture = TestBed.createComponent(FieldComponent);
+//
+//     fixture = TestBed.createComponent(NotificationComponent);
 //     component = fixture.componentInstance;
 //     fixture.detectChanges();
 //   });
-
+//
 //   it('should create', () => {
 //     expect(component).toBeTruthy();
 //   });

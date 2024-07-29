@@ -2,7 +2,7 @@ import {Component, inject, input, OnInit, WritableSignal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators,} from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
 import {FormControlErrorDictionary, TransactionGroup} from '@shared/domain/types';
-import {ModalComponent} from "@core/layouts/modal/modal.component";
+import {ModalComponent} from "@core/layouts/dialog/modal/modal.component";
 import {GroupComponent} from "@core/layouts/form/group/group.component";
 import {FinanceService} from "@features/home/finance/finance.service";
 import {FieldComponent} from "@core/layouts/form/field/field.component";
@@ -62,7 +62,7 @@ export class GroupEditorComponent implements OnInit {
     const transactionGroup: TransactionGroup | undefined = this.group();
 
     const {name, directory} =
-      this.splitPath(transactionGroup?.path || '/');
+      this.splitPath(transactionGroup?.path || '');
     this.formGroup = new FormGroup({
       name: new FormControl<string>(
         name,
@@ -82,10 +82,7 @@ export class GroupEditorComponent implements OnInit {
       ),
       directory: new FormControl<string>(
         directory,
-        [
-          Validators.required,
-          directoryValidator(),
-        ],
+        [directoryValidator()],
       ),
     })
     ;
@@ -119,17 +116,20 @@ export class GroupEditorComponent implements OnInit {
 
   private splitPath(path: string): { name: string, directory: string } {
     if (path.trim() === '/' || path.trim() === '') {
-      return {name: '', directory: '/'};
+      return {name: '', directory: ''};
     }
 
     const index: number = path.lastIndexOf('/');
     return {
-      name: path.substring(0, index),
-      directory: path.substring(index + 1),
+      name: path.substring(0, index).trim(),
+      directory: path.substring(index + 1).trim(),
     }
   }
 
   private getPath(name: string, directory: string): string {
-    return `${directory}/${name}`;
+    if (directory === '/') {
+      return `/${name.trim()}`;
+    }
+    return `${directory.trim()}/${name.trim()}`;
   }
 }

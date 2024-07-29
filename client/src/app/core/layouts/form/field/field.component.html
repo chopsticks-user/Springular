@@ -13,5 +13,11 @@
       />
     }
   }
-  <mat-icon matSuffix (click)="iconClicked.emit()">{{ icon() }}</mat-icon>
+
+  @let titleText = title() || placeholder();
+  @if (titleText) {
+    <mat-icon matSuffix (click)="iconClicked.emit()" [title]="titleText">{{ icon() }}</mat-icon>
+  } @else {
+    <mat-icon matSuffix (click)="iconClicked.emit()">{{ icon() }}</mat-icon>
+  }
 </ng-container>

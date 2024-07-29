@@ -1,0 +1,62 @@
+dialog {
+  display: block;
+  border: 0;
+  padding: 0;
+  background-color: var(--background-primary);
+  position: relative;
+}
+
+dialog > main {
+  padding: 1rem;
+}
+
+dialog > header {
+  height: 18px;
+  background-color: var(--background-tertiary);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+dialog > main > p {
+  margin-top: 0;
+  font-weight: 300;
+}
+
+mat-icon {
+  transform: scale(0.6);
+  color: var(--typography-secondary);
+  cursor: pointer;
+}
+
+dialog > main > div {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+  flex-basis: 50px;
+  background-color: var(--background-tertiary);
+  color: var(--typography-secondary);
+  font-weight: bold;
+}
+
+button:hover {
+  color: var(--typography-primary);
+}
+
+.accept {
+  margin-right: 15px;
+  background-color: var(--static-red-accent);
+}
+
+/*dialog::backdrop {*/
+/*  backdrop-filter: blur(1px);*/
+/*}*/
+
+mat-icon:hover {
+  color: var(--typography-primary);
+}

@@ -3,7 +3,7 @@ import {MainSectionComponent} from '@core/layouts/home/finance/main-section/main
 import {RecentActivitiesComponent} from '@core/layouts/home/finance/recent-activities/recent-activities.component';
 import {SummarySectionComponent} from "@core/layouts/home/finance/summary-section/summary-section.component";
 import {GroupEditorComponent} from "@core/layouts/home/finance/group-editor/group-editor.component";
-import {ModalComponent} from "@core/layouts/modal/modal.component";
+import {ModalComponent} from "@core/layouts/dialog/modal/modal.component";
 
 @Component({
   selector: 'app-home-finance',

@@ -21,23 +21,27 @@
     controlName="start"
     icon="calendar_month"
     type="datetime-local"
+    title="start"
   />
   <app-layout-form-field
     [formGroup]="formGroup"
     controlName="duration"
     icon="timer"
+    title="duration"
   />
   <app-layout-form-field
     [formGroup]="formGroup"
     controlName="color"
     icon="palette"
     type="color"
+    title="color"
   />
   <app-layout-form-field
     [formGroup]="formGroup"
     controlName="repeat"
     icon="event_repeat"
     type="select"
+    title="repeat"
   >
     @for (option of repeatOptions; track option) {
       <option>{{ option }}</option>
@@ -49,6 +53,7 @@
       controlName="repeatEveryUnit"
       icon="repeat"
       type="select"
+      title="repeat interval unit"
     >
       @for (option of repeatEveryUnits; track option) {
         <option>{{ option }}</option>
@@ -58,6 +63,7 @@
       [formGroup]="formGroup"
       controlName="repeatEveryValue"
       icon="repeat"
+      title="repeat interval value"
     />
   }
 </app-layout-form-group>

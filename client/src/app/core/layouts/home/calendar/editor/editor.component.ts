@@ -16,8 +16,8 @@ import {GroupComponent} from "@core/layouts/form/group/group.component";
 import {FieldComponent} from "@core/layouts/form/field/field.component";
 import {CalendarEventsService} from "@features/home/calendar/calendar-events.service";
 import {HttpErrorResponse} from "@angular/common/http";
-import {FormService} from "@shared/services/form.service";
 import {divisibleByValidator} from "@shared/directives/validators/divisible-by.validator";
+import {divisibleByMinutesValidator} from "@shared/directives/validators/divisible-by-minutes.validator";
 
 @Component({
   selector: 'app-layout-home-calendar-editor',
@@ -34,7 +34,6 @@ import {divisibleByValidator} from "@shared/directives/validators/divisible-by.v
 })
 export class EditorComponent implements OnInit {
   private _calendarEventsService = inject(CalendarEventsService);
-  private _formService = inject(FormService);
 
   public calendarEvent = input<CalendarEvent>();
   public editorShouldClose = output<void>();
@@ -59,6 +58,7 @@ export class EditorComponent implements OnInit {
       name: 'start',
       entries: [
         {type: 'required', message: 'Start time is required'},
+        {type: 'divisibleByMinutes', message: 'Start time minutes must be divisible by 5'},
       ],
     },
     {
@@ -111,7 +111,10 @@ export class EditorComponent implements OnInit {
       start: new FormControl<string>(
         this._formatDate(this.calendarEvent()?.start) ||
         this._formatDate(DateTime.local().toJSDate()),
-        [Validators.required]
+        [
+          Validators.required,
+          divisibleByMinutesValidator(5),
+        ]
       ),
       duration: new FormControl<number>(
         this.calendarEvent()?.durationMinutes || 15,

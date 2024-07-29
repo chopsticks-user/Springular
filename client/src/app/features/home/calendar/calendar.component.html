@@ -8,12 +8,13 @@
     [calendarEvents]="(calendarEvents$ | async) ?? []"
     (onEventClicked)="openEventEditor($event)"
   />
-  <app-layout-modal
+  <app-layout-dialog-modal
     [modalShouldOpen]="modalShouldOpen"
     (modalShouldClose)="closeEventEditor()"
   >
     @if (selectedCalendarEvent) {
-      <app-layout-modal-tool
+      <app-layout-dialog-modal-tool
+        title="delete event"
         icon="delete"
         (click)="deleteCalendarEvent(selectedCalendarEvent)"
       />
@@ -24,5 +25,5 @@
         (editorShouldClose)="closeEventEditor()"
       ></app-layout-home-calendar-editor>
     }
-  </app-layout-modal>
+  </app-layout-dialog-modal>
 </main>
