@@ -1,26 +1,34 @@
-<div class="group info"></div>
-<div class="group">
-  <button>
-    <mat-icon (click)="transactionEditorShouldOpen=true">
-      add
-    </mat-icon>
-  </button>
-  <button>
-    <mat-icon (click)="groupEditorShouldOpen=true">
-      create_new_folder
-    </mat-icon>
-  </button>
-</div>
-<div class="group">
-  <button>
-    <mat-icon>
-      search
-    </mat-icon>
-  </button>
-  <button>
-    <mat-icon>sort</mat-icon>
-  </button>
-</div>
+<header>
+  <div class="group info"></div>
+  <div class="group">
+    <button>
+      <mat-icon (click)="transactionEditorShouldOpen=true">
+        add
+      </mat-icon>
+    </button>
+    <button>
+      <mat-icon (click)="groupEditorShouldOpen=true">
+        create_new_folder
+      </mat-icon>
+    </button>
+  </div>
+  <div class="group">
+    <button>
+      <mat-icon>
+        search
+      </mat-icon>
+    </button>
+    <button>
+      <mat-icon>sort</mat-icon>
+    </button>
+  </div>
+</header>
+<div></div>
+<main>
+  <app-layout-home-finance-main-section-group-explorer
+    [childrenGroups]="childrenGroups()"
+  />
+</main>
 <app-layout-dialog-modal
   [modalShouldOpen]="groupEditorShouldOpen"
   (modalShouldClose)="groupEditorShouldOpen=false"

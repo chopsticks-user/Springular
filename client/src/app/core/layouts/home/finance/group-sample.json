@@ -3,7 +3,7 @@
     "id": "0",
     "path": "/housing/mortgage",
     "level": 2,
-    "description": "",
+    "description": "Aligns grid items along the block (column) axis (as opposed to justify-items which aligns along the inline (row) axis). This value applies to all grid items inside the container.",
     "color": "#41af12",
     "revenues": 0.0,
     "expenses": -1000.0
@@ -12,7 +12,7 @@
     "id": "1",
     "path": "/housing/taxes",
     "level": 2,
-    "description": "",
+    "description": "Aligns grid items along the block (column) axis (as opposed to justify-items which aligns along the inline (row) axis). This value applies to all grid items inside the container.",
     "color": "#731abc",
     "revenues": 0.0,
     "expenses": -200.0
@@ -21,7 +21,7 @@
     "id": "2",
     "path": "/housing/repairs",
     "level": 2,
-    "description": "",
+    "description": "Aligns grid items along the block (column) axis (as opposed to justify-items which aligns along the inline (row) axis). This value applies to all grid items inside the container.",
     "color": "#9ab72a",
     "revenues": 0.0,
     "expenses": -300.0
@@ -30,7 +30,7 @@
     "id": "3",
     "path": "/housing/hoa",
     "level": 2,
-    "description": "",
+    "description": "Aligns grid items along the block (column) axis (as opposed to justify-items which aligns along the inline (row) axis). This value applies to all grid items inside the container.",
     "color": "#123afc",
     "revenues": 0.0,
     "expenses": -50.0
@@ -39,7 +39,7 @@
     "id": "4",
     "path": "/housing",
     "level": 1,
-    "description": "",
+    "description": "Aligns grid items along the block (column) axis (as opposed to justify-items which aligns along the inline (row) axis). This value applies to all grid items inside the container.",
     "color": "#123afc",
     "revenues": 0.0,
     "expenses": -1550.0
@@ -48,7 +48,7 @@
     "id": "5",
     "path": "/transportation/repairs",
     "level": 2,
-    "description": "",
+    "description": "Aligns grid items along the block (column) axis (as opposed to justify-items which aligns along the inline (row) axis). This value applies to all grid items inside the container.",
     "color": "#41af12",
     "revenues": 0.0,
     "expenses": -200.0
@@ -57,7 +57,7 @@
     "id": "6",
     "path": "/transportation/gas",
     "level": 2,
-    "description": "",
+    "description": "Aligns grid items along the block (column) axis (as opposed to justify-items which aligns along the inline (row) axis). This value applies to all grid items inside the container.",
     "color": "#731abc",
     "revenues": 0.0,
     "expenses": -100.0
@@ -66,7 +66,7 @@
     "id": "7",
     "path": "/transportation/parking",
     "level": 2,
-    "description": "",
+    "description": "Aligns grid items along the block (column) axis (as opposed to justify-items which aligns along the inline (row) axis). This value applies to all grid items inside the container.",
     "color": "#9ab72a",
     "revenues": 0.0,
     "expenses": -50.0
@@ -75,7 +75,7 @@
     "id": "8",
     "path": "/transportation/insurance",
     "level": 2,
-    "description": "",
+    "description": "Aligns grid items along the block (column) axis (as opposed to justify-items which aligns along the inline (row) axis). This value applies to all grid items inside the container.",
     "color": "#123afc",
     "revenues": 0.0,
     "expenses": -500.0
@@ -84,7 +84,7 @@
     "id": "9",
     "path": "/transportation",
     "level": 1,
-    "description": "",
+    "description": "Aligns grid items along the block (column) axis (as opposed to justify-items which aligns along the inline (row) axis). This value applies to all grid items inside the container.",
     "color": "#123afc",
     "revenues": 0.0,
     "expenses": -850.0
@@ -93,7 +93,7 @@
     "id": "10",
     "path": "/income",
     "level": 1,
-    "description": "",
+    "description": "Aligns grid items along the block (column) axis (as opposed to justify-items which aligns along the inline (row) axis). This value applies to all grid items inside the container.",
     "color": "#abc789",
     "revenues": 0.0,
     "expenses": 10000.0
@@ -102,7 +102,7 @@
     "id": "11",
     "path": "/",
     "level": 0,
-    "description": "",
+    "description": "Aligns grid items along the block (column) axis (as opposed to justify-items which aligns along the inline (row) axis). This value applies to all grid items inside the container.",
     "color": "#999aaa",
     "revenues": 0.0,
     "expenses": 7600.0

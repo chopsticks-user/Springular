@@ -1,16 +1,41 @@
 :host {
-  height: 40px;
+  flex: 0 0 30%;
+  display: block;
   background-color: var(--background-secondary);
   margin-bottom: 20px;
-  /*border-bottom: 1px solid var(--border-primary);*/
+  overflow: scroll;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--background-tertiary);
+  border: 1px solid var(--border-primary);
+  border-radius: 5px;
+  height: 40px;
   display: flex;
   align-items: center;
+  padding-right: 20px;
+}
+
+:host > div {
+  height: 10px;
+  position: sticky;
+  z-index: 1000;
+  top: calc(40px + 2px);
+  background-color: var(--background-secondary);
+}
+
+main {
+  display: block;
 }
 
 .info {
   flex: 1;
   border-right: 1px solid var(--border-primary);
 }
+
 
 .group {
   height: 70%;
@@ -40,29 +65,4 @@ button {
 
 button:hover {
   background-color: var(--border-primary);
-}
-
-dialog {
-  background-color: var(--background-primary);
-  border: var(--dialog-border);
-  border-radius: 10px;
-}
-
-dialog::backdrop {
-  backdrop-filter: blur(2px);
-}
-
-dialog[open] {
-  animation-duration: 0.5s;
-  animation-name: slidein;
-}
-
-@keyframes slidein {
-  from {
-    scale: 0;
-  }
-
-  to {
-    scale: 1;
-  }
 }

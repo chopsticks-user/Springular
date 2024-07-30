@@ -70,12 +70,11 @@ export const routes: Routes = [
       },
       {
         path: 'finance',
-        // canActivate: [authorizedGuard],
         children: [
           {
             path: '**',
             component: FinanceComponent,
-            canActivate: [],
+            // canActivate: [authorizedGuard],
           }
         ],
       },

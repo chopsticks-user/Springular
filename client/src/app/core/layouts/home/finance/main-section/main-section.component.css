@@ -3,10 +3,6 @@
   margin-right: 20px;
   display: flex;
   flex-direction: column;
-  background-color: var(--background-secondary);
-  border-radius: 20px;
-  padding: 20px;
-  padding-bottom: 0;
 }
 
 main {
@@ -14,12 +10,4 @@ main {
   display: flex;
   flex-direction: column;
   /*background: var(--background-gradient-100);*/
-}
-
-section {
-  flex: 1 1 auto;
-  background-color: var(--background-tertiary);
-  border-radius: 20px;
-  display: flex;
-  margin-bottom: 20px;
 }

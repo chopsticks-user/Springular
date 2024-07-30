@@ -1,0 +1,5 @@
+<main>
+  @for (childGroup of childrenGroups(); track childGroup.id) {
+    <app-layout-home-finance-main-section-group [group]="childGroup"/>
+  }
+</main>
