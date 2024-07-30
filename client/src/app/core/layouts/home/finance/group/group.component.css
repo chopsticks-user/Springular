@@ -35,14 +35,16 @@
   /*padding-top: 10px;*/
 }
 
-.info > h4 {
+.info > .name {
   color: var(--typography-primary);
   margin: 0;
-  text-transform: capitalize;
   margin-bottom: 5px;
+  text-transform: capitalize;
+  font-weight: bold;
+  font-size: small;
 }
 
-.info > p {
+.info > .path {
   color: var(--typography-secondary);
   font-size: small;
   font-weight: 300;

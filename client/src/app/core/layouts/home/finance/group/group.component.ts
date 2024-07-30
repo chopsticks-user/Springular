@@ -10,7 +10,10 @@ import {Router} from "@angular/router";
     MatIcon
   ],
   templateUrl: './group.component.html',
-  styleUrl: './group.component.css'
+  styleUrl: './group.component.css',
+  host: {
+    '[title]': "group().description"
+  },
 })
 export class GroupComponent {
   private _router = inject(Router);
