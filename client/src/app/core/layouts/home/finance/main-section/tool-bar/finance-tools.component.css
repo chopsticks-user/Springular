@@ -51,13 +51,22 @@ header > div {
   box-sizing: border-box;
   font-size: 14px;
   color: var(--typography-primary);
-  padding-left: 10px;
+  padding-left: 15px;
   padding-right: 10px;
 }
 
 .search-bar > button {
   position: absolute;
   right: 6px;
+  z-index: 1000;
+}
+
+.slash {
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  position: absolute;
+  width: 5px;
+  left: 10px;
   z-index: 1000;
 }
 
@@ -73,6 +82,7 @@ header > div {
   color: var(--typography-primary);
   padding-left: 10px;
   padding-right: 10px;
+  margin-right: 1px;
 }
 
 mat-icon {

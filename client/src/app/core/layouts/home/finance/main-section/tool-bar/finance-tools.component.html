@@ -5,7 +5,11 @@
     </button>
   </div>
   <div class="search-bar">
-    <input type="text" [value]="rootGroup()?.path || '/'">
+    <div class="slash">/</div>
+    <input
+      type="text"
+      [value]="displayedPath(rootGroup()?.path || '/')"
+    >
     <button title="search for groups">
       <mat-icon>search</mat-icon>
     </button>
@@ -45,18 +49,6 @@
 </header>
 <div class="margin"></div>
 <main>
-  @for (childGroup of childrenGroups(); track childGroup.id) {
-    <app-layout-home-finance-main-section-group [group]="childGroup"/>
-  }
-  @for (childGroup of childrenGroups(); track childGroup.id) {
-    <app-layout-home-finance-main-section-group [group]="childGroup"/>
-  }
-  @for (childGroup of childrenGroups(); track childGroup.id) {
-    <app-layout-home-finance-main-section-group [group]="childGroup"/>
-  }
-  @for (childGroup of childrenGroups(); track childGroup.id) {
-    <app-layout-home-finance-main-section-group [group]="childGroup"/>
-  }
   @for (childGroup of childrenGroups(); track childGroup.id) {
     <app-layout-home-finance-main-section-group [group]="childGroup"/>
   }

@@ -56,6 +56,13 @@ export class FinanceToolsComponent {
     void this._router.navigateByUrl(`${this._router.url.substring(
       0, this._router.url.lastIndexOf('/')
     )}`);
+  }
 
+  public displayedPath(path: string): string {
+    return path.substring(1);
+  }
+
+  public actualPath(path: string): string {
+    return '/'.concat(path);
   }
 }

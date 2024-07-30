@@ -102,7 +102,6 @@ export interface TransactionGroup {
   path: string;
   level?: number;
   description: string;
-  color: string;
   revenues?: number;
   expenses?: number;
 }

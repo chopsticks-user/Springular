@@ -44,12 +44,6 @@ export class GroupEditorComponent implements OnInit {
       ],
     },
     {
-      name: 'color',
-      entries: [
-        {type: 'required', message: 'Color is required'},
-      ],
-    },
-    {
       name: 'directory',
       entries: [
         {type: 'directory', message: 'Invalid directory'},
@@ -76,10 +70,6 @@ export class GroupEditorComponent implements OnInit {
         transactionGroup?.description || '',
         [Validators.maxLength(100)],
       ),
-      color: new FormControl<string>(
-        transactionGroup?.color || '#7cfc00',
-        [Validators.required],
-      ),
       directory: new FormControl<string>(
         directory,
         [directoryValidator()],
@@ -101,13 +91,11 @@ export class GroupEditorComponent implements OnInit {
         ...transactionGroup,
         path: path,
         description: this.formGroup.get('description')?.value,
-        color: this.formGroup.get('color')?.value,
       };
     } else {
       transactionGroup = {
         path: path,
         description: this.formGroup.get('description')?.value as string,
-        color: this.formGroup.get('color')?.value as string,
       };
     }
 

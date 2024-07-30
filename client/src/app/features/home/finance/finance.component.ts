@@ -31,9 +31,6 @@ export class FinanceComponent {
   public childrenGroups$ = this._financeService.childrenGroups$;
 
   constructor() {
-    this._financeService.path$.pipe(takeUntilDestroyed()).subscribe(
-      path => console.log(path),
-    );
     this.rootGroup$.pipe(takeUntilDestroyed()).subscribe(
       rootGroup => !rootGroup && void this._router.navigateByUrl('/home/finance')
     );
