@@ -45,6 +45,6 @@ export class SectionComponent {
       return false;
     }
 
-    return item.url! === this._router.url;
+    return this._router.url.startsWith(item.url!);
   }
 }

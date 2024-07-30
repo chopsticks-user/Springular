@@ -1,5 +1,10 @@
-<app-layout-home-finance-tool-bar/>
+<app-layout-home-finance-tool-bar
+  [rootGroup]="rootGroup()"
+  [childrenGroups]="childrenGroups()"
+/>
 <main>
-  <section></section>
-  <section></section>
+  <app-layout-home-finance-main-section-group-summary
+    [rootGroup]="rootGroup()"
+    [childrenGroups]="childrenGroups()"
+  />
 </main>

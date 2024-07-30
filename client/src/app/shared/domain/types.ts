@@ -102,7 +102,6 @@ export interface TransactionGroup {
   path: string;
   level?: number;
   description: string;
-  color: string;
   revenues?: number;
   expenses?: number;
 }
@@ -116,3 +115,5 @@ export interface FormControlErrorDictionary {
   name: string;
   entries: FormControlErrorEntry[];
 }
+
+export type NotificationLevel = 'info' | 'warning' | 'error';

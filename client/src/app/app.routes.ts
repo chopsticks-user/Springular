@@ -70,8 +70,13 @@ export const routes: Routes = [
       },
       {
         path: 'finance',
-        component: FinanceComponent,
-        // canActivate: [authorizedGuard],
+        children: [
+          {
+            path: '**',
+            component: FinanceComponent,
+            // canActivate: [authorizedGuard],
+          }
+        ],
       },
       {
         path: 'contacts',

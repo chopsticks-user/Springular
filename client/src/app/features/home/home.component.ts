@@ -5,11 +5,12 @@ import {NavigationBarComponent} from '@core/layouts/home/navigation-bar/navigati
 import {RouterOutlet} from '@angular/router';
 import {UserService} from '@shared/services/user.service';
 import {ConfirmationComponent} from "@core/layouts/dialog/confirmation/confirmation.component";
+import {NotificationComponent} from "@core/layouts/dialog/notification/notification.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NavigationBarComponent, HeaderComponent, CalendarComponent, RouterOutlet, NavigationBarComponent, ConfirmationComponent,],
+  imports: [NavigationBarComponent, HeaderComponent, CalendarComponent, RouterOutlet, NavigationBarComponent, ConfirmationComponent, NotificationComponent,],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })

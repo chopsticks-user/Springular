@@ -1,9 +1,9 @@
-// describe('ConfirmationService', () => {
-//   let service: ConfirmationService;
+// describe('NotificationService', () => {
+//   let service: NotificationService;
 //
 //   beforeEach(() => {
 //     TestBed.configureTestingModule({});
-//     service = TestBed.inject(ConfirmationService);
+//     service = TestBed.inject(NotificationService);
 //   });
 //
 //   it('should be created', () => {

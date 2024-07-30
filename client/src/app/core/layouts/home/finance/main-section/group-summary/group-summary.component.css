@@ -1,0 +1,14 @@
+:host {
+  flex: 1 1 auto;
+  background-color: var(--background-secondary);
+}
+
+header {
+  flex: 0 0 fit-content;
+  padding: 20px;
+}
+
+header > p {
+  margin: 0;
+  font-weight: 300;
+}

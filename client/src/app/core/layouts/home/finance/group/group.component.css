@@ -1,0 +1,52 @@
+:host {
+  /*height: 50px;*/
+  /*width: 150px;*/
+  height: calc(50px - 5px * 2);
+  border: 1px solid var(--border-primary);
+  border-radius: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+:host:hover {
+  background-color: var(--background-tertiary);
+}
+
+.icon {
+  flex-basis: 50px;
+  justify-self: flex-start;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.icon > mat-icon {
+  transform: scale(1.5);
+  cursor: pointer;
+  color: var(--typography-quaternary);
+}
+
+.info {
+  flex: 1 1 auto;
+  /*padding-top: 10px;*/
+}
+
+.info > .name {
+  color: var(--typography-primary);
+  margin: 0;
+  margin-bottom: 5px;
+  text-transform: capitalize;
+  font-weight: bold;
+  font-size: small;
+}
+
+.info > .path {
+  color: var(--typography-secondary);
+  font-size: small;
+  font-weight: 300;
+  margin: 0;
+}

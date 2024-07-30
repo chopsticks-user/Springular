@@ -1,1 +1,21 @@
-<p>notification works!</p>
+@if (displayed$ | async) {
+  @let level = (level$ | async)!;
+  @let color = getColor(level);
+  <div #notificationContent [style.color]="color">
+    <mat-icon>{{ getIcon(level) }}</mat-icon>
+    <p>{{ message$ | async }}</p>
+    <mat-icon
+      class="close"
+      (click)="close()"
+    >
+      close
+    </mat-icon>
+  </div>
+}
+
+<!--(mouseenter)="keepNotificationDialog()"-->
+<!--(mouseleave)="resetNotificationDialogTimer()"-->
+<!--[style.animation]="stopAnimation() ? 'none' : undefined"-->
+
+
+

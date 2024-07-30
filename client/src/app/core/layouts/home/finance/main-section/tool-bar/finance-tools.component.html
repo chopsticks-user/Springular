@@ -1,24 +1,58 @@
-<div class="group info"></div>
-<div class="group">
-  <button>
-    <mat-icon (click)="transactionEditorShouldOpen=true">
-      add
-    </mat-icon>
-  </button>
-  <button>
-    <mat-icon (click)="groupEditorShouldOpen=true">
-      create_new_folder
-    </mat-icon>
-  </button>
-</div>
-<div class="group">
-  <button>
-    <mat-icon>search</mat-icon>
-  </button>
-  <button>
-    <mat-icon>sort</mat-icon>
-  </button>
-</div>
+<header>
+  <div class="back">
+    <button title="go back to the parent group">
+      <mat-icon (click)="goBack()">arrow_back</mat-icon>
+    </button>
+  </div>
+  <div class="search-bar">
+    <div class="slash">/</div>
+    <input
+      type="text"
+      [value]="displayedPath(rootGroup()?.path || '/')"
+    >
+    <button title="search for groups">
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
+  <div class="month-year-picker">
+    <select>
+      @for (month of months; track month) {
+        <option [selected]="months[today.getMonth()] === month">
+          {{ month }}
+        </option>
+      }
+    </select>
+    <select>
+      @for (year of years; track year) {
+        <option [selected]="today.getFullYear() === year">
+          {{ year }}
+        </option>
+      }
+    </select>
+    <!--    <input type="number" [defaultValue]="2024">-->
+  </div>
+  <div class="buttons">
+    <button title="add a new transaction">
+      <mat-icon (click)="transactionEditorShouldOpen=true">
+        add
+      </mat-icon>
+    </button>
+    <button title="create a new group">
+      <mat-icon (click)="groupEditorShouldOpen=true">
+        create_new_folder
+      </mat-icon>
+    </button>
+    <button title="filter groups">
+      <mat-icon>sort</mat-icon>
+    </button>
+  </div>
+</header>
+<div class="margin"></div>
+<main>
+  @for (childGroup of childrenGroups(); track childGroup.id) {
+    <app-layout-home-finance-main-section-group [group]="childGroup"/>
+  }
+</main>
 <app-layout-dialog-modal
   [modalShouldOpen]="groupEditorShouldOpen"
   (modalShouldClose)="groupEditorShouldOpen=false"

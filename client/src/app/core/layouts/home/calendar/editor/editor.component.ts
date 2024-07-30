@@ -18,6 +18,7 @@ import {CalendarEventsService} from "@features/home/calendar/calendar-events.ser
 import {HttpErrorResponse} from "@angular/common/http";
 import {divisibleByValidator} from "@shared/directives/validators/divisible-by.validator";
 import {divisibleByMinutesValidator} from "@shared/directives/validators/divisible-by-minutes.validator";
+import {NotificationService} from "@shared/services/notification.service";
 
 @Component({
   selector: 'app-layout-home-calendar-editor',
@@ -34,6 +35,7 @@ import {divisibleByMinutesValidator} from "@shared/directives/validators/divisib
 })
 export class EditorComponent implements OnInit {
   private _calendarEventsService = inject(CalendarEventsService);
+  private _notificationService = inject(NotificationService);
 
   public calendarEvent = input<CalendarEvent>();
   public editorShouldClose = output<void>();
@@ -184,7 +186,9 @@ export class EditorComponent implements OnInit {
         this._calendarEventsService.addCalendarEvent(
           submittedCalendarEvent
         ).subscribe({
-          next: () => this.editorShouldClose.emit(),
+          next: () => {
+            this.editorShouldClose.emit();
+          },
           error: (res: HttpErrorResponse) =>
             errorMessage.set(res.error.description),
         });
@@ -193,7 +197,9 @@ export class EditorComponent implements OnInit {
         this._calendarEventsService.editCalendarEvent(
           submittedCalendarEvent
         ).subscribe({
-          next: () => this.editorShouldClose.emit(),
+          next: () => {
+            this.editorShouldClose.emit()
+          },
           error: (res: HttpErrorResponse) =>
             errorMessage.set(res.error.description),
         });

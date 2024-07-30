@@ -1,6 +1,9 @@
 <header></header>
 <main>
   <app-layout-home-finance-recent-activities/>
-  <app-layout-home-finance-main-section/>
+  <app-layout-home-finance-main-section
+    [rootGroup]="rootGroup$ | async"
+    [childrenGroups]="(childrenGroups$ | async)!"
+  />
   <app-layout-home-finance-summary-section/>
 </main>
