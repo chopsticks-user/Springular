@@ -26,8 +26,4 @@ export class FinanceToolsComponent {
 
   public groupEditorShouldOpen = false;
   public transactionEditorShouldOpen = false;
-
-  public search() {
-    this._notificationService.show(Math.random().toString(), 'warning');
-  }
 }

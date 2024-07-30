@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, tap} from "rxjs";
+import {BehaviorSubject} from "rxjs";
 import {DateTime} from "luxon";
 import {NotificationLevel} from "@shared/domain/types";
 
@@ -18,22 +18,18 @@ export class NotificationService {
   // private _currentTimer = new Subscription();
 
   public message$ = this.$message.asObservable();
-  public displayed$ = this.$displayed.asObservable()
-    .pipe(tap((displayed) => console.log(displayed)));
+  public displayed$ = this.$displayed.asObservable();
   public level$ = this.$level.asObservable();
 
   public show(
     message: string,
     level?: NotificationLevel,
-    duration?: number,
+    // duration?: number,
   ) {
-    // TODO: add new notifications to a task queue
-    // if(this.$displayed.value){
-    //
-    // }
-
     this.close();
-    this.$message.next(`${DateTime.local().toLocaleString(DateTime.TIME_SIMPLE)}: ${message}`);
+    this.$message.next(
+      `${DateTime.local().toLocaleString(DateTime.TIME_SIMPLE)}: ${message}`
+    );
     this.$displayed.next(true);
     this.$level.next(this.notificationLevel(level));
     // this.resetTimer(duration);
@@ -58,9 +54,9 @@ export class NotificationService {
     this.$displayed.next(false);
   }
 
-  private timerDuration(duration?: number) {
-    return duration ? duration : this._defaultTimerDuration;
-  }
+  // private timerDuration(duration?: number) {
+  //   return duration ? duration : this._defaultTimerDuration;
+  // }
 
   private notificationLevel(level?: NotificationLevel) {
     return level || this._defaultLevel;

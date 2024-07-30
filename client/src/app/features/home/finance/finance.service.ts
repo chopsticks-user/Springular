@@ -1,8 +1,12 @@
 import {HttpClient} from '@angular/common/http';
 import {inject, Injectable} from '@angular/core';
 import {Transaction, TransactionGroup} from '@shared/domain/types';
-import {DateTime} from 'luxon';
-import {BehaviorSubject, map, Observable, zip} from 'rxjs';
+import {BehaviorSubject, Observable, of} from 'rxjs';
+import groupSample from '@core/layouts/home/finance/group-sample.json';
+
+function fetchAllGroups() {
+  return groupSample as TransactionGroup[];
+}
 
 @Injectable({
   providedIn: 'root',
@@ -12,27 +16,36 @@ export class FinanceService {
   private $transactions = new BehaviorSubject<Transaction[]>([]);
   private $groups = new BehaviorSubject<TransactionGroup[]>([]);
 
-  public transactions$: Observable<Transaction[]> = this.$transactions;
+  public transactions$: Observable<Transaction[]> = this.$transactions.asObservable();
   public groups$: Observable<TransactionGroup[]> = this.$groups.asObservable();
 
-  public load(interval: string, start: DateTime): void {
-    zip(
-      this._http.get<Transaction[]>('/finance/transactions', {
-        params: {
-          interval: interval,
-          start: start.toJSDate().toISOString(),
-        },
-      }),
-      this._http.get<TransactionGroup[]>('/finance/groups')
-    ).subscribe(([transactions, groups]) => {
-      this.$transactions.next(transactions);
-      this.$groups.next(groups);
-    });
-  }
-
-  public getGroupById(id: string): Observable<TransactionGroup | undefined> {
-    return this.$groups.pipe(
-      map((groups) => groups.find((group) => group.id === id))
+  public getGroupAndDirectChildrenAt(path: string) {
+    return of(
+      fetchAllGroups()
+        .filter(group => group.path.indexOf(path) === 0)
+        .sort((a, b) => a.level! - b.level!
+        )
     );
   }
+
+  // public load(interval: string, start: DateTime): void {
+  // zip(
+  //   this._http.get<Transaction[]>('/finance/transactions', {
+  //     params: {
+  //       interval: interval,
+  //       start: start.toJSDate().toISOString(),
+  //     },
+  //   }),
+  //   this._http.get<TransactionGroup[]>('/finance/groups')
+  // ).subscribe(([transactions, groups]) => {
+  //   this.$transactions.next(transactions);
+  //   this.$groups.next(groups);
+  // });
+  // }
+
+  // public getGroupById(id: string): Observable<TransactionGroup | undefined> {
+  //   return this.$groups.pipe(
+  //     map((groups) => groups.find((group) => group.id === id))
+  //   );
+  // }
 }
