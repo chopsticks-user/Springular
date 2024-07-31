@@ -1,7 +1,7 @@
 <header>
   <div class="back">
     <button title="go back to the parent group">
-      <mat-icon (click)="goBack()">arrow_back</mat-icon>
+      <app-shared-ui-icon (click)="goBack()" name="arrow_back"/>
     </button>
   </div>
   <div class="search-bar">
@@ -11,7 +11,7 @@
       [value]="displayedPath(rootGroup$()?.path || '/')"
     >
     <button title="search for groups">
-      <mat-icon>search</mat-icon>
+      <app-shared-ui-icon name="search"/>
     </button>
   </div>
   <div class="month-year-picker">
@@ -36,22 +36,22 @@
       title="add a new transaction"
       (click)="transactionEditorShouldOpen=true"
     >
-      <mat-icon>add</mat-icon>
+      <app-shared-ui-icon name="add"/>
     </button>
     <button
       title="create a new group"
       (click)="groupEditorShouldOpen=true"
     >
-      <mat-icon>create_new_folder</mat-icon>
+      <app-shared-ui-icon name="create_new_folder"/>
     </button>
     <button
       title="edit the current group"
       (click)="editTransactionGroup()"
     >
-      <mat-icon>edit_note</mat-icon>
+      <app-shared-ui-icon name="edit_note"/>
     </button>
     <button title="filter groups">
-      <mat-icon>sort</mat-icon>
+      <app-shared-ui-icon name="sort"/>
     </button>
   </div>
 </header>

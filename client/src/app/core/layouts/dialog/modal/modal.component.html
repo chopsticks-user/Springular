@@ -1,10 +1,14 @@
 <dialog #modal (close)="modalShouldClose.emit()">
   @if (modalShouldOpen()) {
     <header>
-      <mat-icon>menu_open</mat-icon>
+      <app-shared-ui-icon name="menu_open"/>
       <ng-content select="app-layout-dialog-modal-tool"/>
       <span></span>
-      <mat-icon (click)="modalShouldClose.emit()" title="close">close</mat-icon>
+      <app-shared-ui-icon
+        (click)="modalShouldClose.emit()"
+        name="close"
+        title="close"
+      />
     </header>
     <ng-content/>
   }

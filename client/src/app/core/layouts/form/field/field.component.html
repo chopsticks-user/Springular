@@ -16,8 +16,14 @@
 
   @let titleText = title() || placeholder();
   @if (titleText) {
-    <mat-icon matSuffix (click)="iconClicked.emit()" [title]="titleText">{{ icon() }}</mat-icon>
+    <app-shared-ui-icon [name]="icon()" (click)="iconClicked.emit()" [title]="titleText"/>
+    <!--    <mat-icon (click)="iconClicked.emit()" [title]="titleText">{{ icon() }}</mat-icon>-->
   } @else {
-    <mat-icon matSuffix (click)="iconClicked.emit()">{{ icon() }}</mat-icon>
+    <app-shared-ui-icon [name]="icon()" (click)="iconClicked.emit()"/>
   }
+  <!--    @if (titleText) {-->
+  <!--      <mat-icon (click)="iconClicked.emit()" [title]="titleText">{{ icon() }}</mat-icon>-->
+  <!--    } @else {-->
+  <!--      <mat-icon (click)="iconClicked.emit()">{{ icon() }}</mat-icon>-->
+  <!--    }-->
 </ng-container>

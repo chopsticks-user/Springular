@@ -5,43 +5,28 @@
     (click)="onTodayButtonClicked()"
     [title]="todayString$ | async"
   >
-    <p style="color: var(--foreground-quinary); font-size: small">
-      Today
-    </p>
+    <p>Today</p>
   </div>
 </div>
 <div class="calendar-header-navigation">
-  <mat-icon
-    style="color: var(--foreground-quinary); cursor: pointer"
-    matSuffix
+  <app-shared-ui-icon
+    name="arrow_left"
     (click)="onPrevButtonClicked()"
     title="previous week"
-  >arrow_back_ios
-  </mat-icon
-  >
-  <p style="color: white">
-    {{ (firstWeekday$ | async)?.toFormat("MMMM dd, yyyy") }}
-  </p>
-  <div style="width: 100px"></div>
-  <p style="color: white">
-    {{ (lastWeekday$ | async)?.toFormat("MMMM dd, yyyy") }}
-  </p>
-  <mat-icon
-    style="color: var(--foreground-quinary); cursor: pointer"
-    matSuffix
+  />
+  <p>{{ (firstWeekday$ | async)?.toFormat("MMMM dd, yyyy") }}</p>
+  <div></div>
+  <p>{{ (lastWeekday$ | async)?.toFormat("MMMM dd, yyyy") }}</p>
+  <app-shared-ui-icon
+    name="arrow_right"
     (click)="onNextButtonClicked()"
     title="next week"
-  >arrow_forward_ios
-  </mat-icon
-  >
+  />
 </div>
 <div class="calendar-header-right">
-  <mat-icon
-    matSuffix
-    style="color: var(--foreground-quinary); cursor: pointer; align-self: center"
+  <app-shared-ui-icon
+    name="edit_calendar"
     (click)="onAddEventButtonClicked.emit()"
     title="add event"
-  >edit_calendar
-  </mat-icon
-  >
+  />
 </div>

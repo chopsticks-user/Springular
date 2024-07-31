@@ -1,3 +1,1 @@
-<mat-icon (click)="click.emit()">
-  {{ icon() }}
-</mat-icon>
+<app-shared-ui-icon (click)="click.emit()" [name]="icon()"/>

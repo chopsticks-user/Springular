@@ -13,14 +13,14 @@ dialog > header {
   align-items: center;
 }
 
-mat-icon {
+app-shared-ui-icon {
   cursor: pointer;
   color: var(--typography-secondary);
   transform: scale(0.75);
   flex: 0 0 fit-content;
 }
 
-mat-icon:hover {
+app-shared-ui-icon:hover {
   color: var(--typography-primary);
 }
 

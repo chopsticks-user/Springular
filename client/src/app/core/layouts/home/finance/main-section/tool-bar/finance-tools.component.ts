@@ -1,5 +1,4 @@
 import {Component, inject} from '@angular/core';
-import {MatIconModule} from '@angular/material/icon';
 import {TransactionEditorComponent} from '@core/layouts/home/finance/transaction-editor/transaction-editor.component';
 import {GroupEditorComponent} from '@core/layouts/home/finance/group-editor/group-editor.component';
 import {ModalComponent} from "@core/layouts/dialog/modal/modal.component";
@@ -13,18 +12,19 @@ import {AsyncPipe} from "@angular/common";
 import {FinanceService} from "@features/home/finance/finance.service";
 import {toSignal} from "@angular/core/rxjs-interop";
 import {TransactionGroup} from "@shared/domain/types";
+import {IconComponent} from "@shared/ui/icon/icon.component";
 
 @Component({
   selector: 'app-layout-home-finance-tool-bar',
   standalone: true,
   imports: [
-    MatIconModule,
     TransactionEditorComponent,
     GroupEditorComponent,
     ModalComponent,
     ConfirmationComponent,
     GroupComponent,
     AsyncPipe,
+    IconComponent,
   ],
   templateUrl: './finance-tools.component.html',
   styleUrl: './finance-tools.component.css',

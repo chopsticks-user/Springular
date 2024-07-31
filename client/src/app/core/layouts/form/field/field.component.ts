@@ -1,19 +1,13 @@
 import {Component, input, output} from '@angular/core';
 import {FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {MatFormField, MatLabel, MatSuffix} from "@angular/material/form-field";
-import {MatIcon} from "@angular/material/icon";
-import {MatInput} from "@angular/material/input";
+import {IconComponent} from "@shared/ui/icon/icon.component";
 
 @Component({
   selector: 'app-layout-form-field',
   standalone: true,
   imports: [
-    MatFormField,
-    MatIcon,
-    MatInput,
-    MatLabel,
-    MatSuffix,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    IconComponent
   ],
   templateUrl: './field.component.html',
   styleUrl: './field.component.css'

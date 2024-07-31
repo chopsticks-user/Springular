@@ -1,10 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
-import {MatButtonModule} from '@angular/material/button';
 import {LoginComponent} from '../auth/login/login.component';
 import {SignupComponent} from '../auth/signup/signup.component';
-import {MatIconModule} from '@angular/material/icon';
-import {MatSuffix} from "@angular/material/form-field";
 import {ModalComponent} from "@core/layouts/dialog/modal/modal.component";
 import {AsyncPipe} from "@angular/common";
 
@@ -15,11 +12,8 @@ import {AsyncPipe} from "@angular/common";
     RouterOutlet,
     RouterLink,
     RouterLinkActive,
-    MatButtonModule,
     LoginComponent,
     SignupComponent,
-    MatIconModule,
-    MatSuffix,
     ModalComponent,
     AsyncPipe,
   ],

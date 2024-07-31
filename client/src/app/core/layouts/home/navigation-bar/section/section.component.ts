@@ -1,14 +1,13 @@
 import {NgClass, NgStyle} from '@angular/common';
 import {Component, inject, input} from '@angular/core';
-import {MatIconModule} from '@angular/material/icon';
 import {Router} from '@angular/router';
 import {SidebarItem} from '@shared/domain/types';
-import {MatSuffix} from "@angular/material/form-field";
+import {IconComponent} from "@shared/ui/icon/icon.component";
 
 @Component({
   selector: 'app-layout-home-navigation-bar-section',
   standalone: true,
-  imports: [MatIconModule, NgStyle, MatSuffix, NgClass],
+  imports: [NgStyle, NgClass, IconComponent],
   templateUrl: './section.component.html',
   styleUrl: './section.component.css',
 })
@@ -42,6 +41,11 @@ export class SectionComponent {
 
   public isSelectedItem(item: SidebarItem): boolean {
     if (item.action !== 'navigate') {
+      return false;
+    }
+
+    // logout
+    if (!item.url?.startsWith('/home')) {
       return false;
     }
 

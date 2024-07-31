@@ -1,5 +1,4 @@
 import {Component, inject, WritableSignal} from '@angular/core';
-import {MatIcon} from "@angular/material/icon";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AuthService} from "@shared/services/auth.service";
 import {Router} from "@angular/router";
@@ -12,7 +11,6 @@ import {GroupComponent} from "@core/layouts/form/group/group.component";
   selector: 'app-auth-reset-password',
   standalone: true,
   imports: [
-    MatIcon,
     ReactiveFormsModule,
     FieldComponent,
     GroupComponent

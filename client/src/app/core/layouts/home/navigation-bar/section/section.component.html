@@ -11,7 +11,7 @@
       (click)="onItemClicked(item)"
     >
       <div class="item-icon">
-        <mat-icon matSuffix>{{ item.icon }}</mat-icon>
+        <app-shared-ui-icon [name]="item.icon"/>
       </div>
       <div class="item-name">
         <p>{{ item.name }}</p>

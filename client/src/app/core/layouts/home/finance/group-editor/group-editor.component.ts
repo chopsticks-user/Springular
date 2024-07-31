@@ -1,6 +1,5 @@
 import {Component, inject, input, WritableSignal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators,} from '@angular/forms';
-import {MatIconModule} from '@angular/material/icon';
 import {FormControlErrorDictionary, TransactionGroup} from '@shared/domain/types';
 import {ModalComponent} from "@core/layouts/dialog/modal/modal.component";
 import {GroupComponent} from "@core/layouts/form/group/group.component";
@@ -15,7 +14,6 @@ import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    MatIconModule,
     FieldComponent,
     ModalComponent,
     GroupComponent,

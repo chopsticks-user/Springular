@@ -27,7 +27,7 @@ div {
   }
 }
 
-mat-icon {
+app-shared-ui-icon {
   transform: scale(0.5);
 }
 

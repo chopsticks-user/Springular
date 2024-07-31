@@ -1,16 +1,16 @@
 import {Component, ElementRef, inject, viewChild} from '@angular/core';
 import {ConfirmationService} from "@shared/services/confirmation.service";
 import {AsyncPipe} from "@angular/common";
-import {MatIcon} from "@angular/material/icon";
 import {tap} from "rxjs";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
+import {IconComponent} from "@shared/ui/icon/icon.component";
 
 @Component({
   selector: 'app-layout-dialog-confirmation',
   standalone: true,
   imports: [
     AsyncPipe,
-    MatIcon
+    IconComponent
   ],
   templateUrl: './confirmation.component.html',
   styleUrl: './confirmation.component.css'

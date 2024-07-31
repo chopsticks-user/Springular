@@ -5,12 +5,12 @@
   align-items: center;
 }
 
-mat-icon {
+app-shared-ui-icon {
   color: var(--typography-secondary);
   transform: scale(0.75);
   cursor: pointer;
 }
 
-mat-icon:hover {
+app-shared-ui-icon:hover {
   color: var(--typography-primary);
 }
