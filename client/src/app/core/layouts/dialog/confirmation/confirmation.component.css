@@ -23,7 +23,7 @@ dialog > main > p {
   font-weight: 300;
 }
 
-mat-icon {
+app-shared-ui-icon {
   transform: scale(0.6);
   color: var(--typography-secondary);
   cursor: pointer;
@@ -57,6 +57,6 @@ button:hover {
 /*  backdrop-filter: blur(1px);*/
 /*}*/
 
-mat-icon:hover {
+app-shared-ui-icon:hover {
   color: var(--typography-primary);
 }

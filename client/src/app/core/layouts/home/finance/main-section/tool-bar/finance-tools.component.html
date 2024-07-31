@@ -1,17 +1,17 @@
 <header>
   <div class="back">
     <button title="go back to the parent group">
-      <mat-icon (click)="goBack()">arrow_back</mat-icon>
+      <app-shared-ui-icon (click)="goBack()" name="arrow_back"/>
     </button>
   </div>
   <div class="search-bar">
     <div class="slash">/</div>
     <input
       type="text"
-      [value]="displayedPath(rootGroup()?.path || '/')"
+      [value]="displayedPath(rootGroup$()?.path || '/')"
     >
     <button title="search for groups">
-      <mat-icon>search</mat-icon>
+      <app-shared-ui-icon name="search"/>
     </button>
   </div>
   <div class="month-year-picker">
@@ -32,32 +32,42 @@
     <!--    <input type="number" [defaultValue]="2024">-->
   </div>
   <div class="buttons">
-    <button title="add a new transaction">
-      <mat-icon (click)="transactionEditorShouldOpen=true">
-        add
-      </mat-icon>
+    <button
+      title="add a new transaction"
+      (click)="transactionEditorShouldOpen=true"
+    >
+      <app-shared-ui-icon name="add"/>
     </button>
-    <button title="create a new group">
-      <mat-icon (click)="groupEditorShouldOpen=true">
-        create_new_folder
-      </mat-icon>
+    <button
+      title="create a new group"
+      (click)="groupEditorShouldOpen=true"
+    >
+      <app-shared-ui-icon name="create_new_folder"/>
+    </button>
+    <button
+      title="edit the current group"
+      (click)="editTransactionGroup()"
+    >
+      <app-shared-ui-icon name="edit_note"/>
     </button>
     <button title="filter groups">
-      <mat-icon>sort</mat-icon>
+      <app-shared-ui-icon name="sort"/>
     </button>
   </div>
 </header>
 <div class="margin"></div>
 <main>
-  @for (childGroup of childrenGroups(); track childGroup.id) {
+  @for (childGroup of (childrenGroups$ | async); track childGroup.id) {
     <app-layout-home-finance-main-section-group [group]="childGroup"/>
   }
 </main>
 <app-layout-dialog-modal
   [modalShouldOpen]="groupEditorShouldOpen"
-  (modalShouldClose)="groupEditorShouldOpen=false"
+  (modalShouldClose)="closeGroupEditor()"
 >
-  <app-layout-home-finance-group-editor/>
+  <app-layout-home-finance-group-editor
+    [group]="selectedGroup"
+  />
 </app-layout-dialog-modal>
 <app-layout-dialog-modal
   [modalShouldOpen]="transactionEditorShouldOpen"

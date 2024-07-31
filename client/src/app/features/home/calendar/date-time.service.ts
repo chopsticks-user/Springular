@@ -10,6 +10,10 @@ export class DateTimeService {
   private $today = new BehaviorSubject<DateTime>(DateTime.local());
   private $currentTime = new BehaviorSubject<DateTime>(DateTime.local());
 
+  public readonly months = Info.months();
+  public readonly years = [...Array(30).keys()]
+    .map(value => value + 2000).reverse();
+
   public firstDayOfWeek$: Observable<DateTime> = this.$currentTime.pipe(
     map((currentTime) => {
       return currentTime.startOf('week').toLocal();
@@ -25,7 +29,7 @@ export class DateTimeService {
       map((firstDayOfWeek) =>
         Info.weekdays('short').map((weekDayName, index) => ({
           dayOfWeek: weekDayName,
-          dayOfMonth: firstDayOfWeek.plus({ days: index }).day,
+          dayOfMonth: firstDayOfWeek.plus({days: index}).day,
         }))
       )
     );
@@ -53,10 +57,10 @@ export class DateTimeService {
   }
 
   public currentTimeToNextWeek() {
-    this.$currentTime.next(this.$currentTime.value.plus({ days: 7 }));
+    this.$currentTime.next(this.$currentTime.value.plus({days: 7}));
   }
 
   public currentTimeToLastWeek() {
-    this.$currentTime.next(this.$currentTime.value.minus({ days: 7 }));
+    this.$currentTime.next(this.$currentTime.value.minus({days: 7}));
   }
 }

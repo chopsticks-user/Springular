@@ -1,9 +1,5 @@
 import {Component, inject, WritableSignal} from '@angular/core';
 import {Router} from '@angular/router';
-import {MatButtonModule} from '@angular/material/button';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {MatIconModule} from '@angular/material/icon';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators,} from '@angular/forms';
 import {AuthService} from '@shared/services/auth.service';
 import {FormControlErrorDictionary, LoginInfo} from '@shared/domain/types';
@@ -15,12 +11,8 @@ import {GroupComponent} from "@core/layouts/form/group/group.component";
   selector: 'app-auth-login',
   standalone: true,
   imports: [
-    MatFormFieldModule,
-    MatInputModule,
     FormsModule,
-    MatButtonModule,
     ReactiveFormsModule,
-    MatIconModule,
     FieldComponent,
     GroupComponent,
   ],

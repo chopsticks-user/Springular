@@ -15,8 +15,9 @@ p {
   margin: 0;
 }
 
-mat-icon {
+app-shared-ui-icon {
   cursor: pointer;
+  color: var(--typography-quaternary);
 }
 
 div {

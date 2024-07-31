@@ -1,6 +1,5 @@
 import {Component, inject, input, OnInit, WritableSignal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators,} from '@angular/forms';
-import {MatIconModule} from '@angular/material/icon';
 import {GroupComponent} from "@core/layouts/form/group/group.component";
 import {FinanceService} from "@features/home/finance/finance.service";
 import {FormControlErrorDictionary, Transaction} from "@shared/domain/types";
@@ -8,13 +7,13 @@ import {nonNegativeValidator} from "@shared/directives/validators/non-negative.v
 import {beforeNowValidator} from "@shared/directives/validators/before-now.validator";
 import {directoryValidator} from "@shared/directives/validators/directory.validator";
 import {FieldComponent} from "@core/layouts/form/field/field.component";
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 
 @Component({
   selector: 'app-layout-home-finance-transaction-editor',
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    MatIconModule,
     FieldComponent,
     GroupComponent,
     FieldComponent,
@@ -26,6 +25,7 @@ export class TransactionEditorComponent implements OnInit {
   private _financeService = inject(FinanceService);
 
   public transaction = input<Transaction>();
+  public path$ = this._financeService.path$.pipe(takeUntilDestroyed());
   public errorDictionaries: FormControlErrorDictionary[] = [
     {
       name: 'revenues',
@@ -61,6 +61,14 @@ export class TransactionEditorComponent implements OnInit {
     },
   ];
   public formGroup!: FormGroup;
+
+  constructor() {
+    this.path$.subscribe((path) => {
+      if (this.formGroup.contains('path')) {
+        this.formGroup.controls['path'].setValue(path);
+      }
+    });
+  }
 
   ngOnInit() {
     const _transaction = this.transaction();

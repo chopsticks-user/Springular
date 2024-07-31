@@ -1,9 +1,5 @@
 import {Component, inject, WritableSignal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators,} from '@angular/forms';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatIconModule} from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
-import {MatButtonModule} from '@angular/material/button';
 import {FormControlErrorDictionary, SignupInfo} from '@shared/domain/types';
 import {AuthService} from '@shared/services/auth.service';
 import {Router} from '@angular/router';
@@ -16,11 +12,7 @@ import {beforeNowValidator} from "@shared/directives/validators/before-now.valid
   selector: 'app-auth-signup',
   standalone: true,
   imports: [
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
     ReactiveFormsModule,
-    MatButtonModule,
     FieldComponent,
     GroupComponent,
   ],

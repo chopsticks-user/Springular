@@ -1,7 +1,11 @@
 <dialog #confirmationDialog (close)="declineHandler()">
   @if (open$ | async) {
     <header>
-      <mat-icon (click)="declineHandler()">close</mat-icon>
+      <app-shared-ui-icon
+        name="close"
+        title="close"
+        (click)="declineHandler()"
+      />
     </header>
     <main>
       <p>{{ question$ | async }}</p>

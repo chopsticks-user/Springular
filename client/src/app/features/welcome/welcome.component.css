@@ -1,14 +1,4 @@
 :host {
-  --header-height: 3rem;
-  --header-padding: 25px;
-  --button-background-color: var(--foreground-primary);
-  --button-width: 100px;
-  --button-margin: 10px;
-  --text-color: var(--foreground-quinary);
-  --button-shadow: var(--shadow-primary);
-  --dialog-border: 1px solid var(--border-secondary);
-
-
   background: var(--background-gradient-100);
   display: flex;
   justify-content: center;
@@ -17,51 +7,20 @@
   height: 100%;
 }
 
-.modal-header {
-  display: flex;
-  flex-direction: row;
-}
-
-.modal-header-span {
-  display: flex;
-  flex: 1;
-}
-
-.modal-footer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-a {
-  text-decoration: underline;
+.get-started {
+  font-family: "Roboto", sans-serif;
+  text-transform: capitalize;
+  outline: 0;
+  width: 150px;
+  background-color: var(--static-green-accent);
+  border: 0;
+  border-radius: 30px;
+  padding: 15px;
+  color: var(--typography-secondary);
   cursor: pointer;
+  font-size: large;
 }
 
-p {
-  margin-right: 5px;
-}
-
-dialog {
-  border: var(--dialog-border);
-  border-radius: 10px;
-}
-
-dialog::backdrop {
-  backdrop-filter: blur(2px);
-}
-
-dialog[open] {
-  animation-duration: 0.5s;
-  animation-name: zoom-in;
-}
-
-@keyframes zoom-in {
-  from {
-    scale: 0;
-  }
-
-  to {
-    scale: 1;
-  }
+.get-started:hover {
+  color: var(--typography-primary);
 }

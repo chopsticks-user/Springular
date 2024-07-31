@@ -28,6 +28,10 @@
   border: 1px solid gray;
 }
 
+.calendar-header-left-today > p {
+  font-size: small;
+}
+
 .calendar-header-left-today-info {
   display: none;
   background-color: gray;
@@ -52,10 +56,34 @@
   align-items: center;
 }
 
+.calendar-header-navigation > app-shared-ui-icon {
+  color: var(--typography-secondary);
+  transform: scale(1.5);
+  cursor: pointer;
+}
+
+.calendar-header-navigation > app-shared-ui-icon:hover {
+  color: var(--typography-primary);
+}
+
+.calendar-header-navigation > div {
+  width: 100px;
+}
+
 .calendar-header-right {
   display: flex;
   flex-direction: row-reverse;
   /* border-left: 1px solid gray; */
   padding-right: 20px;
   padding-left: 10px;
+}
+
+.calendar-header-right > app-shared-ui-icon {
+  color: var(--typography-secondary);
+  cursor: pointer;
+  align-self: center;
+}
+
+.calendar-header-right > app-shared-ui-icon:hover {
+  color: var(--typography-primary);
 }

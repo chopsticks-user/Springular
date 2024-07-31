@@ -24,7 +24,7 @@
   margin-right: 10px;
 }
 
-.icon > mat-icon {
+.icon > app-shared-ui-icon {
   transform: scale(1.5);
   cursor: pointer;
   color: var(--typography-quaternary);

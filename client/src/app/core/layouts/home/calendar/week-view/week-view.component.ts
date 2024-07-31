@@ -3,13 +3,12 @@ import {CalendarEvent, CalendarWeekDay} from '@shared/domain/types';
 import {EventComponent} from '@core/layouts/home/calendar/event/event.component';
 import {Observable} from 'rxjs';
 import {AsyncPipe} from '@angular/common';
-import {MatIcon} from '@angular/material/icon';
 import {DateTimeService} from '@features/home/calendar/date-time.service';
 
 @Component({
   selector: 'app-layout-home-calendar-week-view',
   standalone: true,
-  imports: [EventComponent, AsyncPipe, MatIcon],
+  imports: [EventComponent, AsyncPipe],
   templateUrl: './week-view.component.html',
   styleUrl: './week-view.component.css',
 })

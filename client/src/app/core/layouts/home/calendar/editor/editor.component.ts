@@ -1,6 +1,5 @@
 import {Component, inject, input, OnInit, output, WritableSignal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators,} from '@angular/forms';
-import {MatIconModule} from '@angular/material/icon';
 import {
   CalendarEvent,
   CalendarEventRepeat,
@@ -25,7 +24,6 @@ import {NotificationService} from "@shared/services/notification.service";
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    MatIconModule,
     AsyncPipe,
     GroupComponent,
     FieldComponent,

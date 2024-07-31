@@ -4,7 +4,6 @@ import {CalendarHeaderComponent} from '@core/layouts/home/calendar/header/header
 import {EditorComponent} from '@core/layouts/home/calendar/editor/editor.component';
 import {CalendarEvent} from '@shared/domain/types';
 import {AsyncPipe} from '@angular/common';
-import {MatIcon} from '@angular/material/icon';
 import {CalendarEventsService} from './calendar-events.service';
 import {DateTimeService} from './date-time.service';
 import {ModalComponent} from "@core/layouts/dialog/modal/modal.component";
@@ -17,7 +16,6 @@ import {ConfirmationService} from "@shared/services/confirmation.service";
   imports: [
     CalendarWeekViewComponent,
     AsyncPipe,
-    MatIcon,
     CalendarHeaderComponent,
     EditorComponent,
     ModalComponent,

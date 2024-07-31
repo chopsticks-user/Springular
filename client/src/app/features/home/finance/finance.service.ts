@@ -32,10 +32,10 @@ export class FinanceService {
     map(url => this.getStartPath(url)),
     startWith(this.getStartPath()),
   );
-  public rootGroup$: Observable<TransactionGroup | null> = this.path$.pipe(
+  public rootGroup$: Observable<TransactionGroup | undefined> = this.path$.pipe(
     switchMap(path => fetchAllGroups().pipe(
       map(groups =>
-        groups.find(group => group.path === path) || null
+        groups.find(group => group.path === path) || undefined
       ),
     ))
   );

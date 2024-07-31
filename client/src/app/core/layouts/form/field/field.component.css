@@ -18,9 +18,6 @@ input {
 }
 
 input[type="color" i] {
-  /*font-family: "Roboto", sans-serif;*/
-  /*font-size: 14px;*/
-  /*box-sizing: border-box;*/
   height: calc(15px * 2 + 14px + 2px);
 }
 
@@ -36,7 +33,7 @@ select {
   color: var(--typography-primary);
 }
 
-mat-icon {
+app-shared-ui-icon {
   color: var(--static-green-accent);
   padding-right: 10px;
   padding-left: 10px;

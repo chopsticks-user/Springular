@@ -1,13 +1,13 @@
 import {Component, computed, inject, input} from '@angular/core';
 import {TransactionGroup} from "@shared/domain/types";
-import {MatIcon} from "@angular/material/icon";
 import {Router} from "@angular/router";
+import {IconComponent} from "@shared/ui/icon/icon.component";
 
 @Component({
   selector: 'app-layout-home-finance-main-section-group',
   standalone: true,
   imports: [
-    MatIcon
+    IconComponent
   ],
   templateUrl: './group.component.html',
   styleUrl: './group.component.css',

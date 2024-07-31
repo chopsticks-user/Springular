@@ -1,16 +1,15 @@
 import {AsyncPipe} from '@angular/common';
 import {Component, inject, output} from '@angular/core';
-import {MatIcon} from '@angular/material/icon';
 import {CalendarWeekViewComponent} from '../week-view/week-view.component';
 import {DateTime} from 'luxon';
 import {Observable} from 'rxjs';
 import {DateTimeService} from '@features/home/calendar/date-time.service';
-import {MatSuffix} from "@angular/material/form-field";
+import {IconComponent} from "@shared/ui/icon/icon.component";
 
 @Component({
   selector: 'app-layout-home-calendar-header',
   standalone: true,
-  imports: [CalendarWeekViewComponent, AsyncPipe, MatIcon, MatSuffix],
+  imports: [CalendarWeekViewComponent, AsyncPipe, IconComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })

@@ -85,7 +85,7 @@ header > div {
   margin-right: 1px;
 }
 
-mat-icon {
+app-shared-ui-icon {
   transform: scale(1);
 }
 

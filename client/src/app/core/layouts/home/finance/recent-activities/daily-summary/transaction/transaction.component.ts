@@ -1,13 +1,11 @@
 import {Component} from '@angular/core';
-import {MatIcon} from "@angular/material/icon";
-import {MatSuffix} from "@angular/material/form-field";
+import {IconComponent} from "@shared/ui/icon/icon.component";
 
 @Component({
   selector: 'app-layout-home-finance-transaction',
   standalone: true,
   imports: [
-    MatIcon,
-    MatSuffix
+    IconComponent
   ],
   templateUrl: './transaction.component.html',
   styleUrl: './transaction.component.css',

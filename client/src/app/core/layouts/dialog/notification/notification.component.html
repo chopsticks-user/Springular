@@ -2,20 +2,15 @@
   @let level = (level$ | async)!;
   @let color = getColor(level);
   <div #notificationContent [style.color]="color">
-    <mat-icon>{{ getIcon(level) }}</mat-icon>
+    <app-shared-ui-icon [name]="getIcon(level)"/>
     <p>{{ message$ | async }}</p>
-    <mat-icon
+    <app-shared-ui-icon
       class="close"
+      name="close"
       (click)="close()"
-    >
-      close
-    </mat-icon>
+    />
   </div>
 }
-
-<!--(mouseenter)="keepNotificationDialog()"-->
-<!--(mouseleave)="resetNotificationDialogTimer()"-->
-<!--[style.animation]="stopAnimation() ? 'none' : undefined"-->
 
 
 
