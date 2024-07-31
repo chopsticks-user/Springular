@@ -25,6 +25,5 @@ export class FieldComponent {
   public controlName = input.required<string>();
   public icon = input.required<string>();
   public title = input<string>();
-
   public iconClicked = output<void>();
 }

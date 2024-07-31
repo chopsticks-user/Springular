@@ -1,5 +1,4 @@
-import {Component, input} from '@angular/core';
-import {TransactionGroup} from "@shared/domain/types";
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-layout-home-finance-main-section-group-summary',
@@ -9,6 +8,4 @@ import {TransactionGroup} from "@shared/domain/types";
   styleUrl: './group-summary.component.css'
 })
 export class GroupSummaryComponent {
-  public rootGroup = input.required<TransactionGroup | null>();
-  public childrenGroups = input.required<TransactionGroup[]>();
 }

@@ -8,7 +8,7 @@
     <div class="slash">/</div>
     <input
       type="text"
-      [value]="displayedPath(rootGroup()?.path || '/')"
+      [value]="displayedPath(rootGroup$()?.path || '/')"
     >
     <button title="search for groups">
       <mat-icon>search</mat-icon>
@@ -32,15 +32,23 @@
     <!--    <input type="number" [defaultValue]="2024">-->
   </div>
   <div class="buttons">
-    <button title="add a new transaction">
-      <mat-icon (click)="transactionEditorShouldOpen=true">
-        add
-      </mat-icon>
+    <button
+      title="add a new transaction"
+      (click)="transactionEditorShouldOpen=true"
+    >
+      <mat-icon>add</mat-icon>
     </button>
-    <button title="create a new group">
-      <mat-icon (click)="groupEditorShouldOpen=true">
-        create_new_folder
-      </mat-icon>
+    <button
+      title="create a new group"
+      (click)="groupEditorShouldOpen=true"
+    >
+      <mat-icon>create_new_folder</mat-icon>
+    </button>
+    <button
+      title="edit the current group"
+      (click)="editTransactionGroup()"
+    >
+      <mat-icon>edit_note</mat-icon>
     </button>
     <button title="filter groups">
       <mat-icon>sort</mat-icon>
@@ -49,15 +57,17 @@
 </header>
 <div class="margin"></div>
 <main>
-  @for (childGroup of childrenGroups(); track childGroup.id) {
+  @for (childGroup of (childrenGroups$ | async); track childGroup.id) {
     <app-layout-home-finance-main-section-group [group]="childGroup"/>
   }
 </main>
 <app-layout-dialog-modal
   [modalShouldOpen]="groupEditorShouldOpen"
-  (modalShouldClose)="groupEditorShouldOpen=false"
+  (modalShouldClose)="closeGroupEditor()"
 >
-  <app-layout-home-finance-group-editor/>
+  <app-layout-home-finance-group-editor
+    [group]="selectedGroup"
+  />
 </app-layout-dialog-modal>
 <app-layout-dialog-modal
   [modalShouldOpen]="transactionEditorShouldOpen"
