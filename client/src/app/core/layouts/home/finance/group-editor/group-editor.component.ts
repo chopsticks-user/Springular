@@ -52,7 +52,7 @@ export class GroupEditorComponent implements OnInit {
   ];
   public formGroup!: FormGroup;
 
-  ngOnInit():void {
+  ngOnInit(): void {
     const transactionGroup: TransactionGroup | undefined = this.group();
     const {name, directory} = this.splitPath(transactionGroup?.path || '/');
 

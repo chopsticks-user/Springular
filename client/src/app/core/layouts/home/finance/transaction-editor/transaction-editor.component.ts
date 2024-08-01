@@ -56,7 +56,7 @@ export class TransactionEditorComponent implements OnInit {
     {
       name: 'path',
       entries: [
-        {type: 'directory', message: 'Invalid transaction group path'},
+        {type: 'directory', message: 'Invalid transaction group-view path'},
       ],
     },
   ];

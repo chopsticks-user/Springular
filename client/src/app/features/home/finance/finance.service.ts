@@ -83,7 +83,7 @@ export class FinanceService {
 
   // public getGroupById(id: string): Observable<TransactionGroup | undefined> {
   //   return this.$groups.pipe(
-  //     map((groups) => groups.find((group) => group.id === id))
+  //     map((groups) => groups.find((group-view) => group-view.id === id))
   //   );
   // }
 }

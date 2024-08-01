@@ -1,11 +1,11 @@
 import {Component} from '@angular/core';
-import {FinanceToolsComponent} from '@core/layouts/home/finance/main-section/tool-bar/finance-tools.component';
-import {GroupSummaryComponent} from "@core/layouts/home/finance/main-section/group-summary/group-summary.component";
+import {GroupExplorerComponent} from '@core/layouts/home/finance/main-section/group-explorer/group-explorer.component';
+import {FinanceTrendComponent} from "@core/layouts/home/finance/main-section/finance-trend/finance-trend.component";
 
 @Component({
   selector: 'app-layout-home-finance-main-section',
   standalone: true,
-  imports: [FinanceToolsComponent, GroupSummaryComponent],
+  imports: [GroupExplorerComponent, FinanceTrendComponent],
   templateUrl: './main-section.component.html',
   styleUrl: './main-section.component.css',
 })

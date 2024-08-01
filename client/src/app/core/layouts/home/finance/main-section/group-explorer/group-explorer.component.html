@@ -58,7 +58,7 @@
 <div class="margin"></div>
 <main>
   @for (childGroup of (childrenGroups$ | async); track childGroup.id) {
-    <app-layout-home-finance-main-section-group [group]="childGroup"/>
+    <app-layout-home-finance-main-section-group-view [group]="childGroup"/>
   }
 </main>
 <app-layout-dialog-modal

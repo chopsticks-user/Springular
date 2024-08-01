@@ -1,18 +1,18 @@
-// describe('GroupComponent', () => {
-//   let component: GroupComponent;
-//   let fixture: ComponentFixture<GroupComponent>;
-//
+// describe('GroupExplorerComponent', () => {
+//   let component: GroupExplorerComponent;
+//   let fixture: ComponentFixture<GroupExplorerComponent>;
+
 //   beforeEach(async () => {
 //     await TestBed.configureTestingModule({
-//       imports: [GroupComponent]
+//       imports: [GroupExplorerComponent]
 //     })
 //     .compileComponents();
-//
-//     fixture = TestBed.createComponent(GroupComponent);
+
+//     fixture = TestBed.createComponent(GroupExplorerComponent);
 //     component = fixture.componentInstance;
 //     fixture.detectChanges();
 //   });
-//
+
 //   it('should create', () => {
 //     expect(component).toBeTruthy();
 //   });
