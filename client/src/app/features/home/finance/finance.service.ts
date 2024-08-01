@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {inject, Injectable} from '@angular/core';
 import {Transaction, TransactionGroup} from '@shared/domain/types';
-import {BehaviorSubject, filter, map, Observable, of, startWith, switchMap} from 'rxjs';
+import {BehaviorSubject, filter, map, Observable, of, shareReplay, startWith, switchMap, tap} from 'rxjs';
 import groupSample from '@core/layouts/home/finance/group-sample.json';
 import {NavigationEnd, Router} from "@angular/router";
 
@@ -30,6 +30,8 @@ export class FinanceService {
     map(event => event.url),
     filter(url => url.startsWith(this._financeRootUrl)),
     map(url => this.getStartPath(url)),
+    tap(path => console.log(path)),
+    shareReplay(1),
     startWith(this.getStartPath()),
   );
   public rootGroup$: Observable<TransactionGroup | undefined> = this.path$.pipe(

@@ -28,7 +28,6 @@ export class FinanceComponent {
   private _router = inject(Router);
 
   public rootGroup$ = this._financeService.rootGroup$;
-  public childrenGroups$ = this._financeService.childrenGroups$;
 
   constructor() {
     this.rootGroup$.pipe(takeUntilDestroyed()).subscribe(
