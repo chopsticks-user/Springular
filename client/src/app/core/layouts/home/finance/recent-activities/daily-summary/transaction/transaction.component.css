@@ -17,7 +17,11 @@ p {
 
 app-shared-ui-icon {
   cursor: pointer;
-  color: var(--typography-quaternary);
+  color: var(--typography-secondary);
+}
+
+app-shared-ui-icon:hover {
+  color: var(--typography-primary);
 }
 
 div {

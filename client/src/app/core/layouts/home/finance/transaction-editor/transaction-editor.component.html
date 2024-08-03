@@ -31,9 +31,13 @@
   />
   <app-layout-form-field
     [formGroup]="formGroup"
+    [readOnly]="!transaction()"
     controlName="path"
     icon="tab_group"
     placeholder="/path/to/group"
     title="path to transaction group"
   />
 </app-layout-form-group>
+
+<!--[readOnly]="transaction()"-->
+

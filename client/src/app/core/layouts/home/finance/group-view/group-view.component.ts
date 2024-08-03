@@ -4,18 +4,18 @@ import {Router} from "@angular/router";
 import {IconComponent} from "@shared/ui/icon/icon.component";
 
 @Component({
-  selector: 'app-layout-home-finance-main-section-group',
+  selector: 'app-layout-home-finance-main-section-group-view',
   standalone: true,
   imports: [
     IconComponent
   ],
-  templateUrl: './group.component.html',
-  styleUrl: './group.component.css',
+  templateUrl: './group-view.component.html',
+  styleUrl: './group-view.component.css',
   host: {
     '[title]': "group().description"
   },
 })
-export class GroupComponent {
+export class GroupViewComponent {
   private _router = inject(Router);
 
   public group = input.required<TransactionGroup>();

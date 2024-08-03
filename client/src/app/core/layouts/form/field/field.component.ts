@@ -19,5 +19,6 @@ export class FieldComponent {
   public controlName = input.required<string>();
   public icon = input.required<string>();
   public title = input<string>();
+  public readOnly = input<boolean>(false);
   public iconClicked = output<void>();
 }

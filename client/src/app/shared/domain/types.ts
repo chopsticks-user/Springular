@@ -104,6 +104,8 @@ export interface TransactionGroup {
   description: string;
   revenues?: number;
   expenses?: number;
+  transactions?: Transaction[];
+  children?: string[];
 }
 
 export interface FormControlErrorEntry {

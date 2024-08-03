@@ -1,14 +1,14 @@
-// describe('GroupComponent', () => {
-//   let component: GroupComponent;
-//   let fixture: ComponentFixture<GroupComponent>;
+// describe('GroupViewComponent', () => {
+//   let component: GroupViewComponent;
+//   let fixture: ComponentFixture<GroupViewComponent>;
 //
 //   beforeEach(async () => {
 //     await TestBed.configureTestingModule({
-//       imports: [GroupComponent]
+//       imports: [GroupViewComponent]
 //     })
 //     .compileComponents();
 //
-//     fixture = TestBed.createComponent(GroupComponent);
+//     fixture = TestBed.createComponent(GroupViewComponent);
 //     component = fixture.componentInstance;
 //     fixture.detectChanges();
 //   });

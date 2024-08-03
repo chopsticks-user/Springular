@@ -1,13 +1,13 @@
-import {Component, inject, input, WritableSignal} from '@angular/core';
+import {Component, inject, input, OnInit, WritableSignal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators,} from '@angular/forms';
 import {FormControlErrorDictionary, TransactionGroup} from '@shared/domain/types';
 import {ModalComponent} from "@core/layouts/dialog/modal/modal.component";
 import {GroupComponent} from "@core/layouts/form/group/group.component";
 import {FinanceService} from "@features/home/finance/finance.service";
 import {FieldComponent} from "@core/layouts/form/field/field.component";
-import {directoryValidator} from "@shared/directives/validators/directory.validator";
 import {AsyncPipe} from "@angular/common";
-import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
+import {toSignal} from "@angular/core/rxjs-interop";
+import {directoryValidator} from "@shared/directives/validators/directory.validator";
 
 @Component({
   selector: 'app-layout-home-finance-group-editor',
@@ -23,12 +23,11 @@ import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
   templateUrl: './group-editor.component.html',
   styleUrl: './group-editor.component.css',
 })
-export class GroupEditorComponent {
+export class GroupEditorComponent implements OnInit {
   private _financeService = inject(FinanceService);
 
-  public path$ = this._financeService.path$.pipe(takeUntilDestroyed());
+  public path$ = toSignal(this._financeService.path$);
   public group = input<TransactionGroup>();
-
   public readonly errorDictionaries: FormControlErrorDictionary[] = [
     {
       name: 'name',
@@ -53,19 +52,9 @@ export class GroupEditorComponent {
   ];
   public formGroup!: FormGroup;
 
-  constructor() {
-    this.path$.subscribe((path) => {
-      if (!this.group() && this.formGroup.contains('directory')) {
-        this.formGroup.controls['directory'].setValue(path);
-      }
-    });
-  }
-
-  ngOnChanges(): void {
+  ngOnInit(): void {
     const transactionGroup: TransactionGroup | undefined = this.group();
-
-    const {name, directory} =
-      this.splitPath(transactionGroup?.path || '/');
+    const {name, directory} = this.splitPath(transactionGroup?.path || '/');
 
     this.formGroup = new FormGroup({
       name: new FormControl<string>(
@@ -81,11 +70,10 @@ export class GroupEditorComponent {
         [Validators.maxLength(100)],
       ),
       directory: new FormControl<string>(
-        directory,
+        transactionGroup ? directory : (this.path$() || '/'),
         [directoryValidator()],
       ),
-    })
-    ;
+    });
   }
 
   public submitHandler = (errorMessage: WritableSignal<string>): void => {

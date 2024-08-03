@@ -18,9 +18,10 @@
   />
   <app-layout-form-field
     [formGroup]="formGroup"
+    [readOnly]="!group()"
+    title="path to parent group"
     controlName="directory"
     icon="folder"
     placeholder="/path/to/parent"
-    title="directory to parent group"
   />
 </app-layout-form-group>

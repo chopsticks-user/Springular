@@ -1,18 +1,18 @@
-// describe('FinanceToolsComponent', () => {
-//   let component: FinanceToolsComponent;
-//   let fixture: ComponentFixture<FinanceToolsComponent>;
-
+// describe('GroupViewComponent', () => {
+//   let component: GroupViewComponent;
+//   let fixture: ComponentFixture<GroupViewComponent>;
+//
 //   beforeEach(async () => {
 //     await TestBed.configureTestingModule({
-//       imports: [FinanceToolsComponent]
+//       imports: [GroupViewComponent]
 //     })
 //     .compileComponents();
-
-//     fixture = TestBed.createComponent(FinanceToolsComponent);
+//
+//     fixture = TestBed.createComponent(GroupViewComponent);
 //     component = fixture.componentInstance;
 //     fixture.detectChanges();
 //   });
-
+//
 //   it('should create', () => {
 //     expect(component).toBeTruthy();
 //   });

@@ -5,7 +5,7 @@ import {ModalComponent} from "@core/layouts/dialog/modal/modal.component";
 import {ConfirmationService} from "@shared/services/confirmation.service";
 import {ConfirmationComponent} from "@core/layouts/dialog/confirmation/confirmation.component";
 import {NotificationService} from "@shared/services/notification.service";
-import {GroupComponent} from "@core/layouts/home/finance/group/group.component";
+import {GroupViewComponent} from "@core/layouts/home/finance/group-view/group-view.component";
 import {Router} from "@angular/router";
 import {DateTimeService} from "@features/home/calendar/date-time.service";
 import {AsyncPipe} from "@angular/common";
@@ -15,21 +15,21 @@ import {TransactionGroup} from "@shared/domain/types";
 import {IconComponent} from "@shared/ui/icon/icon.component";
 
 @Component({
-  selector: 'app-layout-home-finance-tool-bar',
+  selector: 'app-layout-home-finance-group-explorer',
   standalone: true,
   imports: [
     TransactionEditorComponent,
     GroupEditorComponent,
     ModalComponent,
     ConfirmationComponent,
-    GroupComponent,
+    GroupViewComponent,
     AsyncPipe,
     IconComponent,
   ],
-  templateUrl: './finance-tools.component.html',
-  styleUrl: './finance-tools.component.css',
+  templateUrl: './group-explorer.component.html',
+  styleUrl: './group-explorer.component.css',
 })
-export class FinanceToolsComponent {
+export class GroupExplorerComponent {
   private _confirmationService = inject(ConfirmationService);
   private _notificationService = inject(NotificationService);
   private _dateTimeService = inject(DateTimeService);

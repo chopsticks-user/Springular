@@ -58,20 +58,26 @@
 <div class="margin"></div>
 <main>
   @for (childGroup of (childrenGroups$ | async); track childGroup.id) {
-    <app-layout-home-finance-main-section-group [group]="childGroup"/>
+    <app-layout-home-finance-main-section-group-view [group]="childGroup"/>
   }
 </main>
 <app-layout-dialog-modal
   [modalShouldOpen]="groupEditorShouldOpen"
   (modalShouldClose)="closeGroupEditor()"
 >
-  <app-layout-home-finance-group-editor
-    [group]="selectedGroup"
-  />
+  @if (groupEditorShouldOpen) {
+    <app-layout-home-finance-group-editor
+      [group]="selectedGroup"
+    />
+  }
 </app-layout-dialog-modal>
 <app-layout-dialog-modal
   [modalShouldOpen]="transactionEditorShouldOpen"
   (modalShouldClose)="transactionEditorShouldOpen=false"
 >
-  <app-layout-home-finance-transaction-editor/>
+  @if (transactionEditorShouldOpen) {
+    <app-layout-home-finance-transaction-editor
+      [transaction]="undefined"
+    />
+  }
 </app-layout-dialog-modal>

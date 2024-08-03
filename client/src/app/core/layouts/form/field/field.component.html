@@ -1,7 +1,7 @@
 <ng-container [formGroup]="formGroup()">
   @switch (type()) {
     @case ("select") {
-      <select [formControlName]="controlName()">
+      <select [formControlName]="controlName()" [contentEditable]="readOnly().toString()">
         <ng-content/>
       </select>
     }
@@ -10,6 +10,7 @@
         [formControlName]="controlName()"
         [type]="type()"
         [placeholder]="placeholder()"
+        [readOnly]="readOnly()"
       />
     }
   }

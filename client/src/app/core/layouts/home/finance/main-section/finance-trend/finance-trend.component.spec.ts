@@ -1,14 +1,14 @@
-// describe('GroupSummaryComponent', () => {
-//   let component: GroupSummaryComponent;
-//   let fixture: ComponentFixture<GroupSummaryComponent>;
+// describe('FinanceTrendComponent', () => {
+//   let component: FinanceTrendComponent;
+//   let fixture: ComponentFixture<FinanceTrendComponent>;
 //
 //   beforeEach(async () => {
 //     await TestBed.configureTestingModule({
-//       imports: [GroupSummaryComponent]
+//       imports: [FinanceTrendComponent]
 //     })
 //     .compileComponents();
 //
-//     fixture = TestBed.createComponent(GroupSummaryComponent);
+//     fixture = TestBed.createComponent(FinanceTrendComponent);
 //     component = fixture.componentInstance;
 //     fixture.detectChanges();
 //   });
